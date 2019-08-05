@@ -3,6 +3,401 @@
   <constants>
   </constants>
   <classes>
+    <class id="GenericCommConnector" _delta="define">
+      <parent>cmdbAbstractObject</parent>
+      <properties>
+        <category>bizmodel,searchable</category>
+        <abstract>false</abstract>
+        <key_type>autoincrement</key_type>
+        <db_table>genericcommconnector</db_table>
+        <db_key_field>id</db_key_field>
+        <db_final_class_field/>
+        <naming>
+          <format>%1$s</format>
+          <attributes>
+            <attribute id="type"/>
+          </attributes>
+        </naming>
+        <display_template/>
+        <reconciliation>
+          <attributes>
+            <attribute id="type"/>
+          </attributes>
+        </reconciliation>
+      </properties>
+      <fields>
+        <field id="type" xsi:type="AttributeString">
+          <sql>type</sql>
+          <default_value/>
+          <is_null_allowed>false</is_null_allowed>
+        </field>
+        <field id="comment" xsi:type="AttributeText">
+          <sql>comment</sql>
+          <default_value/>
+          <is_null_allowed>true</is_null_allowed>
+        </field>
+        <field id="genericcomminterface_list" xsi:type="AttributeLinkedSet">
+          <linked_class>GenericCommInterface</linked_class>
+          <ext_key_to_me>commtype_id</ext_key_to_me>
+          <edit_mode>add_only</edit_mode>
+          <count_min>0</count_min>
+          <count_max>0</count_max>
+          <duplicates/>
+        </field>
+      </fields>
+      <methods>
+      </methods>
+      <presentation>
+        <details>
+          <items>
+            <item id="type">
+              <rank>10</rank>
+            </item>
+            <item id="comment">
+              <rank>20</rank>
+            </item>
+            <item id="genericcomminterface_list">
+              <rank>30</rank>
+            </item>
+          </items>
+        </details>
+        <list>
+          <items>
+            <item id="type">
+              <rank>10</rank>
+            </item>
+            <item id="comment">
+              <rank>20</rank>
+            </item>
+          </items>
+        </list>
+        <search>
+          <items>
+            <item id="type">
+              <rank>10</rank>
+            </item>
+            <item id="comment">
+              <rank>20</rank>
+            </item>
+          </items>
+        </search>
+      </presentation>
+    </class>
+    <class id="GenericCommProtocol" _delta="define">
+      <parent>cmdbAbstractObject</parent>
+      <properties>
+        <category>bizmodel,searchable</category>
+        <abstract>false</abstract>
+        <key_type>autoincrement</key_type>
+        <db_table>genericcommprotocol</db_table>
+        <db_key_field>id</db_key_field>
+        <db_final_class_field/>
+        <naming>
+          <attributes>
+            <attribute id="protocol"/>
+          </attributes>
+        </naming>
+        <display_template/>
+        <reconciliation>
+          <attributes>
+            <attribute id="protocol"/>
+          </attributes>
+        </reconciliation>
+      </properties>
+      <fields>
+        <field id="protocol" xsi:type="AttributeString">
+          <sql>protocol</sql>
+          <default_value/>
+          <is_null_allowed>false</is_null_allowed>
+        </field>
+        <field id="comment" xsi:type="AttributeText">
+          <sql>comment</sql>
+          <default_value/>
+          <is_null_allowed>true</is_null_allowed>
+        </field>
+        <field id="genericcomminterface_list" xsi:type="AttributeLinkedSet">
+          <linked_class>GenericCommInterface</linked_class>
+          <ext_key_to_me>commproto_id</ext_key_to_me>
+          <edit_mode>add_only</edit_mode>
+          <count_min>0</count_min>
+          <count_max>0</count_max>
+          <duplicates/>
+        </field>
+      </fields>
+      <methods>
+      </methods>
+      <presentation>
+        <details>
+          <items>
+            <item id="protocol">
+              <rank>10</rank>
+            </item>
+            <item id="comment">
+              <rank>20</rank>
+            </item>
+            <item id="genericcomminterface_list">
+              <rank>30</rank>
+            </item>
+          </items>
+        </details>
+        <list>
+          <items>
+            <item id="protocol">
+              <rank>10</rank>
+            </item>
+            <item id="comment">
+              <rank>20</rank>
+            </item>
+          </items>
+        </list>
+      </presentation>
+    </class>
+    <class id="GenericCommSpeed" _delta="define">
+      <parent>cmdbAbstractObject</parent>
+      <properties>
+        <category>bizmodel,searchable</category>
+        <abstract>false</abstract>
+        <key_type>autoincrement</key_type>
+        <db_table>genericcommspeed</db_table>
+        <db_key_field>id</db_key_field>
+        <db_final_class_field/>
+        <naming>
+          <attributes>
+            <attribute id="speed"/>
+          </attributes>
+        </naming>
+        <display_template/>
+        <reconciliation>
+          <attributes>
+            <attribute id="speed"/>
+          </attributes>
+        </reconciliation>
+      </properties>
+      <fields>
+        <field id="speed" xsi:type="AttributeInteger">
+          <sql>speed</sql>
+          <default_value/>
+          <is_null_allowed>false</is_null_allowed>
+        </field>
+        <field id="comment" xsi:type="AttributeText">
+          <sql>comment</sql>
+          <default_value/>
+          <is_null_allowed>true</is_null_allowed>
+        </field>
+        <field id="genericcomminterface_list" xsi:type="AttributeLinkedSet">
+          <linked_class>GenericCommInterface</linked_class>
+          <ext_key_to_me>commspeed_id</ext_key_to_me>
+          <edit_mode>add_only</edit_mode>
+          <count_min>0</count_min>
+          <count_max>0</count_max>
+          <duplicates/>
+        </field>
+      </fields>
+      <methods>
+      </methods>
+      <presentation>
+        <details>
+          <items>
+            <item id="speed">
+              <rank>10</rank>
+            </item>
+            <item id="comment">
+              <rank>20</rank>
+            </item>
+            <item id="genericcomminterface_list">
+              <rank>30</rank>
+            </item>
+          </items>
+        </details>
+        <list>
+          <items>
+            <item id="speed">
+              <rank>10</rank>
+            </item>
+            <item id="comment">
+              <rank>20</rank>
+            </item>
+          </items>
+        </list>
+      </presentation>
+    </class>
+    <class id="GenericCommInterface" _delta="define">
+      <parent>cmdbAbstractObject</parent>
+      <properties>
+        <category>bizmodel,searchable</category>
+        <abstract>false</abstract>
+        <key_type>autoincrement</key_type>
+        <db_table>genericcomminterface</db_table>
+        <db_key_field>id</db_key_field>
+        <db_final_class_field/>
+        <naming>
+          <attributes>
+            <attribute id="name"/>
+            <attribute id="connectableci_name"/>
+          </attributes>
+        </naming>
+        <display_template/>
+        <reconciliation>
+          <attributes>
+            <attribute id="name"/>
+            <attribute id="connectableci_id"/>
+            <attribute id="connectableci_name"/>
+          </attributes>
+        </reconciliation>
+        <obsolescence>
+          <condition>connectableci_id_obsolescence_flag</condition>
+        </obsolescence>
+      </properties>
+      <fields>
+        <field id="name" xsi:type="attributeString">
+          <sql>name</sql>
+          <is_null_allowed>false</is_null_allowed>
+        </field>
+        <field id="comment" xsi:type="AttributeText">
+          <sql>comment</sql>
+          <default_value/>
+          <is_null_allowed>true</is_null_allowed>
+        </field>
+        <field id="connectableci_id" xsi:type="AttributeExternalKey">
+          <sql>connectableci_id</sql>
+          <target_class>ConnectableCI</target_class>
+          <is_null_allowed>false</is_null_allowed>
+          <on_target_delete>DEL_AUTO</on_target_delete>
+        </field>
+        <field id="connectableci_name" xsi:type="AttributeExternalField">
+          <extkey_attcode>connectableci_id</extkey_attcode>
+          <target_attcode>name</target_attcode>
+        </field>
+        <field id="commtype_id" xsi:type="AttributeExternalKey">
+          <sql>commtype_id</sql>
+          <target_class>GenericCommConnector</target_class>
+          <is_null_allowed>false</is_null_allowed>
+          <on_target_delete>DEL_MANUAL</on_target_delete>
+        </field>
+        <field id="commtype_type" xsi:type="AttributeExternalField">
+          <extkey_attcode>commtype_id</extkey_attcode>
+          <target_attcode>type</target_attcode>
+        </field>
+        <field id="commproto_id" xsi:type="AttributeExternalKey">
+          <sql>commproto_id</sql>
+          <target_class>GenericCommProtocol</target_class>
+          <is_null_allowed>false</is_null_allowed>
+          <on_target_delete>DEL_MANUAL</on_target_delete>
+        </field>
+        <field id="commproto_proto" xsi:type="AttributeExternalField">
+          <extkey_attcode>commproto_id</extkey_attcode>
+          <target_attcode>protocol</target_attcode>
+        </field>
+        <field id="commspeed_id" xsi:type="AttributeExternalKey">
+          <sql>commspeed_id</sql>
+          <target_class>GenericCommSpeed</target_class>
+          <is_null_allowed>true</is_null_allowed>
+          <on_target_delete>DEL_MANUAL</on_target_delete>
+        </field>
+        <field id="commspeed_speed" xsi:type="AttributeExternalField">
+          <extkey_attcode>commspeed_id</extkey_attcode>
+          <target_attcode>speed</target_attcode>
+        </field>
+      </fields>
+      <methods>
+      </methods>
+      <presentation>
+        <details>
+          <items>
+            <item id="name">
+              <rank>10</rank>
+            </item>
+            <item id="connectableci_id">
+              <rank>20</rank>
+            </item>
+            <item id="comment">
+              <rank>30</rank>
+            </item>
+            <item id="commtype_id">
+              <rank>40</rank>
+            </item>
+            <item id="commproto_id">
+              <rank>50</rank>
+            </item>
+            <item id="commspeed_id">
+              <rank>60</rank>
+            </item>
+          </items>
+        </details>
+        <search>
+          <items>
+            <item id="name">
+              <rank>10</rank>
+            </item>
+            <item id="connectableci_id">
+              <rank>20</rank>
+            </item>
+            <item id="comment">
+              <rank>30</rank>
+            </item>
+            <item id="commtype_type">
+              <rank>40</rank>
+            </item>
+            <item id="commproto_proto">
+              <rank>50</rank>
+            </item>
+          </items>
+        </search>
+        <list>
+          <items>
+            <item id="name">
+              <rank>10</rank>
+            </item>
+            <item id="connectableci_id">
+              <rank>20</rank>
+            </item>
+            <item id="comment">
+              <rank>30</rank>
+            </item>
+            <item id="commtype_type">
+              <rank>40</rank>
+            </item>
+            <item id="commproto_proto">
+              <rank>50</rank>
+            </item>
+          </items>
+        </list>
+      </presentation>
+    </class>
+    <class id="ConnectableCI" _delta="must_exist">
+      <fields>
+        <field id="genericcomminterface_list" xsi:type="AttributeLinkedSet" _delta="define">
+          <linked_class>GenericCommInterface</linked_class>
+          <ext_key_to_me>connectableci_id</ext_key_to_me>
+          <edit_mode>in_place</edit_mode>
+          <tracking_level>all</tracking_level>
+          <count_min>0</count_min>
+          <count_max>0</count_max>
+        </field>
+      </fields>
+    </class>
+    <class id="Enclosure" _delta="must_exist">
+      <presentation>
+        <details>
+          <items>
+            <item id="genericcomminterface_list" _delta="define">
+              <rank>55</rank>
+            </item>
+          </items>
+        </details>
+      </presentation>
+    </class>
+    <class id="Server" _delta="must_exist">
+      <presentation>
+        <details>
+          <items>
+            <item id="genericcomminterface_list" _delta="define">
+              <rank>55</rank>
+            </item>
+          </items>
+        </details>
+      </presentation>
+    </class>
   </classes>
   <menus>
   </menus>
