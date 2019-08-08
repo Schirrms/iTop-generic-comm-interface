@@ -16,7 +16,7 @@ class AttributeCommInterfaceSpeed extends AttributeDecimal
 		$sValueLabel = $this->m_sCode;
 		if(($sValueLabel !== null) && ($sValueLabel !== ''))
 		{
-			if (is_numeric($sValueLabel)
+			if (is_numeric($sValueLabel))
 			{
 				$iLevel = 15;
 				$sUnit = ' KMGTE';
