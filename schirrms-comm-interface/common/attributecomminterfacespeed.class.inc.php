@@ -11,20 +11,27 @@ class AttributeCommInterfaceSpeed extends AttributeDecimal
 	/**
 	 * @inheritdoc
 	 */
-	public function GetLabel($sValue)
+	public function GetLabel($sDefault = null)
 	{
-		$sValueLabel = parent::GetValueLabel($sValue);
+		$sValueLabel = $this->m_sCode;
 		if(($sValueLabel !== null) && ($sValueLabel !== ''))
 		{
-			$iLevel = 15;
-			$sUnit = ' KMGTE';
-			for ($iLevel=15; $iLevel >0 ;$iLevel=$iLevel-3)
+			if (is_numeric($sValueLabel)
 			{
-				if ($sValueLabel >= 10**$iLevel)
+				$iLevel = 15;
+				$sUnit = ' KMGTE';
+				for ($iLevel=15; $iLevel >0 ;$iLevel=$iLevel-3)
 				{
-					$sValueLabel = sprintf('%.3g ', $sValueLabel / (10**$iLevel)) . substr($sUnit, $iLevel/3, 1);
-					break;
+					if ($sValueLabel >= 10**$iLevel)
+					{
+						$sValueLabel = sprintf('%.3g ', $sValueLabel / (10**$iLevel)) . substr($sUnit, $iLevel/3, 1);
+						break;
+					}
 				}
+			}
+			else
+			{
+				$sValueLabel .= ' PS Here';
 			}
 		}
 		else
