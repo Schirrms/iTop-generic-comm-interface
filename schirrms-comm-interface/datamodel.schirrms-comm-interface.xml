@@ -174,10 +174,12 @@
 				</reconciliation>
 			</properties>
 			<fields>
-				<field id="speed" xsi:type="AttributeInteger">
+				<field id="speed" xsi:type="AttributeCommInterfaceSpeed">
 					<sql>speed</sql>
 					<default_value/>
 					<is_null_allowed>false</is_null_allowed>
+					<digits>18</digits>
+					<decimals>0</decimals>
 				</field>
 				<field id="comment" xsi:type="AttributeText">
 					<sql>comment</sql>
