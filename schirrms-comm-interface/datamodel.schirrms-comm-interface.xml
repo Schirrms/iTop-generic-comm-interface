@@ -163,19 +163,19 @@
 				<db_final_class_field/>
 				<naming>
 					<attributes>
-						<attribute id="speed"/>
+						<attribute id="commspeed"/>
 					</attributes>
 				</naming>
 				<display_template/>
 				<reconciliation>
 					<attributes>
-						<attribute id="speed"/>
+						<attribute id="commspeed"/>
 					</attributes>
 				</reconciliation>
 			</properties>
 			<fields>
-				<field id="speed" xsi:type="AttributeCommInterfaceSpeed">
-					<sql>speed</sql>
+				<field id="commspeed" xsi:type="AttributeCommInterfaceSpeed">
+					<sql>commspeed</sql>
 					<default_value/>
 					<is_null_allowed>false</is_null_allowed>
 					<digits>18</digits>
@@ -200,7 +200,7 @@
 			<presentation>
 				<details>
 					<items>
-						<item id="speed">
+						<item id="commspeed">
 							<rank>10</rank>
 						</item>
 						<item id="comment">
@@ -213,7 +213,7 @@
 				</details>
 				<list>
 					<items>
-						<item id="speed">
+						<item id="commspeed">
 							<rank>10</rank>
 						</item>
 						<item id="comment">
@@ -298,7 +298,7 @@
 				</field>
 				<field id="commspeed_speed" xsi:type="AttributeExternalField">
 					<extkey_attcode>commspeed_id</extkey_attcode>
-					<target_attcode>speed</target_attcode>
+					<target_attcode>commspeed</target_attcode>
 				</field>
 			</fields>
 			<methods>
