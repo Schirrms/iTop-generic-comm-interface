@@ -3,13 +3,13 @@
 	<constants>
 	</constants>
 	<classes>
-		<class id="GenericCommConnector" _delta="define">
+		<class id="GenericPhysCommConnector" _delta="define">
 			<parent>cmdbAbstractObject</parent>
 			<properties>
 				<category>bizmodel,searchable</category>
 				<abstract>false</abstract>
 				<key_type>autoincrement</key_type>
-				<db_table>genericcommconnector</db_table>
+				<db_table>genericphyscommconnector</db_table>
 				<db_key_field>id</db_key_field>
 				<db_final_class_field/>
 				<naming>
@@ -36,9 +36,9 @@
 					<default_value/>
 					<is_null_allowed>true</is_null_allowed>
 				</field>
-				<field id="genericcomminterface_list" xsi:type="AttributeLinkedSet">
-					<linked_class>GenericCommInterface</linked_class>
-					<ext_key_to_me>commtype_id</ext_key_to_me>
+				<field id="genericcommphysinterface_list" xsi:type="AttributeLinkedSet">
+					<linked_class>GenericCommPhysInterface</linked_class>
+					<ext_key_to_me>physcommtype_id</ext_key_to_me>
 					<edit_mode>add_only</edit_mode>
 					<count_min>0</count_min>
 					<count_max>0</count_max>
@@ -56,7 +56,7 @@
 						<item id="comment">
 							<rank>20</rank>
 						</item>
-						<item id="genericcomminterface_list">
+						<item id="genericcommphysinterface_list">
 							<rank>30</rank>
 						</item>
 					</items>
@@ -239,6 +239,7 @@
 					</attributes>
 				</naming>
 				<display_template/>
+				<icon/>
 				<reconciliation>
 					<attributes>
 						<attribute id="name"/>
@@ -271,93 +272,6 @@
 					<extkey_attcode>connectableci_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
-			</fields>
-			<methods/>
-			<presentation>
-				<details>
-					<items>
-						<item id="name">
-							<rank>10</rank>
-						</item>
-						<item id="connectableci_id">
-							<rank>20</rank>
-						</item>
-						<item id="comment">
-							<rank>30</rank>
-						</item>
-					</items>
-				</details>
-				<default_search>
-					<items>
-						<item id="name">
-							<rank>10</rank>
-						</item>
-						<item id="connectableci_id">
-							<rank>20</rank>
-						</item>
-					</items>
-				</default_search>
-				<search>
-					<items>
-						<item id="name">
-							<rank>10</rank>
-						</item>
-						<item id="connectableci_id">
-							<rank>20</rank>
-						</item>
-					</items>
-				</search>
-				<list>
-					<items>
-						<item id="name">
-							<rank>10</rank>
-						</item>
-						<item id="connectableci_id">
-							<rank>20</rank>
-						</item>
-					</items>
-				</list>
-			</presentation>
-		</class>
-		<class id="GenericCommPhysInterface" _delta="define">
-			<parent>GenericCommInterface</parent>
-			<properties>
-				<category>bizmodel,searchable</category>
-				<abstract>false</abstract>
-				<key_type>autoincrement</key_type>
-				<db_table>genericcommphysinterface</db_table>
-				<db_key_field>id</db_key_field>
-				<db_final_class_field/>
-				<naming>
-					<attributes>
-						<attribute id="name"/>
-						<attribute id="connectableci_name"/>
-					</attributes>
-				</naming>
-				<display_template/>
-				<reconciliation>
-					<attributes>
-						<attribute id="name"/>
-						<attribute id="connectableci_id"/>
-						<attribute id="connectableci_name"/>
-						<attribute id="finalclass"/>
-					</attributes>
-				</reconciliation>
-				<obsolescence>
-					<condition>connectableci_id_obsolescence_flag</condition>
-				</obsolescence>
-			</properties>
-			<fields>
-				<field id="commtype_id" xsi:type="AttributeExternalKey">
-					<sql>commtype_id</sql>
-					<target_class>GenericCommConnector</target_class>
-					<is_null_allowed>false</is_null_allowed>
-					<on_target_delete>DEL_MANUAL</on_target_delete>
-				</field>
-				<field id="commtype_type" xsi:type="AttributeExternalField">
-					<extkey_attcode>commtype_id</extkey_attcode>
-					<target_attcode>type</target_attcode>
-				</field>
 				<field id="commproto_id" xsi:type="AttributeExternalKey">
 					<sql>commproto_id</sql>
 					<target_class>GenericCommProtocol</target_class>
@@ -379,8 +293,7 @@
 					<target_attcode>commspeed</target_attcode>
 				</field>
 			</fields>
-			<methods>
-			</methods>
+			<methods/>
 			<presentation>
 				<details>
 					<items>
@@ -393,8 +306,6 @@
 						<item id="comment">
 							<rank>30</rank>
 						</item>
-						<item id="commtype_id">
-							<rank>40</rank>
 						</item>
 						<item id="commproto_id">
 							<rank>50</rank>
@@ -412,11 +323,105 @@
 						<item id="connectableci_id">
 							<rank>20</rank>
 						</item>
+						<item id="commproto_id">
+							<rank>50</rank>
+						</item>
+					</items>
+				</default_search>
+				<search>
+					<items>
+						<item id="name">
+							<rank>10</rank>
+						</item>
+						<item id="connectableci_id">
+							<rank>20</rank>
+						</item>
+						<item id="commproto_id">
+							<rank>50</rank>
+						</item>
+					</items>
+				</search>
+				<list>
+					<items>
+						<item id="name">
+							<rank>10</rank>
+						</item>
+						<item id="connectableci_id">
+							<rank>20</rank>
+						</item>
+						<item id="commproto_id">
+							<rank>50</rank>
+						</item>
+						<item id="commspeed_id">
+							<rank>60</rank>
+						</item>
+					</items>
+				</list>
+			</presentation>
+		</class>
+		<class id="GenericCommPhysInterface" _delta="define">
+			<parent>GenericCommInterface</parent>
+			<properties>
+				<category>bizmodel,searchable</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>genericcommphysinterface</db_table>
+				<db_key_field>id</db_key_field>
+				<db_final_class_field/>
+				<naming>
+					<attributes>
+						<attribute id="name"/>
+					</attributes>
+				</naming>
+				<display_template/>
+				<icon/>
+				<reconciliation>
+					<attributes>
+						<attribute id="name"/>
+						<attribute id="finalclass"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+				<field id="physcommtype_id" xsi:type="AttributeExternalKey">
+					<sql>physcommtype_id</sql>
+					<target_class>GenericPhysCommConnector</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_MANUAL</on_target_delete>
+				</field>
+				<field id="physcommtype_type" xsi:type="AttributeExternalField">
+					<extkey_attcode>physcommtype_id</extkey_attcode>
+					<target_attcode>type</target_attcode>
+				</field>
+			</fields>
+			<methods>
+			</methods>
+			<presentation>
+				<details>
+					<items>
+						<item id="name">
+							<rank>10</rank>
+						</item>
+						<item id="connectableci_id">
+							<rank>20</rank>
+						</item>
+						<item id="comment">
+							<rank>30</rank>
+						</item>
+						<item id="commtype_id">
+							<rank>40</rank>
+					</items>
+				</details>
+				<default_search>
+					<items>
+						<item id="name">
+							<rank>10</rank>
+						</item>
+						<item id="connectableci_id">
+							<rank>20</rank>
+						</item>
 						<item id="commtype_type">
 							<rank>40</rank>
-						</item>
-						<item id="commproto_proto">
-							<rank>50</rank>
 						</item>
 					</items>
 				</default_search>
@@ -431,12 +436,6 @@
 						<item id="commtype_type">
 							<rank>40</rank>
 						</item>
-						<item id="commproto_proto">
-							<rank>50</rank>
-						</item>
-						<item id="commspeed_id">
-							<rank>60</rank>
-						</item>
 					</items>
 				</search>
 				<list>
@@ -449,12 +448,6 @@
 						</item>
 						<item id="commtype_type">
 							<rank>40</rank>
-						</item>
-						<item id="commproto_proto">
-							<rank>50</rank>
-						</item>
-						<item id="commspeed_id">
-							<rank>60</rank>
 						</item>
 					</items>
 				</list>
