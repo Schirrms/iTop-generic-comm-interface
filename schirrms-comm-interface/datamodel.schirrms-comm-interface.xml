@@ -227,11 +227,11 @@
 			<parent>cmdbAbstractObject</parent>
 			<properties>
 				<category>bizmodel,searchable</category>
-				<abstract>false</abstract>
+				<abstract>true</abstract>
 				<key_type>autoincrement</key_type>
 				<db_table>genericcomminterface</db_table>
 				<db_key_field>id</db_key_field>
-				<db_final_class_field/>
+				<db_final_class_field>finalclass</db_final_class_field>
 				<naming>
 					<attributes>
 						<attribute id="name"/>
@@ -244,6 +244,7 @@
 						<attribute id="name"/>
 						<attribute id="connectableci_id"/>
 						<attribute id="connectableci_name"/>
+						<attribute id="finalclass"/>
 					</attributes>
 				</reconciliation>
 				<obsolescence>
@@ -270,6 +271,83 @@
 					<extkey_attcode>connectableci_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
+			<fields>
+			<methods/>
+			<presentation>
+				<details>
+					<items>
+						<item id="name">
+							<rank>10</rank>
+						</item>
+						<item id="connectableci_id">
+							<rank>20</rank>
+						</item>
+						<item id="comment">
+							<rank>30</rank>
+						</item>
+					</items>
+				</details>
+				<default_search>
+					<items>
+						<item id="name">
+							<rank>10</rank>
+						</item>
+						<item id="connectableci_id">
+							<rank>20</rank>
+						</item>
+					</items>
+				</default_search>
+				<search>
+					<items>
+						<item id="name">
+							<rank>10</rank>
+						</item>
+						<item id="connectableci_id">
+							<rank>20</rank>
+						</item>
+					</items>
+				</search>
+				<list>
+					<items>
+						<item id="name">
+							<rank>10</rank>
+						</item>
+						<item id="connectableci_id">
+							<rank>20</rank>
+						</item>
+					</items>
+				</list>
+			</presentation>
+		</class>
+		<class id="GenericCommPhysInterface" _delta="define">
+			<parent>GenericCommInterface</parent>
+			<properties>
+				<category>bizmodel,searchable</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>genericcommphysinterface</db_table>
+				<db_key_field>id</db_key_field>
+				<db_final_class_field/>
+				<naming>
+					<attributes>
+						<attribute id="name"/>
+						<attribute id="connectableci_name"/>
+					</attributes>
+				</naming>
+				<display_template/>
+				<reconciliation>
+					<attributes>
+						<attribute id="name"/>
+						<attribute id="connectableci_id"/>
+						<attribute id="connectableci_name"/>
+						<attribute id="finalclass"/>
+					</attributes>
+				</reconciliation>
+				<obsolescence>
+					<condition>connectableci_id_obsolescence_flag</condition>
+				</obsolescence>
+			</properties>
+			<fields>
 				<field id="commtype_id" xsi:type="AttributeExternalKey">
 					<sql>commtype_id</sql>
 					<target_class>GenericCommConnector</target_class>
@@ -304,8 +382,6 @@
 			<methods>
 			</methods>
 			<presentation>
-				<details>
-					<items>
 						<item id="name">
 							<rank>10</rank>
 						</item>
@@ -326,6 +402,22 @@
 						</item>
 					</items>
 				</details>
+				<default_search>
+					<items>
+						<item id="name">
+							<rank>10</rank>
+						</item>
+						<item id="connectableci_id">
+							<rank>20</rank>
+						</item>
+						<item id="commtype_type">
+							<rank>40</rank>
+						</item>
+						<item id="commproto_proto">
+							<rank>50</rank>
+						</item>
+					</items>
+				</default_search>
 				<search>
 					<items>
 						<item id="name">
@@ -334,14 +426,14 @@
 						<item id="connectableci_id">
 							<rank>20</rank>
 						</item>
-						<item id="comment">
-							<rank>30</rank>
-						</item>
 						<item id="commtype_type">
 							<rank>40</rank>
 						</item>
 						<item id="commproto_proto">
 							<rank>50</rank>
+						</item>
+						<item id="commspeed_id">
+							<rank>60</rank>
 						</item>
 					</items>
 				</search>
@@ -352,9 +444,6 @@
 						</item>
 						<item id="connectableci_id">
 							<rank>20</rank>
-						</item>
-						<item id="comment">
-							<rank>30</rank>
 						</item>
 						<item id="commtype_type">
 							<rank>40</rank>
