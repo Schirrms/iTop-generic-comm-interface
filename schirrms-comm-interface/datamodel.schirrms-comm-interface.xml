@@ -306,7 +306,6 @@
 						<item id="comment">
 							<rank>30</rank>
 						</item>
-						</item>
 						<item id="commproto_id">
 							<rank>50</rank>
 						</item>
@@ -410,6 +409,7 @@
 						</item>
 						<item id="commtype_id">
 							<rank>40</rank>
+						</item>
 					</items>
 				</details>
 				<default_search>
