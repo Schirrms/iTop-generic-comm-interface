@@ -196,42 +196,6 @@
 				</field>
 			</fields>
 			<methods>
-				<method id="GetAsHTML">
-					<comment></comment>
-					<static>false</static>
-					<access>public</access>
-					<type>Overload-DBObject</type>
-					<code><![CDATA[ public function GetAsHTML($sAttCode, $bLocalize = true)
-	{
-		// Display speed in a more human readble form
-		// This calculation is for power of ten, it would be sliglty different for disk usage (power of 2)
-		if($sAttCode === 'commspeed_id' || $sAttCode === 'commspeed')
-		{
-			$sClass = get_class($this);
-			$oAtt = MetaModel::GetAttributeDef($sClass, $sAttCode);
-			
-			$sHtmlValue = $oAtt->GetAsHTML($this->Get($sAttCode), $this, $bLocalize);
-			if(is_numeric($sHtmlValue))
-			{
-				$sUnit = ' KMGTP';
-				for ($iLevel=15; $iLevel >0 ;$iLevel=$iLevel-3)
-				{
-					if ($sHtmlValue >= 10**$iLevel)
-					{
-						$sHtmlValue = sprintf('%.3g ', $sHtmlValue / (10**$iLevel)) . substr($sUnit, $iLevel/3, 1);
-						break;
-					}
-				}
-			}
-		}
-		// Default processing for all others
-		else
-		{
-			$sHtmlValue = parent::GetAsHTML($sAttCode, $bLocalize);
-		}
-		return $sHtmlValue;
-	}]]>			</code>
-				</method>
 			</methods>
 			<presentation>
 				<details>
@@ -345,7 +309,7 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[ public function GetAsHTML($sAttCode, $bLocalize = true)
 	{
-		// Display speed in a more human readble form
+		// Display speed in a more human readable form
 		// This calculation is for power of ten, it would be sliglty different for disk usage (power of 2)
 		if($sAttCode === 'commspeed_id' || $sAttCode === 'commspeed')
 		{
