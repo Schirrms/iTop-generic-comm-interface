@@ -235,7 +235,6 @@
 				<naming>
 					<attributes>
 						<attribute id="name"/>
-						<attribute id="connectableci_name"/>
 					</attributes>
 				</naming>
 				<display_template/>
@@ -243,14 +242,9 @@
 				<reconciliation>
 					<attributes>
 						<attribute id="name"/>
-						<attribute id="connectableci_id"/>
-						<attribute id="connectableci_name"/>
 						<attribute id="finalclass"/>
 					</attributes>
 				</reconciliation>
-				<obsolescence>
-					<condition>connectableci_id_obsolescence_flag</condition>
-				</obsolescence>
 			</properties>
 			<fields>
 				<field id="name" xsi:type="attributeString">
@@ -370,16 +364,21 @@
 				<naming>
 					<attributes>
 						<attribute id="name"/>
-					</attributes>
+						<attribute id="connectableci_name"/>
+ 					</attributes>
 				</naming>
 				<display_template/>
 				<icon/>
 				<reconciliation>
 					<attributes>
 						<attribute id="name"/>
-						<attribute id="finalclass"/>
-					</attributes>
+						<attribute id="connectableci_id"/>
+						<attribute id="connectableci_name"/>
+ 					</attributes>
 				</reconciliation>
+				<obsolescence>
+					<condition>connectableci_id_obsolescence_flag</condition>
+				</obsolescence>
 			</properties>
 			<fields>
 				<field id="physcommtype_id" xsi:type="AttributeExternalKey">
