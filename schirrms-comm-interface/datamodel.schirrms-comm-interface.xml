@@ -362,6 +362,9 @@
 						<item id="commproto_proto">
 							<rank>50</rank>
 						</item>
+						<item id="commspeed_id">
+							<rank>60</rank>
+						</item>
 					</items>
 				</list>
 			</presentation>
