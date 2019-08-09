@@ -460,8 +460,8 @@
 		</class>
 		<class id="ConnectableCI" _delta="must_exist">
 			<fields>
-				<field id="genericcomminterface_list" xsi:type="AttributeLinkedSet" _delta="define">
-					<linked_class>GenericCommInterface</linked_class>
+				<field id="genericphyscomminterface_list" xsi:type="AttributeLinkedSet" _delta="define">
+					<linked_class>GenericPhysCommInterface</linked_class>
 					<ext_key_to_me>connectableci_id</ext_key_to_me>
 					<edit_mode>in_place</edit_mode>
 					<tracking_level>all</tracking_level>
@@ -474,7 +474,7 @@
 			<presentation>
 				<details>
 					<items>
-						<item id="genericcomminterface_list" _delta="define">
+						<item id="genericphyscomminterface_list" _delta="define">
 							<rank>55</rank>
 						</item>
 					</items>
@@ -485,7 +485,7 @@
 			<presentation>
 				<details>
 					<items>
-						<item id="genericcomminterface_list" _delta="define">
+						<item id="genericphyscomminterface_list" _delta="define">
 							<rank>55</rank>
 						</item>
 					</items>
