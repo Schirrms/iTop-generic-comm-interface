@@ -19,7 +19,7 @@ class AttributeCommInterfaceSpeed extends AttributeDecimal
 			if(is_numeric($sValueLabel))
 			{
 				$iLevel = 15;
-				$sUnit = ' KMGTE';
+				$sUnit = ' KMGTP';
 				for ($iLevel=15; $iLevel >0 ;$iLevel=$iLevel-3)
 				{
 					if ($sValueLabel >= 10**$iLevel)
@@ -49,7 +49,7 @@ class AttributeCommInterfaceSpeed extends AttributeDecimal
 			if(is_numeric($sValueLabel))
 			{
 				$iLevel = 15;
-				$sUnit = ' KMGTE';
+				$sUnit = ' KMGTP';
 				for ($iLevel=15; $iLevel >0 ;$iLevel=$iLevel-3)
 				{
 					if ($sValueLabel >= 10**$iLevel)
