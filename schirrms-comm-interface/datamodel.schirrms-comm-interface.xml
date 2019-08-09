@@ -410,6 +410,12 @@
 						<item id="physcommtype_id">
 							<rank>40</rank>
 						</item>
+						<item id="commproto_id">
+							<rank>50</rank>
+						</item>
+						<item id="commspeed_id">
+							<rank>60</rank>
+						</item>
 					</items>
 				</details>
 				<default_search>
@@ -422,6 +428,9 @@
 						</item>
 						<item id="physcommtype_type">
 							<rank>40</rank>
+						</item>
+						<item id="commproto_id">
+							<rank>50</rank>
 						</item>
 					</items>
 				</default_search>
@@ -436,6 +445,9 @@
 						<item id="physcommtype_type">
 							<rank>40</rank>
 						</item>
+						<item id="commproto_id">
+							<rank>50</rank>
+						</item>
 					</items>
 				</search>
 				<list>
@@ -448,6 +460,12 @@
 						</item>
 						<item id="physcommtype_type">
 							<rank>40</rank>
+						</item>
+						<item id="commproto_id">
+							<rank>50</rank>
+						</item>
+						<item id="commspeed_id">
+							<rank>60</rank>
 						</item>
 					</items>
 				</list>
