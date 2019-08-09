@@ -197,7 +197,7 @@
 			</fields>
 			<methods>
 				<method id="GetAsHTML">
-					<comment>Display interface speed in a more human readable form</comment>
+					<comment></comment>
 					<static>false</static>
 					<access>public</access>
 					<type>Overload-DBObject</type>
