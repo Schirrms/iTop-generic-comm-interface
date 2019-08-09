@@ -271,7 +271,7 @@
 					<extkey_attcode>connectableci_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
-			<fields>
+			</fields>
 			<methods/>
 			<presentation>
 				<details>
@@ -382,6 +382,8 @@
 			<methods>
 			</methods>
 			<presentation>
+				<details>
+					<items>
 						<item id="name">
 							<rank>10</rank>
 						</item>
