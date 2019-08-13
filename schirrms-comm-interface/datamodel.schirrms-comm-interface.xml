@@ -551,8 +551,8 @@
 				<relation id="impacts">
 					<neighbours>
 						<neighbour id="virtualinterfaces">
-							<query_down>SELECT GenericCommVirtInterface WHERE connectableci_id = :this-&gt;id</query_down>
-							<query_up>SELECT GenericCommPhysInterface WHERE id = :this-&gt;connectableci_id</query_up>
+							<query_down>SELECT GenericCommVirtInterface WHERE connectableci_id = :this-&gt;connectableci_id</query_down>
+							<query_up>SELECT GenericCommPhysInterface WHERE connectableci_id = :this-&gt;connectableci_id</query_up>
 						</neighbour>
 					</neighbours>
 				</relation>
@@ -731,7 +731,7 @@
 				<category>bizmodel</category>
 				<abstract>false</abstract>
 				<key_type>autoincrement</key_type>
-				<db_table>lnkphyisicaltovirtualinterface</db_table>
+				<db_table>lnkphysicaltovirtualinterface</db_table>
 				<db_key_field>id</db_key_field>
 				<db_final_class_field/>
 				<naming>
@@ -751,6 +751,10 @@
 			</properties>
 			<fields>
 				<field id="virtualinterface_id" xsi:type="AttributeExternalKey">
+					<filter><![CDATA[SELECT GenericCommVirtInterface WHERE connectableci_id = :this->connectableci_id]]></filter>
+					<dependencies>
+						<attribute id="connectableci_id"/>
+					</dependencies>
 					<sql>virtualinterface_id</sql>
 					<target_class>GenericCommVirtInterface</target_class>
 					<is_null_allowed>false</is_null_allowed>
@@ -761,6 +765,10 @@
 					<target_attcode>name</target_attcode>
 				</field>
 				<field id="physicalinterface_id" xsi:type="AttributeExternalKey">
+					<filter><![CDATA[SELECT GenericCommPhysInterface WHERE connectableci_id = :this->connectableci_id]]></filter>
+					<dependencies>
+						<attribute id="connectableci_id"/>
+					</dependencies>
 					<sql>physicalinterface_id</sql>
 					<target_class>GenericCommPhysInterface</target_class>
 					<is_null_allowed>false</is_null_allowed>
