@@ -602,6 +602,8 @@
 					<target_attcode>redundancy</target_attcode>
 				</field>
 			</fields>
+			<methods>
+			</methods>
 			<presentation>
 				<details>
 					<items>
