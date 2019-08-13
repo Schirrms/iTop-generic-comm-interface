@@ -551,6 +551,8 @@
 				<relation id="impacts">
 					<neighbours>
 						<neighbour id="virtualinterfaces">
+							<query_down>SELECT GenericCommVirtInterface WHERE connectableci_id = :this-&gt;id</query_down>
+							<query_up>SELECT GenericCommPhysInterface WHERE id = :this-&gt;connectableci_id</query_up>
 						</neighbour>
 					</neighbours>
 				</relation>
