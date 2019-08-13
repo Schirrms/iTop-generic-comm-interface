@@ -45,17 +45,22 @@ class AttributeCommInterfaceSpeed extends AttributeDecimal
 		$sHTMLValue = parent::GetAsHTML($sValue, $oHostObject, $bLocalize);
 		if(($sHTMLValue !== null) && ($sHTMLValue !== ''))
 		{
-			if(is_numeric($sValueLabel))
+			if(is_numeric($sHTMLValue))
 			{
 				$sUnit = ' KMGTP';
 				for ($iLevel=15; $iLevel >0 ;$iLevel=$iLevel-3)
 				{
-					if ($sValueLabel >= 10**$iLevel)
+					if ($sHTMLValue >= 10**$iLevel)
 					{
-						$sValueLabel = sprintf('%.3g ', $sValueLabel / (10**$iLevel)) . substr($sUnit, $iLevel/3, 1);
+						$sHTMLValue = sprintf('%.3g ', $sHTMLValue / (10**$iLevel)) . substr($sUnit, $iLevel/3, 1);
 						break;
 					}
 				}
+			}
+			else
+			{
+				//where we here ?
+				$sHTMLValue .= '-TestPS';
 			}
 		}
 		else
