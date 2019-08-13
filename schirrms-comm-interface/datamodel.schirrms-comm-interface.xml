@@ -246,13 +246,13 @@
 				<db_final_class_field/>
 				<naming>
 					<attributes>
-						<attribute id="virtcommredundancy"/>
+						<attribute id="virtualcommredundancy"/>
 					</attributes>
 				</naming>
 				<display_template/>
 				<reconciliation>
 					<attributes>
-						<attribute id="virtcommredundancy"/>
+						<attribute id="virtualcommredundancy"/>
 					</attributes>
 				</reconciliation>
 			</properties>
@@ -598,7 +598,7 @@
 					<on_target_delete>DEL_MANUAL</on_target_delete>
 				</field>
 				<field id="virtualcommredundancy_redundancy" xsi:type="AttributeExternalField">
-					<extkey_attcode>virtcommredundancy_id</extkey_attcode>
+					<extkey_attcode>virtualcommredundancy_id</extkey_attcode>
 					<target_attcode>redundancy</target_attcode>
 				</field>
 			</fields>
@@ -616,7 +616,7 @@
 						<item id="comment">
 							<rank>30</rank>
 						</item>
-						<item id="virtcommredundancy_id">
+						<item id="virtualcommredundancy_id">
 							<rank>40</rank>
 						</item>
 						<item id="commproto_id">
@@ -651,7 +651,7 @@
 						<item id="connectableci_id">
 							<rank>20</rank>
 						</item>
-						<item id="virtcommredundancy_id">
+						<item id="virtualcommredundancy_id">
 							<rank>40</rank>
 						</item>
 						<item id="commproto_id">
