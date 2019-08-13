@@ -551,6 +551,7 @@
 				<relation id="impacts">
 					<neighbours>
 						<neighbour id="virtualinterfaces">
+						</neighbour>
 					</neighbours>
 				</relation>
 			</relations>
