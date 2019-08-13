@@ -4,7 +4,7 @@
 	</constants>
 	<classes>
 		<!--
-		This class stores all types of connectors : OF, RJ-45, DB-9
+		This class stores all types of connectors : Optical Fiber, RJ-45, DB-9...
 		-->
 		<class id="GenericPhysCommConnector" _delta="define">
 			<parent>cmdbAbstractObject</parent>
@@ -547,9 +547,16 @@
 					</items>
 				</list>
 			</presentation>
+			<relations>
+				<relation id="impacts">
+					<neighbours>
+						<neighbour id="virtualinterfaces">
+					</neighbours>
+				</relation>
+			</relations>
 		</class>
 		<!--
-		this class defines the specific attribuetes of a Generic Virtual Communication interface
+		this class defines the specific attributes of a Generic Virtual Communication interface
 		It also adds the redudancy function
 		-->
 		<class id="GenericCommVirtInterface" _delta="define">
@@ -600,6 +607,20 @@
 				<field id="virtualcommredundancy_redundancy" xsi:type="AttributeExternalField">
 					<extkey_attcode>virtualcommredundancy_id</extkey_attcode>
 					<target_attcode>redundancy</target_attcode>
+				</field>
+				<!--
+				Next field for the actual redundancy : see also virtualinterfaces in GenericCommPhysInterface
+				-->
+				<field id="redundancyType" xsi:type="AttributeRedundancySettings">
+					<sql>redundancytype</sql>
+					<relation_code>impacts</relation_code>
+					<from_class>GenericCommPhysInterface</from_class>
+					<neighbour_id>virtualinterfaces</neighbour_id>
+					<enabled>true</enabled>
+					<enabled_mode>user</enabled_mode>
+					<min_up>1</min_up>
+					<min_up_type>count</min_up_type>
+					<min_up_mode>user</min_up_mode>
 				</field>
 			</fields>
 			<methods>
