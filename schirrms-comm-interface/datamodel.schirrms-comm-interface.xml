@@ -241,18 +241,18 @@
 				<category>bizmodel,searchable</category>
 				<abstract>false</abstract>
 				<key_type>autoincrement</key_type>
-				<db_table>virtualcommrendudancy</db_table>
+				<db_table>virtualcommredundancy</db_table>
 				<db_key_field>id</db_key_field>
 				<db_final_class_field/>
 				<naming>
 					<attributes>
-						<attribute id="virtualcommredundancy"/>
+						<attribute id="redundancy"/>
 					</attributes>
 				</naming>
 				<display_template/>
 				<reconciliation>
 					<attributes>
-						<attribute id="virtualcommredundancy"/>
+						<attribute id="redundancy"/>
 					</attributes>
 				</reconciliation>
 			</properties>
