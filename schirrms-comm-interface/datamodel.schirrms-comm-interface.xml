@@ -720,7 +720,6 @@
 					</items>
 				</list>
 			</presentation>
-
 		</class>
 		<!--
 		This clas links the physical interfaces to one virtual interface
@@ -729,7 +728,7 @@
 			<parent>cmdbAbstractObject</parent>
 			<properties>
 				<is_link>1</is_link>
-				<category>bizmodel</bizmodel>
+				<category>bizmodel</category>
 				<abstract>false</abstract>
 				<key_type>autoincrement</key_type>
 				<db_table>lnkphyisicaltovirtualinterface</db_table>
