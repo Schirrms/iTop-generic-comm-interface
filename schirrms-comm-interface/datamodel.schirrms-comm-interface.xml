@@ -469,6 +469,17 @@
 					<extkey_attcode>physcommtype_id</extkey_attcode>
 					<target_attcode>type</target_attcode>
 				</field>
+				<field id="connected_to_id" xsi:type="AttributeExternalKey">
+					<sql>connected_to_id</sql>
+					<target_class>GenericCommPhysInterface</target_class>
+					<is_null_allowed>true</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<edit_mode>none</edit_mode>
+				</field>
+				<field id="connected_to_name" xsi:type="AttributeExternalField">
+					<extkey_attcode>connected_to_id</extkey_attcode>
+					<target_attcode>name</target_attcode>
+				</field>
 			</fields>
 			<methods>
 			</methods>
@@ -493,6 +504,9 @@
 						<item id="commspeed_id">
 							<rank>60</rank>
 						</item>
+						<item id="connected_to_id">
+							<rank>100</rank>
+						</item>
 					</items>
 				</details>
 				<default_search>
@@ -509,6 +523,9 @@
 						<item id="commproto_id">
 							<rank>50</rank>
 						</item>
+						<item id="connected_to_id">
+							<rank>100</rank>
+						</item>
 					</items>
 				</default_search>
 				<search>
@@ -524,6 +541,9 @@
 						</item>
 						<item id="commproto_id">
 							<rank>50</rank>
+						</item>
+						<item id="connected_to_id">
+							<rank>100</rank>
 						</item>
 					</items>
 				</search>
@@ -543,6 +563,9 @@
 						</item>
 						<item id="commspeed_id">
 							<rank>60</rank>
+						</item>
+						<item id="connected_to_id">
+							<rank>100</rank>
 						</item>
 					</items>
 				</list>
@@ -814,6 +837,713 @@
 			</presentation>
 		</class>
 		<!--
+				*** All the stuffs for the GenericCommDevices ***
+		-->
+		<!--
+		This class implements a GenericCommDeviceType
+		-->
+		<class id="GenericCommDeviceType" _delta="define">
+			<parent>Typology</parent>
+			<properties>
+				<category>bizmodel,searchable</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>genericcommdevicetype</db_table>
+				<db_key_field>id</db_key_field>
+				<db_final_class_field/>
+				<naming>
+					<attributes>
+						<attribute id="name"/>
+					</attributes>
+				</naming>
+				<display_template/>
+				<icon/>
+				<reconciliation>
+					<attributes>
+						<attribute id="name"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+				<field id="genericcommdevices_list" xsi:type="AttributeLinkedSet">
+					<linked_class>GenericCommDevice</linked_class>
+					<ext_key_to_me>genericcommdevicetype_id</ext_key_to_me>
+					<edit_mode>add_only</edit_mode>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<duplicates/>
+				</field>
+			</fields>
+			<methods/>
+			<presentation>
+				<details>
+					<items>
+						<item id="name">
+							<rank>10</rank>
+						</item>
+						<item id="networkdevices_list">
+							<rank>20</rank>
+						</item>
+					</items>
+				</details>
+				<search>
+					<items>
+						<item id="name">
+							<rank>10</rank>
+						</item>
+					</items>
+				</search>
+				<list>
+					<items>
+						<item id="name">
+							<rank>10</rank>
+						</item>
+					</items>
+				</list>
+			</presentation>
+		</class>
+		<!--
+		This class is a link between ConnectableCIs and GenericCommDevice
+		*** To check : is that table still mandatory as we create links at interface level ? ***
+		-->
+		<class id="lnkConnectableCIToGenericCommDevice" _delta="define">
+			<parent>cmdbAbstractObject</parent>
+			<properties>
+				<is_link>1</is_link>
+				<category>bizmodel</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>lnkconnectablecitogenericcommdevice</db_table>
+				<db_key_field>id</db_key_field>
+				<db_final_class_field/>
+				<naming>
+					<attributes>
+						<attribute id="genericcommdevice_id"/>
+						<attribute id="connectableci_id"/>
+					</attributes>
+				</naming>
+				<display_template/>
+				<icon/>
+				<reconciliation>
+					<attributes>
+						<attribute id="genericcommdevice_id"/>
+						<attribute id="connectableci_id"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+				<field id="genericcommdevice_id" xsi:type="AttributeExternalKey">
+					<sql>genericcommdevice_id</sql>
+					<target_class>GenericCommDevice</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+				</field>
+				<field id="genericcommdevice_name" xsi:type="AttributeExternalField">
+					<extkey_attcode>genericcommdevice_id</extkey_attcode>
+					<target_attcode>name</target_attcode>
+				</field>
+				<field id="connectableci_id" xsi:type="AttributeExternalKey">
+					<sql>connectableci_id</sql>
+					<target_class>ConnectableCI</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+				</field>
+				<field id="connectableci_name" xsi:type="AttributeExternalField">
+					<extkey_attcode>connectableci_id</extkey_attcode>
+					<target_attcode>name</target_attcode>
+				</field>
+				<field id="genericcommdevice_port_id" xsi:type="AttributeExternalKey" _delta="define">
+					<filter><![CDATA[SELECT GenericCommPhysInterface WHERE connectableci_id = :this->genericcommdevice_id AND connected_to_id='NULL']]></filter>
+					<dependencies>
+						<attribute id="connectableci_id"/>
+						<attribute id="genericcommdevice_id"/>
+					</dependencies>
+					<sql>genericcomm_port_id</sql>
+					<target_class>GenericCommPhysInterface</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<allow_target_creation>true</allow_target_creation>
+				</field>
+				<field id="genericcomm_port_name" xsi:type="AttributeExternalField" _delta="define">
+					<extkey_attcode>genericcomm_port_id</extkey_attcode>
+					<target_attcode>name</target_attcode>
+				</field>
+				<field id="device_port_id" xsi:type="AttributeExternalKey" _delta="define">
+					<filter><![CDATA[SELECT GenericCommPhysInterface WHERE connectableci_id = :this->connectableci_id AND connected_to_id='NULL']]></filter>
+					<dependencies>
+						<attribute id="connectableci_id"/>
+					</dependencies>
+					<sql>device_port_id</sql>
+					<target_class>GenericCommPhysInterface</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<allow_target_creation>true</allow_target_creation>
+				</field>
+				<field id="device_port_name" xsi:type="AttributeExternalField" _delta="define">
+					<extkey_attcode>device_port_id</extkey_attcode>
+					<target_attcode>name</target_attcode>
+				</field>
+				<field id="connection_type" xsi:type="AttributeEnum">
+					<values>
+						<value id="uplink">uplink</value>
+						<value id="downlink">downlink</value>
+					</values>
+					<sql>type</sql>
+					<default_value>downlink</default_value>
+					<is_null_allowed>false</is_null_allowed>
+					<display_style>list</display_style>
+				</field>
+			</fields>
+			<methods>
+				<method id="AddConnectedGenericCommDevice">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-cmdbAbstractObject</type>
+					<code><![CDATA[	protected function AddConnectedGenericCommDevice()
+	{
+		$oDevice = MetaModel::GetObject('ConnectableCI', $this->Get('connectableci_id'));
+		if (is_object($oDevice) && (get_class($oDevice) == 'GenericCommDevice'))
+		{
+			$sOQL = "SELECT	lnkConnectableCIToGenericCommDevice WHERE connectableci_id = :device AND genericcommdevice_id = :gencomm AND genericcomm_port_id = :gcport AND device_port_id = :devport";
+			$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL),
+							array(),
+							array(
+								'gencomm' => $this->Get('connectableci_id'),
+								'device'  => $this->Get('genericcommdevice_id'),
+								'devport' => $this->Get('genericcomm_port_id'),
+								'gcport'  => $this->Get('device_port_id'),
+								)
+			);	
+			if ($oConnectionSet->Count() == 0)
+			{
+				$sLink = $this->Get('connection_type');
+				$sConnLink = ($sLink == 'uplink') ? 'downlink' : 'uplink';
+
+				$oNewLink = new lnkConnectableCIToGenericCommDevice();
+				$oNewLink->Set('genericcommdevice_id', $this->Get('connectableci_id'));
+				$oNewLink->Set('connectableci_id', $this->Get('genericcommdevice_id'));
+				$oNewLink->Set('genericcomm_port_id', $this->Get('device_port_id'));
+				$oNewLink->Set('device_port_id', $this->Get('genericcomm_port_id'));
+				$oNewLink->Set('connection_type', $sConnLink);
+				$oNewLink->DBInsert();
+			}
+		}
+		// time to feed the 'connected_to_id' in the GenericCommPhysInterface table
+		// Step One : GenericCommDevice to edge
+		$oIntEdge = MetaModel::GetObject('GenericCommPhysInterface', $this->Get('device_port_id'));
+		if (is_object($oIntEdge))
+		{
+			$sOQL = "SELECT GenericCommPhysInterface WHERE id = :id";
+			$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('id' => $this->Get('device_port_id'),));
+			// There should be one link - do it in a safe manner anyway
+			while ($oConnection = $oConnectionSet->Fetch())
+			{
+				$oConnection->Set('connected_to_id', $this->Get('genericcomm_port_id'));
+				$oConnection->DBUpdate();
+			}
+		}
+		// Step Two : Edge to GenericCommDevice
+		$oIntNet = MetaModel::GetObject('GenericCommPhysInterface', $this->Get('genericcomm_port_id'));
+		if (is_object($oIntNet))
+		{
+			$sOQL = "SELECT GenericCommPhysInterface WHERE id = :id";
+			$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('id' => $this->Get('genericcomm_port_id'),));
+			// There should be one link - do it in a safe manner anyway
+			while ($oConnection = $oConnectionSet->Fetch())
+			{
+				$oConnection->Set('connected_to_id', $this->Get('device_port_id'));
+				$oConnection->DBUpdate();
+			}
+		}
+	}]]>			</code>
+				</method>
+				<method id="UpdateConnectedGenericCommDevice">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-cmdbAbstractObject</type>
+					<code><![CDATA[	protected function UpdateConnectedGenericCommDevice()
+	{
+		$oDevice = MetaModel::GetObject('ConnectableCI', $this->Get('connectableci_id'));
+		if (is_object($oDevice) && (get_class($oDevice) == 'GenericCommDevice'))
+		{
+			// Note: in case a port has been changed, search with the original values
+			$sOQL = "SELECT	lnkConnectableCIToGenericCommDevice WHERE connectableci_id = :device AND genericcommdevice_id = :gencomm AND genericcomm_port_id = :gcport AND device_port_id = :devport";
+			$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL),
+							array(),
+							array(
+								'gencomm' => $this->Get('connectableci_id'),
+								'device'  => $this->Get('genericcommdevice_id'),
+								'devport' => $this->GetOriginal('genericcomm_port_id'),
+								'gcport'  => $this->GetOriginal('device_port_id'),
+								)
+			);	
+			$sLink = $this->Get('connection_type');
+			$sConnLink = ($sLink == 'uplink') ? 'downlink' : 'uplink';
+
+			// There should be one link - do it in a safe manner anyway
+			while ($oConnection = $oConnectionSet->Fetch())
+			{
+				$oConnection->Set('connection_type', $sConnLink);
+				$oConnection->Set('genericcomm_port_id', $this->Get('device_port_id'));
+				$oConnection->Set('device_port_id', $this->Get('genericcomm_port_id'));
+				$oConnection->DBUpdate();
+			}
+		}
+		// time to update the 'connected_to_id' in the PhysicalInterface table
+		// due to my poor understanding of the whole method logic, I start
+		// by removing all old connections, then adding the new one. 
+		// basically, if there was only one move on the connection, I delete
+		// and recreate the other for nothing
+		// Step One : Delete existing connections
+		$sOQLEdge = "SELECT GenericCommPhysInterface WHERE connected_to_id = :id";
+		$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQLEdge), array(), array('id' => $this->Get('device_port_id'),));
+		// There should be one link - do it in a safe manner anyway
+		while ($oConnection = $oConnectionSet->Fetch())
+		{
+			$oConnection->Set('connected_to_id', NULL);
+			$oConnection->DBUpdate();
+		}
+		$sOQLNet = "SELECT GenericCommPhysInterface WHERE connected_to_id = :id";
+		$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQLNet), array(), array('id' => $this->Get('genericcomm_port_id'),));
+		// There should be one link - do it in a safe manner anyway
+		while ($oConnection = $oConnectionSet->Fetch())
+		{
+			$oConnection->Set('connected_to_id', NULL);
+			$oConnection->DBUpdate();
+		}
+		// Step Two : rebuild the connections
+		$oIntEdge = MetaModel::GetObject('GenericCommPhysInterface', $this->Get('device_port_id'));
+		if (is_object($oIntEdge))
+		{
+			$sOQL = "SELECT GenericCommPhysInterface WHERE id = :id";
+			$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('id' => $this->Get('device_port_id'),));
+			// There should be one link - do it in a safe manner anyway
+			while ($oConnection = $oConnectionSet->Fetch())
+			{
+				$oConnection->Set('connected_to_id', $this->Get('genericcomm_port_id'));
+				$oConnection->DBUpdate();
+			}
+		}
+		$oIntNet = MetaModel::GetObject('GenericCommPhysInterface', $this->Get('genericcomm_port_id'));
+		if (is_object($oIntNet))
+		{
+			$sOQL = "SELECT GenericCommPhysInterface WHERE id = :id";
+			$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('id' => $this->Get('genericcomm_port_id'),));
+			// There should be one link - do it in a safe manner anyway
+			while ($oConnection = $oConnectionSet->Fetch())
+			{
+				$oConnection->Set('connected_to_id', $this->Get('device_port_id'));
+				$oConnection->DBUpdate();
+			}
+		}
+	}]]>			</code>
+				</method>
+				<method id="DeleteConnectedGenericCommDevice">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-cmdbAbstractObject</type>
+					<code><![CDATA[	protected function DeleteConnectedGenericCommDevice()
+	{
+		// The device might be already deleted (reentrance in the current procedure when both device are NETWORK devices!)
+		$oDevice = MetaModel::GetObject('ConnectableCI', $this->Get('connectableci_id'), false);
+		if (is_object($oDevice) && (get_class($oDevice) == 'GenericCommDevice'))
+		{
+			// Track and delete the counterpart link
+			$sOQL = "SELECT	lnkConnectableCIToGenericCommDevice WHERE connectableci_id = :device AND genericcommdevice_id = :gencomm AND genericcomm_port_id = :gcport AND device_port_id = :devport";
+			$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL),
+							array(),
+							array(
+								'gencomm' => $this->Get('connectableci_id'),
+								'device' => $this->Get('genericcommdevice_id'),
+								'devport' => $this->Get('genericcomm_port_id'),
+								'gcport' => $this->Get('device_port_id'),
+								)
+			);
+			// There should be one link - do it in a safe manner anyway
+			while ($oConnection = $oConnectionSet->Fetch())
+			{
+				$oConnection->DBDelete();
+			}
+		}	
+		// time to clean up the 'connected_to_id' in the GenericCommPhiysInterface table
+		// The cleanup is a little harsh. Search for all occurences of the disconnected port
+		// Step One : GenericCommDevice to Edge
+		$sOQL = "SELECT GenericCommPhysInterface WHERE connected_to_id = :id";
+		$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('id' => $this->Get('device_port_id'),));
+		// There should be one link - do it in a safe manner anyway
+		while ($oConnection = $oConnectionSet->Fetch())
+		{
+			$oConnection->Set('connected_to_id', NULL);
+			$oConnection->DBUpdate();
+		}
+		// Step Two : Edge to GenericCommDevice
+		$sOQL = "SELECT GenericCommPhysInterface WHERE connected_to_id = :id";
+		$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('id' => $this->Get('genericcomm_port_id'),));
+		// There should be one link - do it in a safe manner anyway
+		while ($oConnection = $oConnectionSet->Fetch())
+		{
+			$oConnection->Set('connected_to_id', NULL);
+			$oConnection->DBUpdate();
+		}
+	}]]>			</code>
+				</method>
+				<method id="AfterInsert">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	protected function AfterInsert()
+						{
+							$this->AddConnectedGenericCommDevice();
+							parent::AfterInsert();
+				}]]></code>
+				</method>
+				<method id="AfterUpdate">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	protected function AfterUpdate()
+						{
+							$this->UpdateConnectedGenericCommDevice();
+							parent::AfterUpdate();
+				}]]></code>
+				</method>
+				<method id="AfterDelete">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	protected function AfterDelete()
+						{
+							$this->DeleteConnectedGenericCommDevice();
+							parent::AfterDelete();
+				}]]></code>
+				</method>
+			</methods>
+			<presentation>
+				<details>
+					<items>
+						<item id="genericcommdevice_id">
+							<rank>10</rank>
+						</item>
+						<item id="connectableci_id">
+							<rank>20</rank>
+						</item>
+						<item id="genericcomm_port_id">
+							<rank>30</rank>
+						</item>
+						<item id="device_port_id">
+							<rank>40</rank>
+						</item>
+						<item id="connection_type">
+							<rank>50</rank>
+						</item>
+					</items>
+				</details>
+				<search>
+					<items>
+						<item id="genericcommdevice_id">
+							<rank>10</rank>
+						</item>
+						<item id="connectableci_id">
+							<rank>20</rank>
+						</item>
+						<item id="genericcomm_port_id">
+							<rank>30</rank>
+						</item>
+						<item id="device_port_id">
+							<rank>40</rank>
+						</item>
+						<item id="connection_type">
+							<rank>50</rank>
+						</item>
+					</items>
+				</search>
+				<list>
+					<items>
+						<item id="genericcommdevice_id">
+							<rank>10</rank>
+						</item>
+						<item id="connectableci_id">
+							<rank>20</rank>
+						</item>
+						<item id="genericcomm_port_id">
+							<rank>30</rank>
+						</item>
+						<item id="device_port_id">
+							<rank>40</rank>
+						</item>
+						<item id="connection_type">
+							<rank>50</rank>
+						</item>
+					</items>
+				</list>
+			</presentation>
+		</class>
+		<!--
+		This class defines a Generic Network Connection device (instead of a Network Device, a SAN Device...)
+		-->
+		<class id="GenericCommDevice" _delta="define">
+			<parent>DatacenterDevice</parent>
+			<properties>
+				<category>bizmodel,searchable</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>genericcommdevice</db_table>
+				<db_key_field>id</db_key_field>
+				<db_final_class_field/>
+				<naming>
+					<attributes>
+						<attribute id="name"/>
+					</attributes>
+				</naming>
+				<display_template/>
+				<icon>images/commdevice.png</icon>
+				<reconciliation>
+					<attributes>
+						<attribute id="name"/>
+						<attribute id="org_id"/>
+						<attribute id="organization_name"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+				<field id="genericcommdevicetype_id" xsi:type="AttributeExternalKey">
+					<sql>genericcommdevicetype_id</sql>
+					<target_class>GenericCommDeviceType</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_MANUAL</on_target_delete>
+				</field>
+				<field id="genericcommdevicetype_name" xsi:type="AttributeExternalField">
+					<extkey_attcode>genericcommdevicetype_id</extkey_attcode>
+					<target_attcode>name</target_attcode>
+				</field>
+				<field id="connectablecis_list" xsi:type="AttributeLinkedSetIndirect">
+					<linked_class>lnkConnectableCIToGenericCommDevice</linked_class>
+					<ext_key_to_me>genericcommdevice_id</ext_key_to_me>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<ext_key_to_remote>connectableci_id</ext_key_to_remote>
+					<duplicates>true</duplicates>
+				</field>
+				<field id="iosversion_id" xsi:type="AttributeExternalKey">
+					<sql>iosversion_id</sql>
+					<target_class>IOSVersion</target_class>
+					<is_null_allowed>true</is_null_allowed>
+					<on_target_delete>DEL_MANUAL</on_target_delete>
+				</field>
+				<field id="iosversion_name" xsi:type="AttributeExternalField">
+					<extkey_attcode>iosversion_id</extkey_attcode>
+					<target_attcode>name</target_attcode>
+				</field>
+			</fields>
+			<presentation>
+				<details>
+					<items>
+						<item id="contacts_list">
+							<rank>10</rank>
+						</item>
+						<item id="documents_list">
+							<rank>20</rank>
+						</item>
+						<item id="applicationsolution_list">
+							<rank>35</rank>
+						</item>
+						<item id="genericcommphysinterface_list">
+							<rank>40</rank>
+						</item>
+						<item id="connectablecis_list">
+							<rank>50</rank>
+						</item>
+						<item id="providercontracts_list">
+							<rank>60</rank>
+						</item>
+						<item id="services_list">
+							<rank>70</rank>
+						</item>
+						<item id="col:col1">
+							<rank>80</rank>
+							<items>
+								<item id="fieldset:Server:baseinfo">
+									<rank>10</rank>
+									<items>
+										<item id="name">
+											<rank>10</rank>
+										</item>
+										<item id="org_id">
+											<rank>20</rank>
+										</item>
+										<item id="status">
+											<rank>30</rank>
+										</item>
+										<item id="business_criticity">
+											<rank>40</rank>
+										</item>
+										<item id="location_id">
+											<rank>50</rank>
+										</item>
+										<item id="rack_id">
+											<rank>60</rank>
+										</item>
+										<item id="enclosure_id">
+											<rank>70</rank>
+										</item>
+									</items>
+								</item>
+								<item id="fieldset:Server:moreinfo">
+									<rank>20</rank>
+									<items>
+										<item id="genericcommdevicetype_id">
+											<rank>10</rank>
+										</item>
+										<item id="brand_id">
+											<rank>20</rank>
+										</item>
+										<item id="model_id">
+											<rank>30</rank>
+										</item>
+										<item id="iosversion_id">
+											<rank>40</rank>
+										</item>
+										<item id="managementip">
+											<rank>45</rank>
+										</item>
+										<!--
+										<item id="ram">
+											<rank>50</rank>
+										</item>
+										-->
+										<item id="nb_u">
+											<rank>60</rank>
+										</item>
+										<item id="serialnumber">
+											<rank>70</rank>
+										</item>
+										<item id="asset_number">
+											<rank>80</rank>
+										</item>
+									</items>
+								</item>
+							</items>
+						</item>
+						<item id="col:col2">
+							<rank>90</rank>
+							<items>
+								<item id="fieldset:Server:Date">
+									<rank>10</rank>
+									<items>
+										<item id="move2production">
+											<rank>10</rank>
+										</item>
+										<item id="purchase_date">
+											<rank>20</rank>
+										</item>
+										<item id="end_of_warranty">
+											<rank>30</rank>
+										</item>
+									</items>
+								</item>
+								<item id="fieldset:Server:power">
+									<rank>20</rank>
+									<items>
+										<item id="powerA_id">
+											<rank>10</rank>
+										</item>
+										<item id="powerB_id">
+											<rank>20</rank>
+										</item>
+										<item id="redundancy">
+											<rank>30</rank>
+										</item>
+									</items>
+								</item>
+								<item id="fieldset:Server:otherinfo">
+									<rank>30</rank>
+									<items>
+										<item id="description">
+											<rank>10</rank>
+										</item>
+									</items>
+								</item>
+							</items>
+						</item>
+					</items>
+				</details>
+				<search>
+					<items>
+						<item id="name">
+							<rank>10</rank>
+						</item>
+						<item id="org_id">
+							<rank>20</rank>
+						</item>
+						<item id="status">
+							<rank>30</rank>
+						</item>
+						<item id="business_criticity">
+							<rank>40</rank>
+						</item>
+						<item id="location_id">
+							<rank>50</rank>
+						</item>
+						<item id="managementip">
+							<rank>55</rank>
+						</item>
+						<item id="brand_id">
+							<rank>60</rank>
+						</item>
+						<item id="model_id">
+							<rank>70</rank>
+						</item>
+						<item id="serialnumber">
+							<rank>80</rank>
+						</item>
+						<item id="asset_number">
+							<rank>90</rank>
+						</item>
+						<item id="powerA_id">
+							<rank>100</rank>
+						</item>
+						<item id="powerB_id">
+							<rank>110</rank>
+						</item>
+						<item id="move2production">
+							<rank>120</rank>
+						</item>
+						<item id="purchase_date">
+							<rank>130</rank>
+						</item>
+						<item id="end_of_warranty">
+							<rank>140</rank>
+						</item>
+					</items>
+				</search>
+				<list>
+					<items>
+						<item id="org_id">
+							<rank>10</rank>
+						</item>
+						<item id="status">
+							<rank>20</rank>
+						</item>
+						<item id="business_criticity">
+							<rank>30</rank>
+						</item>
+						<item id="location_id">
+							<rank>40</rank>
+						</item>
+						<item id="brand_id">
+							<rank>50</rank>
+						</item>
+						<item id="model_id">
+							<rank>60</rank>
+						</item>
+						<item id="serialnumber">
+							<rank>70</rank>
+						</item>
+					</items>
+				</list>
+			</presentation>
+		</class>
+		<!--
 		the next modifications are here to extends existing classes
 		-->
 		<class id="ConnectableCI" _delta="must_exist">
@@ -865,7 +1595,30 @@
 			</presentation>
 		</class>
 	</classes>
+	<!-- 
+	I have no idea where (in witch menu) I'm adding The GenericCommDevice
+	I hope it will be in the list of 'new CIs'
+	-->
 	<menus>
+		<menu id="ConfigManagementOverview" xsi:type="DashboardMenuNode" _delta="must_exist">
+			<rank>1</rank>
+			<parent>ConfigManagement</parent>
+			<definition>
+				<layout>DashboardLayoutOneCol</layout>
+				<title/>
+				<cells>
+					<cell id="0" _delta="must_exist">
+						<rank>0</rank>
+						<dashlets>
+							<dashlet id="99" xsi:type="DashletBadge" _delta="define">
+								<rank>5</rank>
+								<class>GenericCommDevice</class>
+							</dashlet>
+						</dashlets>
+					</cell>
+				</cells>
+			</definition>
+		</menu>
 	</menus>
 	<user_rights>
 		<groups>
