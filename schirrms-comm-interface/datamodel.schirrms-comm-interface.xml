@@ -952,7 +952,7 @@
 					<extkey_attcode>connectableci_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
-				<field id="genericcomm_port_id" xsi:type="AttributeExternalKey" _delta="define">
+				<field id="genericcomm_port_id" xsi:type="AttributeExternalKey">
 					<filter><![CDATA[SELECT GenericCommPhysInterface WHERE connectableci_id = :this->genericcommdevice_id AND connected_to_id='NULL']]></filter>
 					<dependencies>
 						<attribute id="connectableci_id"/>
@@ -964,11 +964,11 @@
 					<on_target_delete>DEL_AUTO</on_target_delete>
 					<allow_target_creation>true</allow_target_creation>
 				</field>
-				<field id="genericcomm_port_name" xsi:type="AttributeExternalField" _delta="define">
+				<field id="genericcomm_port_name" xsi:type="AttributeExternalField">
 					<extkey_attcode>genericcomm_port_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
-				<field id="device_port_id" xsi:type="AttributeExternalKey" _delta="define">
+				<field id="device_port_id" xsi:type="AttributeExternalKey">
 					<filter><![CDATA[SELECT GenericCommPhysInterface WHERE connectableci_id = :this->connectableci_id AND connected_to_id='NULL']]></filter>
 					<dependencies>
 						<attribute id="connectableci_id"/>
@@ -979,7 +979,7 @@
 					<on_target_delete>DEL_AUTO</on_target_delete>
 					<allow_target_creation>true</allow_target_creation>
 				</field>
-				<field id="device_port_name" xsi:type="AttributeExternalField" _delta="define">
+				<field id="device_port_name" xsi:type="AttributeExternalField">
 					<extkey_attcode>device_port_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
@@ -1570,6 +1570,14 @@
 		-->
 		<class id="ConnectableCI" _delta="must_exist">
 			<fields>
+				<field id="genericcommdevice_list" xsi:type="AttributeLinkedSetIndirect" _delta="define">
+                <linked_class>lnkConnectableCIToGenericCommDevice</linked_class>
+                <ext_key_to_me>connectableci_id</ext_key_to_me>
+                <count_min>0</count_min>
+                <count_max>0</count_max>
+                <ext_key_to_remote>genericcommdevice_id</ext_key_to_remote>
+                <duplicates>true</duplicates>
+              </field>
 				<field id="genericcommphysinterface_list" xsi:type="AttributeLinkedSet" _delta="define">
 					<linked_class>GenericCommPhysInterface</linked_class>
 					<ext_key_to_me>connectableci_id</ext_key_to_me>
