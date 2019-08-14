@@ -881,7 +881,7 @@
 						<item id="name">
 							<rank>10</rank>
 						</item>
-						<item id="networkdevices_list">
+						<item id="genericcommdevices_list">
 							<rank>20</rank>
 						</item>
 					</items>
