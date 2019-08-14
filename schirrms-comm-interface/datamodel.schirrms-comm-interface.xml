@@ -952,7 +952,7 @@
 					<extkey_attcode>connectableci_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
-				<field id="genericcommdevice_port_id" xsi:type="AttributeExternalKey" _delta="define">
+				<field id="genericcomm_port_id" xsi:type="AttributeExternalKey" _delta="define">
 					<filter><![CDATA[SELECT GenericCommPhysInterface WHERE connectableci_id = :this->genericcommdevice_id AND connected_to_id='NULL']]></filter>
 					<dependencies>
 						<attribute id="connectableci_id"/>
