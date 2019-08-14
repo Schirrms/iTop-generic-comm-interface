@@ -1542,6 +1542,28 @@
 					</items>
 				</list>
 			</presentation>
+			<methods>
+				<method id="GetRelationQueries">
+					<comment>/**
+					* Placeholder for backward compatibility (iTop &lt;= 2.1.0)
+					* in case an extension attempts to redefine this function...	 
+				  */</comment>
+					<static>true</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	public static function GetRelationQueries($sRelCode){return parent::GetRelationQueries($sRelCode);} ]]></code>
+				</method>
+			</methods>
+			<relations>
+				<relation id="impacts">
+					<neighbours>
+						<neighbour id="connectableci">
+							<query_down>SELECT ConnectableCI AS d JOIN lnkConnectableCIToGenericCommDevice AS l1 ON l1.connectableci_id = d.id WHERE l1.genericcommdevice_id = :this-&gt;id AND l1.connection_type='downlink'</query_down>
+							<query_up>SELECT GenericCommDevice AS gc JOIN lnkConnectableCIToGenericCommDevice AS l1 ON l1.genericcommdevice_id = gc.id WHERE l1.connectableci_id = :this-&gt;id AND l1.connection_type='downlink'</query_up>
+						</neighbour>
+					</neighbours>
+				</relation>
+			</relations>
 		</class>
 		<!--
 		the next modifications are here to extends existing classes
