@@ -217,11 +217,14 @@
 						<item id="bitspeed">
 							<rank>10</rank>
 						</item>
-						<item id="comment">
+						<item id="humanspeed">
 							<rank>20</rank>
 						</item>
-						<item id="genericcomminterface_list">
+						<item id="comment">
 							<rank>30</rank>
+						</item>
+						<item id="genericcomminterface_list">
+							<rank>40</rank>
 						</item>
 					</items>
 				</details>
