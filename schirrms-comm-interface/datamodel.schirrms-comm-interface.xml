@@ -234,11 +234,11 @@
 						return parent::GetInitialStateAttributeFlags($sAttCode, $aReasons);
 					}]]></code>
 				</method>
-				<method id="AfterInsert">
+				<method id="OnInsert">
 					<static>false</static>
 					<access>public</access>
 					<type>Overload-DBObject</type>
-					<code><![CDATA[	public function AfterInsert()
+					<code><![CDATA[	public function OnInsert()
 					{
 						$this->SetHumanSpeed();
 					}]]></code>
