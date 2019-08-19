@@ -234,6 +234,15 @@
 						return parent::GetInitialStateAttributeFlags($sAttCode, $aReasons);
 					}]]></code>
 				</method>
+				<method id="OnCreate">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	public function OnCreate()
+					{
+						$this->SetHumanSpeed();
+					}]]></code>
+				</method>
 				<method id="OnUpdate">
 					<static>false</static>
 					<access>public</access>
@@ -242,7 +251,7 @@
 					{
 						$this->SetHumanSpeed();
 					}]]></code>
-                </method>
+				</method>
 				<method id="SetHumanSpeed">
 					<static>false</static>
 					<access>public</access>
@@ -270,7 +279,7 @@
 
 						$this->Set('humanspeed', $sHumanSpeed);
 					}]]></code>
-                </method>
+				</method>
 			</methods>
 			<presentation>
 				<details>
@@ -291,11 +300,14 @@
 				</details>
 				<list>
 					<items>
-						<item id="humanspeed">
+						<item id="bitspeed">
 							<rank>10</rank>
 						</item>
-						<item id="comment">
+						<item id="humanspeed">
 							<rank>20</rank>
+						</item>
+						<item id="comment">
+							<rank>30</rank>
 						</item>
 					</items>
 				</list>
