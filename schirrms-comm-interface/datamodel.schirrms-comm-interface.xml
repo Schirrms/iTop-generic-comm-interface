@@ -210,6 +210,67 @@
 				</field>
 			</fields>
 			<methods>
+				<method id="GetAttributeFlags">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[ public function GetAttributeFlags($sAttCode, &$aReasons = array(), $sTargetState = '')
+					{
+						// Force the computed field to be read-only, preventing it to be written
+						if (($sAttCode == 'humanspeed'))
+							return(OPT_ATT_READONLY | parent::GetAttributeFlags($sAttCode, $aReasons, $sTargetState));
+						return parent::GetAttributeFlags($sAttCode, $aReasons, $sTargetState);
+					}]]></code>
+				</method>
+				<method id="GetInitialStateAttributeFlags">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[public function GetInitialStateAttributeFlags($sAttCode, &$aReasons = array())
+					{
+						// Hide the calculated field in object creation form
+						if (($sAttCode == 'humanspeed'))
+							return(OPT_ATT_HIDDEN | parent::GetInitialStateAttributeFlags($sAttCode, $aReasons));
+						return parent::GetInitialStateAttributeFlags($sAttCode, $aReasons);
+					}]]></code>
+				</method>
+				<method id="OnUpdate">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	public function OnUpdate()
+					{
+						$this->SetHumanSpeed();
+					}]]></code>
+                </method>
+				<method id="SetHumanSpeed">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[public function SetHumanSpeed()
+					{
+						// read the new value of the bitSpeed
+						$dBitSpeed = $this->Get('bitspeed');
+
+						// failsafe, the field cannot be empty
+						$sHumanSpeed = $dBitSpeed." b";
+
+						if(is_numeric($dBitSpeed))
+						{
+							$sUnit = ' KMGTP';
+							for ($iLevel=15; $iLevel >0 ;$iLevel=$iLevel-3)
+							{
+								if ($dBitSpeed >= 10**$iLevel)
+								{
+									$sHumanSpeed = sprintf('%.3g ', $dBitSpeed / (10**$iLevel)) . substr($sUnit, $iLevel/3, 1);
+									break;
+								}
+							}
+						}
+
+						$this->Set('humanspeed', $sValueLabel);
+					}]]></code>
+                </method>
 			</methods>
 			<presentation>
 				<details>
