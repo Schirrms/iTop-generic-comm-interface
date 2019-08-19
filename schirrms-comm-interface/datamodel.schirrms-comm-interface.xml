@@ -268,7 +268,7 @@
 							}
 						}
 
-						$this->Set('humanspeed', $sValueLabel);
+						$this->Set('humanspeed', $sHumanSpeed);
 					}]]></code>
                 </method>
 			</methods>
