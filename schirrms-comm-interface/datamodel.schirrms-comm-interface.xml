@@ -234,20 +234,11 @@
 						return parent::GetInitialStateAttributeFlags($sAttCode, $aReasons);
 					}]]></code>
 				</method>
-				<method id="OnCreate">
+				<method id="AfterUpdate">
 					<static>false</static>
 					<access>public</access>
 					<type>Overload-DBObject</type>
-					<code><![CDATA[	public function OnCreate()
-					{
-						$this->SetHumanSpeed();
-					}]]></code>
-				</method>
-				<method id="OnUpdate">
-					<static>false</static>
-					<access>public</access>
-					<type>Overload-DBObject</type>
-					<code><![CDATA[	public function OnUpdate()
+					<code><![CDATA[	public function AfterUpdate()
 					{
 						$this->SetHumanSpeed();
 					}]]></code>
