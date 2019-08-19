@@ -4,9 +4,9 @@
  */
 
 /**
- * Class GenericCommSpeed : should calculate the human speed after creation/update of a bitSpeed
+ * Class GenericCommSpeedFunct : should calculate the human speed after creation/update of a bitSpeed
  */
-class GenericCommSpeed
+class GenericCommSpeedFunct extends GenericCommSpeedFunct
 {
 	public function SetHumanSpeed()
 	{
