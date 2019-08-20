@@ -23,4 +23,4 @@ As this is still a work in progress, there are no 'label' for all text fields.
 
 # Installation
 
-As for all my extentions, just download the zip file, and copy the 'schirrms-...' directory in your extensions directory, then rerun the setup as usual.
+As for all my extensions, just download the zip file, and copy the 'schirrms-...' directory in your extensions directory, then rerun the setup as usual.

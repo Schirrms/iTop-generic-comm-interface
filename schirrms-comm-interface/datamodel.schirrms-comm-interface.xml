@@ -192,6 +192,7 @@
 					<sql>bitspeed</sql>
 					<default_value/>
 					<is_null_allowed>false</is_null_allowed>
+					<duplicates>false</duplicates>
 					<digits>18</digits>
 					<decimals>0</decimals>
 				</field>
