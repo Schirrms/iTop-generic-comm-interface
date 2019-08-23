@@ -572,6 +572,16 @@
 					<extkey_attcode>connected_to_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
+				<field id="virtinterfacemember_id" xsi:type="AttributeExternalKey">
+					<sql>virtinterfacemember_id</sql>
+					<target_class>GenericCommVirtInterface</target_class>
+					<is_null_allowed>true</is_null_allowed>
+					<on_target_delete>DEL_MANUAL</on_target_delete>
+				</field>
+				<field id="virtinterfacemember_name" xsi:type="AttributeExternalField">
+					<extkey_attcode>virtinterfacemember_id</extkey_attcode>
+					<target_attcode>name</target_attcode>
+				</field>
 			</fields>
 			<methods>
 			</methods>
@@ -743,23 +753,15 @@
 				<!--
 				This field is to link the physicalinterfaces to this virtual interface
 				-->
-				<field id="physicalinterface_list" xsi:type="AttributeLinkedSetIndirect">
-					<linked_class>lnkPhysicalToVirtualInterface</linked_class>
-					<ext_key_to_me>virtualinterface_id</ext_key_to_me>
+				<field id="physicalinterfaces_list" xsi:type="AttributeLinkedSet">
+					<linked_class>GenericCommPhysInterface</linked_class>
+					<ext_key_to_me>virtinterfacemember_id</ext_key_to_me>
 					<count_min>0</count_min>
 					<count_max>0</count_max>
-					<ext_key_to_remote>physicalinterface_id</ext_key_to_remote>
 					<duplicates/>
 				</field>
 			</fields>
 			<methods>
-				<!-- No real idea of the whereabout of this piece of code... just a test -->
-				<method id="GetRelationQueries">
-					<static>true</static>
-					<access>public</access>
-					<type>Overload-DBObject</type>
-					<code><![CDATA[	public static function GetRelationQueries($sRelCode){return parent::GetRelationQueries($sRelCode);} ]]></code>
-				</method>
 			</methods>
 			<presentation>
 				<details>
@@ -785,7 +787,7 @@
 						<item id="redundancyType">
 							<rank>70</rank>
 						</item>
-						<item id="physicalinterface_list">
+						<item id="physicalinterfaces_list">
 							<rank>100</rank>
 						</item>
 					</items>
@@ -844,113 +846,6 @@
 			</presentation>
 		</class>
 		<!--
-		This clas links the physical interfaces to one virtual interface
-		-->
-		<class id="lnkPhysicalToVirtualInterface" _delta="define">
-			<parent>cmdbAbstractObject</parent>
-			<properties>
-				<is_link>1</is_link>
-				<category>bizmodel</category>
-				<abstract>false</abstract>
-				<key_type>autoincrement</key_type>
-				<db_table>lnkphysicaltovirtualinterface</db_table>
-				<db_key_field>id</db_key_field>
-				<db_final_class_field/>
-				<naming>
-					<attributes>
-						<attribute id="connectableci_id"/>
-						<attribute id="virtualinterface_id"/>
-						<attribute id="physicalinterface_id"/>
-					</attributes>
-				</naming>
-				<display_template/>
-				<icon/>
-				<reconciliation>
-					<attributes>
-						<attribute id="connectableci_id"/>
-						<attribute id="virtualinterface_id"/>
-						<attribute id="physicalinterface_id"/>
-					</attributes>
-				</reconciliation>
-			</properties>
-			<fields>
-				<field id="connectableci_id" xsi:type="AttributeExternalKey">
-					<sql>connectableci_id</sql>
-					<target_class>ConnectableCI</target_class>
-					<is_null_allowed>false</is_null_allowed>
-					<on_target_delete>DEL_AUTO</on_target_delete>
- 				</field>
-				<field id="connectableci_name" xsi:type="AttributeExternalField">
-					<extkey_attcode>connectableci_id</extkey_attcode>
-					<target_attcode>name</target_attcode>
-				</field>
-				<field id="virtualinterface_id" xsi:type="AttributeExternalKey">
-					<filter><![CDATA[SELECT GenericCommVirtInterface WHERE connectableci_id = :this->connectableci_id]]></filter>
-					<dependencies>
-						<attribute id="connectableci_id"/>
-					</dependencies>
-					<sql>virtualinterface_id</sql>
-					<target_class>GenericCommVirtInterface</target_class>
-					<is_null_allowed>false</is_null_allowed>
-					<on_target_delete>DEL_AUTO</on_target_delete>
-				</field>
-				<field id="virtualinterface_name" xsi:type="AttributeExternalField">
-					<extkey_attcode>virtualinterface_id</extkey_attcode>
-					<target_attcode>name</target_attcode>
-				</field>
-				<field id="physicalinterface_id" xsi:type="AttributeExternalKey">
-					<filter><![CDATA[SELECT GenericCommPhysInterface WHERE connectableci_id = :this->connectableci_id]]></filter>
-					<dependencies>
-						<attribute id="connectableci_id"/>
-					</dependencies>
-					<sql>physicalinterface_id</sql>
-					<target_class>GenericCommPhysInterface</target_class>
-					<is_null_allowed>false</is_null_allowed>
-					<on_target_delete>DEL_AUTO</on_target_delete>
-				</field>
-				<field id="physicalinterface_name" xsi:type="AttributeExternalField">
-					<extkey_attcode>physicalinterface_id</extkey_attcode>
-					<target_attcode>name</target_attcode>
-				</field>
-			</fields>
-			<methods/>
-			<presentation>
-				<details>
-					<items>
-						<item id="connectableci_id">
-							<rank>10</rank>
-						</item>
-						<item id="virtualinterface_id">
-							<rank>20</rank>
-						</item>
-						<item id="physicalinterface_id">
-							<rank>30</rank>
-						</item>
-					</items>
-				</details>
-				<search>
-					<items>
-						<item id="virtualinterface_id">
-							<rank>10</rank>
-						</item>
-						<item id="physicalinterface_id">
-							<rank>20</rank>
-						</item>
-					</items>
-				</search>
-				<list>
-					<items>
-						<item id="virtualinterface_id">
-							<rank>10</rank>
-						</item>
-						<item id="physicalinterface_id">
-							<rank>20</rank>
-						</item>
-					</items>
-				</list>
-			</presentation>
-		</class>
-		<!--
 				*** All the stuffs for the GenericCommDevices ***
 		-->
 		<!--
@@ -982,6 +877,14 @@
 				<field id="genericcommdevices_list" xsi:type="AttributeLinkedSet">
 					<linked_class>GenericCommDevice</linked_class>
 					<ext_key_to_me>genericcommdevicetype_id</ext_key_to_me>
+					<edit_mode>add_only</edit_mode>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<duplicates/>
+				</field>
+				<field id="genericcommphysinterface_list" xsi:type="AttributeLinkedSet">
+					<linked_class>GenericCommPhysInterface</linked_class>
+					<ext_key_to_me>genericcommvirtinterface_id</ext_key_to_me>
 					<edit_mode>add_only</edit_mode>
 					<count_min>0</count_min>
 					<count_max>0</count_max>
@@ -1279,7 +1182,7 @@
 				$oConnection->DBDelete();
 			}
 		}	
-		// time to clean up the 'connected_to_id' in the GenericCommPhiysInterface table
+		// time to clean up the 'connected_to_id' in the GenericCommPhysInterface table
 		// The cleanup is a little harsh. Search for all occurences of the disconnected port
 		// Step One : GenericCommDevice to Edge
 		$sOQL = "SELECT GenericCommPhysInterface WHERE connected_to_id = :id";
