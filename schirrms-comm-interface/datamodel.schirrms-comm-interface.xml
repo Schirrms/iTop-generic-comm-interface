@@ -272,7 +272,7 @@
 							{
 								if ($dBitSpeed >= 10**$iLevel)
 								{
-									$sHumanSpeed = sprintf('%.3g ', $dBitSpeed / (10**$iLevel)) . substr($sUnit, $iLevel/3, 1);
+									$sHumanSpeed = sprintf('%.3g ', $dBitSpeed / (10**$iLevel)) . substr($sUnit, $iLevel/3, 1) . 'b/s';
 									break;
 								}
 							}
@@ -886,14 +886,6 @@
 				<field id="genericcommdevices_list" xsi:type="AttributeLinkedSet">
 					<linked_class>GenericCommDevice</linked_class>
 					<ext_key_to_me>genericcommdevicetype_id</ext_key_to_me>
-					<edit_mode>add_only</edit_mode>
-					<count_min>0</count_min>
-					<count_max>0</count_max>
-					<duplicates/>
-				</field>
-				<field id="genericcommphysinterface_list" xsi:type="AttributeLinkedSet">
-					<linked_class>GenericCommPhysInterface</linked_class>
-					<ext_key_to_me>genericcommvirtinterface_id</ext_key_to_me>
 					<edit_mode>add_only</edit_mode>
 					<count_min>0</count_min>
 					<count_max>0</count_max>
