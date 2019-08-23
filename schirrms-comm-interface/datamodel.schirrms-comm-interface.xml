@@ -678,10 +678,10 @@
 					</items>
 				</list>
 			</presentation>
-			<!-- Not sure yet of the relation use
 			<relations>
 				<relation id="impacts">
 					<neighbours>
+						<!-- neigbour is used to select the alternatives in which this object is a participant -->
 						<neighbour id="virtualinterfaces">
 							<query_down>SELECT GenericCommVirtInterface WHERE connectableci_id = :this-&gt;connectableci_id</query_down>
 							<query_up>SELECT GenericCommPhysInterface WHERE connectableci_id = :this-&gt;connectableci_id</query_up>
@@ -689,7 +689,6 @@
 					</neighbours>
 				</relation>
 			</relations>
-			-->
 		</class>
 		<!--
 		this class defines the specific attributes of a Generic Virtual Communication interface
@@ -859,6 +858,8 @@
 		-->
 		<!--
 		This class implements a GenericCommDeviceType
+		The idea is to put here the global function of the Device :
+		SAN switch, WAN Router ...
 		-->
 		<class id="GenericCommDeviceType" _delta="define">
 			<parent>Typology</parent>
@@ -1682,6 +1683,8 @@
 	I have no idea where (in witch menu) I'm adding The GenericCommDevice
 	I hope it will be in the list of 'new CIs'
 	-> Well yes, it is added in 'New devices', and also in 'Configuration Management -> Overview -> Infrastructure
+	-> For the record : Cell id=0 is the box order  top to bottom
+	-> <rnk>5</rank> is the horizontal order in the box. so seems also to be the dashlet id..
 	-->
 	<menus>
 		<menu id="ConfigManagementOverview" xsi:type="DashboardMenuNode" _delta="must_exist">
@@ -1700,7 +1703,7 @@
 							</dashlet>
 						</dashlets>
 					</cell>
-					<cell id="4" _delta="must_exist"> <!-- Hopefuly Dashboard -> Miscellaneous -->
+					<cell id="4" _delta="must_exist"> <!-- Dashboard -> Miscellaneous -->
 						<rank>0</rank>
 						<dashlets>
 							<dashlet id="90" xsi:type="DashletBadge" _delta="define">
