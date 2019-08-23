@@ -759,6 +759,7 @@
 				<db_final_class_field/>
 				<naming>
 					<attributes>
+						<attribute id="connectableci_id"/>
 						<attribute id="virtualinterface_id"/>
 						<attribute id="physicalinterface_id"/>
 					</attributes>
@@ -767,17 +768,28 @@
 				<icon/>
 				<reconciliation>
 					<attributes>
+						<attribute id="connectableci_id"/>
 						<attribute id="virtualinterface_id"/>
 						<attribute id="physicalinterface_id"/>
 					</attributes>
 				</reconciliation>
 			</properties>
 			<fields>
+				<field id="connectableci_id" xsi:type="AttributeExternalKey">
+					<sql>connectableci_id</sql>
+					<target_class>ConnectableCI</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+ 				</field>
+				<field id="connectableci_name" xsi:type="AttributeExternalField">
+					<extkey_attcode>connectableci_id</extkey_attcode>
+					<target_attcode>name</target_attcode>
+				</field>
 				<field id="virtualinterface_id" xsi:type="AttributeExternalKey">
 					<filter><![CDATA[SELECT GenericCommVirtInterface WHERE connectableci_id = :this->connectableci_id]]></filter>
-					<!-- I don't think I have dependencies here ? <dependencies>
+					<dependencies>
 						<attribute id="connectableci_id"/>
-					</dependencies> -->
+					</dependencies>
 					<sql>virtualinterface_id</sql>
 					<target_class>GenericCommVirtInterface</target_class>
 					<is_null_allowed>false</is_null_allowed>
@@ -789,9 +801,9 @@
 				</field>
 				<field id="physicalinterface_id" xsi:type="AttributeExternalKey">
 					<filter><![CDATA[SELECT GenericCommPhysInterface WHERE connectableci_id = :this->connectableci_id]]></filter>
-					<!-- <dependencies>
+					<dependencies>
 						<attribute id="connectableci_id"/>
-					</dependencies> -->
+					</dependencies>
 					<sql>physicalinterface_id</sql>
 					<target_class>GenericCommPhysInterface</target_class>
 					<is_null_allowed>false</is_null_allowed>
@@ -806,11 +818,14 @@
 			<presentation>
 				<details>
 					<items>
-						<item id="virtualinterface_id">
+						<item id="connectableci_id">
 							<rank>10</rank>
 						</item>
-						<item id="physicalinterface_id">
+						<item id="virtualinterface_id">
 							<rank>20</rank>
+						</item>
+						<item id="physicalinterface_id">
+							<rank>30</rank>
 						</item>
 					</items>
 				</details>
