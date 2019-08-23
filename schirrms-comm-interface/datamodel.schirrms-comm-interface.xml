@@ -796,7 +796,7 @@
 						<item id="redundancyType">
 							<rank>70</rank>
 						</item>
-						<item id="genericcomminterface_list">
+						<item id="genericcommphysinterface_list">
 							<rank>100</rank>
 						</item>
 					</items>
