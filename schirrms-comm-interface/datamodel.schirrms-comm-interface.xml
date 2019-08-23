@@ -606,6 +606,9 @@
 						<item id="humanspeed_id">
 							<rank>60</rank>
 						</item>
+						<item id="virtinterfacemember_id">
+							<rank>70</rank>
+						</item>
 						<item id="connected_to_id">
 							<rank>100</rank>
 						</item>
@@ -666,12 +669,16 @@
 						<item id="humanspeed_id">
 							<rank>60</rank>
 						</item>
+						<item id="virtinterfacemember_id">
+							<rank>70</rank>
+						</item>
 						<item id="connected_to_id">
 							<rank>100</rank>
 						</item>
 					</items>
 				</list>
 			</presentation>
+			<!-- Not sure yet of the relation use
 			<relations>
 				<relation id="impacts">
 					<neighbours>
@@ -682,6 +689,7 @@
 					</neighbours>
 				</relation>
 			</relations>
+			-->
 		</class>
 		<!--
 		this class defines the specific attributes of a Generic Virtual Communication interface
@@ -753,9 +761,10 @@
 				<!--
 				This field is to link the physicalinterfaces to this virtual interface
 				-->
-				<field id="physicalinterfaces_list" xsi:type="AttributeLinkedSet">
+				<field id="genericcommphysinterface_list" xsi:type="AttributeLinkedSet">
 					<linked_class>GenericCommPhysInterface</linked_class>
 					<ext_key_to_me>virtinterfacemember_id</ext_key_to_me>
+					<edit_mode>add_only</edit_mode>
 					<count_min>0</count_min>
 					<count_max>0</count_max>
 					<duplicates/>
@@ -787,7 +796,7 @@
 						<item id="redundancyType">
 							<rank>70</rank>
 						</item>
-						<item id="physicalinterfaces_list">
+						<item id="genericcomminterface_list">
 							<rank>100</rank>
 						</item>
 					</items>
