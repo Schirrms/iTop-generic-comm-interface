@@ -5,7 +5,11 @@
 
 SetupWebPage::AddModule(
 	__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
+<<<<<<< HEAD
 	'schirrms-comm-interface/0.4.1',
+=======
+	'schirrms-comm-interface/0.5.2',
+>>>>>>> 215e151f98db775be4a1564270de00a34c71b5a7
 	array(
 		// Identification
 		//
@@ -24,7 +28,6 @@ SetupWebPage::AddModule(
 		//
 		'datamodel' => array(
 			'model.schirrms-comm-interface.php',
-			'common/attributecomminterfacespeed.class.inc.php'
 		),
 		'webservice' => array(
 			

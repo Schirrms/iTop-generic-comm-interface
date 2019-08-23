@@ -172,21 +172,27 @@
 				<db_final_class_field/>
 				<naming>
 					<attributes>
-						<attribute id="commspeed"/>
+						<attribute id="humanspeed"/>
 					</attributes>
 				</naming>
 				<display_template/>
 				<reconciliation>
 					<attributes>
-						<attribute id="commspeed"/>
+						<attribute id="humanspeed"/>
 					</attributes>
 				</reconciliation>
 			</properties>
 			<fields>
-				<field id="commspeed" xsi:type="AttributeCommInterfaceSpeed">
-					<sql>commspeed</sql>
+				<field id="humanspeed" xsi:type="AttributeString">
+					<sql>humanspeed</sql>
+					<default_value/>
+					<is_null_allowed>true</is_null_allowed>
+				</field>
+				<field id="bitspeed" xsi:type="AttributeDecimal">
+					<sql>bitspeed</sql>
 					<default_value/>
 					<is_null_allowed>false</is_null_allowed>
+					<duplicates>false</duplicates>
 					<digits>18</digits>
 					<decimals>0</decimals>
 				</field>
@@ -197,7 +203,7 @@
 				</field>
 				<field id="genericcomminterface_list" xsi:type="AttributeLinkedSet">
 					<linked_class>GenericCommInterface</linked_class>
-					<ext_key_to_me>commspeed_id</ext_key_to_me>
+					<ext_key_to_me>humanspeed_id</ext_key_to_me>
 					<edit_mode>add_only</edit_mode>
 					<count_min>0</count_min>
 					<count_max>0</count_max>
@@ -205,31 +211,117 @@
 				</field>
 			</fields>
 			<methods>
+				<method id="GetAttributeFlags">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[ public function GetAttributeFlags($sAttCode, &$aReasons = array(), $sTargetState = '')
+					{
+						// Force the computed field to be read-only, preventing it to be written
+						if (($sAttCode == 'humanspeed'))
+							return(OPT_ATT_READONLY | parent::GetAttributeFlags($sAttCode, $aReasons, $sTargetState));
+						return parent::GetAttributeFlags($sAttCode, $aReasons, $sTargetState);
+					}]]></code>
+				</method>
+				<method id="GetInitialStateAttributeFlags">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[public function GetInitialStateAttributeFlags($sAttCode, &$aReasons = array())
+					{
+						// Hide the calculated field in object creation form
+						if (($sAttCode == 'humanspeed'))
+							return(OPT_ATT_HIDDEN | parent::GetInitialStateAttributeFlags($sAttCode, $aReasons));
+						return parent::GetInitialStateAttributeFlags($sAttCode, $aReasons);
+					}]]></code>
+				</method>
+				<method id="OnInsert">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	public function OnInsert()
+					{
+						$this->SetHumanSpeed();
+					}]]></code>
+				</method>
+				<method id="OnUpdate">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	public function OnUpdate()
+					{
+						$this->SetHumanSpeed();
+					}]]></code>
+				</method>
+				<method id="SetHumanSpeed">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[public function SetHumanSpeed()
+					{
+						// read the new value of the bitSpeed
+						$dBitSpeed = $this->Get('bitspeed');
+
+						// failsafe, the field cannot be empty
+						$sHumanSpeed = $dBitSpeed." b";
+
+						if(is_numeric($dBitSpeed))
+						{
+							$sUnit = ' KMGTP';
+							for ($iLevel=15; $iLevel >0 ;$iLevel=$iLevel-3)
+							{
+								if ($dBitSpeed >= 10**$iLevel)
+								{
+									$sHumanSpeed = sprintf('%.3g ', $dBitSpeed / (10**$iLevel)) . substr($sUnit, $iLevel/3, 1);
+									break;
+								}
+							}
+						}
+
+						$this->Set('humanspeed', $sHumanSpeed);
+					}]]></code>
+				</method>
 			</methods>
 			<presentation>
 				<details>
 					<items>
-						<item id="commspeed">
+						<item id="bitspeed">
 							<rank>10</rank>
 						</item>
-						<item id="comment">
+						<item id="humanspeed">
 							<rank>20</rank>
 						</item>
-						<item id="genericcomminterface_list">
+						<item id="comment">
 							<rank>30</rank>
+						</item>
+						<item id="genericcomminterface_list">
+							<rank>40</rank>
 						</item>
 					</items>
 				</details>
 				<list>
 					<items>
-						<item id="commspeed">
+						<item id="bitspeed">
+							<rank>10</rank>
+						</item>
+						<item id="humanspeed">
+							<rank>20</rank>
+						</item>
+						<item id="comment">
+							<rank>30</rank>
+						</item>
+					</items>
+				</list>
+				<search>
+					<items>
+						<item id="humanspeed">
 							<rank>10</rank>
 						</item>
 						<item id="comment">
 							<rank>20</rank>
 						</item>
 					</items>
-				</list>
+				</search>
 			</presentation>
 		</class>
 		<!--
@@ -353,15 +445,15 @@
 					<extkey_attcode>commproto_id</extkey_attcode>
 					<target_attcode>protocol</target_attcode>
 				</field>
-				<field id="commspeed_id" xsi:type="AttributeExternalKey">
-					<sql>commspeed_id</sql>
+				<field id="humanspeed_id" xsi:type="AttributeExternalKey">
+					<sql>humanspeed_id</sql>
 					<target_class>GenericCommSpeed</target_class>
 					<is_null_allowed>true</is_null_allowed>
 					<on_target_delete>DEL_MANUAL</on_target_delete>
 				</field>
-				<field id="commspeed_speed" xsi:type="AttributeExternalField">
-					<extkey_attcode>commspeed_id</extkey_attcode>
-					<target_attcode>commspeed</target_attcode>
+				<field id="humanspeed_speed" xsi:type="AttributeExternalField">
+					<extkey_attcode>humanspeed_id</extkey_attcode>
+					<target_attcode>humanspeed</target_attcode>
 				</field>
 			</fields>
 			<methods/>
@@ -377,7 +469,7 @@
 						<item id="commproto_id">
 							<rank>50</rank>
 						</item>
-						<item id="commspeed_id">
+						<item id="humanspeed_id">
 							<rank>60</rank>
 						</item>
 					</items>
@@ -410,7 +502,7 @@
 						<item id="commproto_id">
 							<rank>50</rank>
 						</item>
-						<item id="commspeed_id">
+						<item id="humanspeed_id">
 							<rank>60</rank>
 						</item>
 					</items>
@@ -501,7 +593,7 @@
 						<item id="commproto_id">
 							<rank>50</rank>
 						</item>
-						<item id="commspeed_id">
+						<item id="humanspeed_id">
 							<rank>60</rank>
 						</item>
 						<item id="connected_to_id">
@@ -561,7 +653,7 @@
 						<item id="commproto_id">
 							<rank>50</rank>
 						</item>
-						<item id="commspeed_id">
+						<item id="humanspeed_id">
 							<rank>60</rank>
 						</item>
 						<item id="connected_to_id">
@@ -680,7 +772,7 @@
 						<item id="commproto_id">
 							<rank>50</rank>
 						</item>
-						<item id="commspeed_id">
+						<item id="humanspeed_id">
 							<rank>60</rank>
 						</item>
 						<item id="redundancyType">
@@ -737,7 +829,7 @@
 						<item id="commproto_id">
 							<rank>50</rank>
 						</item>
-						<item id="commspeed_id">
+						<item id="humanspeed_id">
 							<rank>60</rank>
 						</item>
 					</items>
