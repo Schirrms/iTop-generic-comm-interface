@@ -753,6 +753,13 @@
 				</field>
 			</fields>
 			<methods>
+				<!-- No real idea of the whereabout of this piece of code... just a test -->
+				<method id="GetRelationQueries">
+					<static>true</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	public static function GetRelationQueries($sRelCode){return parent::GetRelationQueries($sRelCode);} ]]></code>
+				</method>
 			</methods>
 			<presentation>
 				<details>
