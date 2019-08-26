@@ -528,7 +528,7 @@
  					</attributes>
 				</naming>
 				<display_template/>
-				<icon/>
+				<icon>images/phys-interface.png</icon>
 				<reconciliation>
 					<attributes>
 						<attribute id="name"/>
@@ -710,7 +710,7 @@
  					</attributes>
 				</naming>
 				<display_template/>
-				<icon/>
+				<icon>images/virt-interface.png</icon>
 				<reconciliation>
 					<attributes>
 						<attribute id="name"/>
