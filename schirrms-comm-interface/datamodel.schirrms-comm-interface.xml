@@ -1363,6 +1363,30 @@
 					<extkey_attcode>iosversion_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
+				<field id="genericcommdevice_list" xsi:type="AttributeLinkedSetIndirect">
+					<linked_class>lnkConnectableCIToGenericCommDevice</linked_class>
+					<ext_key_to_me>connectableci_id</ext_key_to_me>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<ext_key_to_remote>genericcommdevice_id</ext_key_to_remote>
+					<duplicates>true</duplicates>
+				</field>
+				<field id="genericcommphysinterface_list" xsi:type="AttributeLinkedSet">
+					<linked_class>GenericCommPhysInterface</linked_class>
+					<ext_key_to_me>connectableci_id</ext_key_to_me>
+					<edit_mode>in_place</edit_mode>
+					<tracking_level>all</tracking_level>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+				</field>
+				<field id="genericcommvirtinterface_list" xsi:type="AttributeLinkedSet">
+					<linked_class>GenericCommVirtInterface</linked_class>
+					<ext_key_to_me>connectableci_id</ext_key_to_me>
+					<edit_mode>in_place</edit_mode>
+					<tracking_level>all</tracking_level>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+				</field>
 			</fields>
 			<presentation>
 				<details>
@@ -1379,17 +1403,20 @@
 						<item id="genericcommphysinterface_list">
 							<rank>40</rank>
 						</item>
-						<item id="connectablecis_list">
+						<item id="genericcommvirtinterface_list">
 							<rank>50</rank>
 						</item>
-						<item id="providercontracts_list">
+						<item id="connectablecis_list">
 							<rank>60</rank>
 						</item>
-						<item id="services_list">
+						<item id="providercontracts_list">
 							<rank>70</rank>
 						</item>
-						<item id="col:col1">
+						<item id="services_list">
 							<rank>80</rank>
+						</item>
+						<item id="col:col1">
+							<rank>90</rank>
 							<items>
 								<item id="fieldset:Server:baseinfo">
 									<rank>10</rank>
@@ -1454,7 +1481,7 @@
 							</items>
 						</item>
 						<item id="col:col2">
-							<rank>90</rank>
+							<rank>100</rank>
 							<items>
 								<item id="fieldset:Server:Date">
 									<rank>10</rank>
@@ -1600,13 +1627,13 @@
 		<class id="ConnectableCI" _delta="must_exist">
 			<fields>
 				<field id="genericcommdevice_list" xsi:type="AttributeLinkedSetIndirect" _delta="define">
-                <linked_class>lnkConnectableCIToGenericCommDevice</linked_class>
-                <ext_key_to_me>connectableci_id</ext_key_to_me>
-                <count_min>0</count_min>
-                <count_max>0</count_max>
-                <ext_key_to_remote>genericcommdevice_id</ext_key_to_remote>
-                <duplicates>true</duplicates>
-              </field>
+					<linked_class>lnkConnectableCIToGenericCommDevice</linked_class>
+					<ext_key_to_me>connectableci_id</ext_key_to_me>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<ext_key_to_remote>genericcommdevice_id</ext_key_to_remote>
+					<duplicates>true</duplicates>
+				</field>
 				<field id="genericcommphysinterface_list" xsi:type="AttributeLinkedSet" _delta="define">
 					<linked_class>GenericCommPhysInterface</linked_class>
 					<ext_key_to_me>connectableci_id</ext_key_to_me>
@@ -1635,6 +1662,9 @@
 						<item id="genericcommvirtinterface_list" _delta="define">
 							<rank>56</rank>
 						</item>
+						<item id="connectablecis_list" _delta="define">
+							<rank>57</rank>
+						</item>
 					</items>
 				</details>
 			</presentation>
@@ -1648,6 +1678,9 @@
 						</item>
 						<item id="genericcommvirtinterface_list" _delta="define">
 							<rank>56</rank>
+						</item>
+						<item id="connectablecis_list" _delta="define">
+							<rank>57</rank>
 						</item>
 					</items>
 				</details>
