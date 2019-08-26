@@ -1654,37 +1654,14 @@
 			</presentation>
 		</class>
 		<!--
-		This is lame : I redefine the complete 'type' field of the 'Model' Class to recognise 
-		my new device GenericCommDevice. I hope there is a better way...
+		Thanks to VDumas (again), the correct way to extend an AttributeEnum field
 		-->
 		<class id="Model" _delta="must_exist">
 			<fields>
-				<field id="type" xsi:type="AttributeEnum" _delta="redefine">
+				<field id="type" xsi:type="AttributeEnum" _delta="must_exist">
 					<values>
-						<value id="NetworkDevice">NetworkDevice</value>
-						<value id="Server">Server</value>
-						<value id="SANSwitch">SANSwitch</value>
-						<value id="StorageSystem">StorageSystem</value>
-						<value id="Rack">Rack</value>
-						<value id="Enclosure">Enclosure</value>
-						<value id="PC">PC</value>
-						<value id="Tablet">Tablet</value>
-						<value id="Phone">Phone</value>
-						<value id="MobilePhone">MobilePhone</value>
-						<value id="Printer">Printer</value>
-						<value id="DiskArray">DiskArray</value>
-						<value id="NAS">NAS</value>
-						<value id="TapeLibrary">TapeLibrary</value>
-						<value id="IPPhone">IPPhone</value>
-						<value id="Peripheral">Peripheral</value>
-						<value id="PowerSource">PowerSource</value>
-						<value id="PDU">PDU</value>
-						<value id="GenericCommDevice">GenericCommDevice</value>	
+						<value id="GenericCommDevice" _delta="define">GenericCommDevice</value>	
 					</values>
-					<sql>type</sql>
-					<default_value/>
-					<is_null_allowed>false</is_null_allowed>
-					<display_style>list</display_style>
 				</field>
 			</fields>
 		</class>
