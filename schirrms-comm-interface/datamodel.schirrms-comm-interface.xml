@@ -750,7 +750,7 @@
 					<sql>redundancytype</sql>
 					<relation_code>impacts</relation_code>
 					<from_class>GenericCommPhysInterface</from_class>
-					<neighbour_id>virtualinterfaces</neighbour_id>
+					<neighbour_id>genericcommvirtinterface</neighbour_id>
 					<enabled>true</enabled>
 					<enabled_mode>user</enabled_mode>
 					<min_up>1</min_up>
