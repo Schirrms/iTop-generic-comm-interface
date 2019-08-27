@@ -682,9 +682,12 @@
 				<relation id="impacts">
 					<neighbours>
 						<!-- neigbour is used to select the alternatives in which this object is a participant -->
-						<neighbour id="virtualinterfaces">
+						<neighbour id="genericcommvirtinterface">
+							<attribute>virtinterfacemember_id</attribute>
+							<!--
 							<query_down>SELECT GenericCommVirtInterface WHERE connectableci_id = :this-&gt;connectableci_id</query_down>
 							<query_up>SELECT GenericCommPhysInterface WHERE connectableci_id = :this-&gt;connectableci_id</query_up>
+							-->
 						</neighbour>
 					</neighbours>
 				</relation>
@@ -769,6 +772,16 @@
 				</field>
 			</fields>
 			<methods>
+				<method id="GetRelationQueries">
+					<comment>/**
+					* Placeholder for backward compatibility (iTop &lt;= 2.1.0)
+					* in case an extension attempts to redefine this function...
+					*/</comment>
+					<static>true</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	public static function GetRelationQueries($sRelCode){return parent::GetRelationQueries($sRelCode);} ]]></code>
+				</method>
 			</methods>
 			<presentation>
 				<details>
