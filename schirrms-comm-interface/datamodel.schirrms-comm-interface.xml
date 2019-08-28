@@ -455,6 +455,16 @@
 					<extkey_attcode>humanspeed_id</extkey_attcode>
 					<target_attcode>humanspeed</target_attcode>
 				</field>
+				<field id="connectableci_id" xsi:type="AttributeExternalKey">
+					<sql>connectableci_id</sql>
+					<target_class>ConnectableCI</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+				</field>
+				<field id="connectableci_name" xsi:type="AttributeExternalField">
+					<extkey_attcode>connectableci_id</extkey_attcode>
+					<target_attcode>name</target_attcode>
+				</field>
 			</fields>
 			<methods/>
 			<presentation>
@@ -541,6 +551,7 @@
 				</obsolescence>
 			</properties>
 			<fields>
+				<!-- moved to GenericCommDevice
 				<field id="connectableci_id" xsi:type="AttributeExternalKey">
 					<sql>connectableci_id</sql>
 					<target_class>ConnectableCI</target_class>
@@ -551,6 +562,7 @@
 					<extkey_attcode>connectableci_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
+				-->
 				<field id="physcommtype_id" xsi:type="AttributeExternalKey">
 					<sql>physcommtype_id</sql>
 					<target_class>GenericPhysCommConnector</target_class>
@@ -726,6 +738,7 @@
 				</obsolescence>
 			</properties>
 			<fields>
+				<!-- moved to GenericCommDevice
 				<field id="connectableci_id" xsi:type="AttributeExternalKey">
 					<sql>connectableci_id</sql>
 					<target_class>ConnectableCI</target_class>
@@ -736,6 +749,7 @@
 					<extkey_attcode>connectableci_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
+				-->
 				<field id="virtualcommredundancy_id" xsi:type="AttributeExternalKey">
 					<sql>virtualcommredundancy_id</sql>
 					<target_class>VirtualCommRedundancy</target_class>
