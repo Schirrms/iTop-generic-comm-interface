@@ -455,37 +455,6 @@
 					<extkey_attcode>humanspeed_id</extkey_attcode>
 					<target_attcode>humanspeed</target_attcode>
 				</field>
-				<field id="connectableci_id" xsi:type="AttributeExternalKey">
-					<sql>connectableci_id</sql>
-					<target_class>ConnectableCI</target_class>
-					<is_null_allowed>false</is_null_allowed>
-					<on_target_delete>DEL_AUTO</on_target_delete>
-				</field>
-				<field id="connectableci_name" xsi:type="AttributeExternalField">
-					<extkey_attcode>connectableci_id</extkey_attcode>
-					<target_attcode>name</target_attcode>
-				</field>
-				<field id="connected_to_id" xsi:type="AttributeExternalKey">
-					<sql>connected_to_id</sql>
-					<target_class>GenericCommInterface</target_class>
-					<is_null_allowed>true</is_null_allowed>
-					<on_target_delete>DEL_AUTO</on_target_delete>
-					<edit_mode>none</edit_mode>
-				</field>
-				<field id="connected_to_name" xsi:type="AttributeExternalField">
-					<extkey_attcode>connected_to_id</extkey_attcode>
-					<target_attcode>name</target_attcode>
-				</field>
-				<field id="virtinterfacemember_id" xsi:type="AttributeExternalKey">
-					<sql>virtinterfacemember_id</sql>
-					<target_class>GenericCommVirtInterface</target_class>
-					<is_null_allowed>true</is_null_allowed>
-					<on_target_delete>DEL_MANUAL</on_target_delete>
-				</field>
-				<field id="virtinterfacemember_name" xsi:type="AttributeExternalField">
-					<extkey_attcode>virtinterfacemember_id</extkey_attcode>
-					<target_attcode>name</target_attcode>
-				</field>
 			</fields>
 			<methods/>
 			<presentation>
@@ -572,7 +541,6 @@
 				</obsolescence>
 			</properties>
 			<fields>
-				<!-- moved to GenericCommDevice
 				<field id="connectableci_id" xsi:type="AttributeExternalKey">
 					<sql>connectableci_id</sql>
 					<target_class>ConnectableCI</target_class>
@@ -583,7 +551,6 @@
 					<extkey_attcode>connectableci_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
-				-->
 				<field id="physcommtype_id" xsi:type="AttributeExternalKey">
 					<sql>physcommtype_id</sql>
 					<target_class>GenericPhysCommConnector</target_class>
@@ -594,11 +561,9 @@
 					<extkey_attcode>physcommtype_id</extkey_attcode>
 					<target_attcode>type</target_attcode>
 				</field>
-				<!-- 4 next fields moved to GenericCommDevice : it should permit 
-				a virtual interface to be memeber of another virtual interface
 				<field id="connected_to_id" xsi:type="AttributeExternalKey">
 					<sql>connected_to_id</sql>
-					<target_class>GenericCommInterface</target_class>
+					<target_class>GenericCommPhysInterface</target_class>
 					<is_null_allowed>true</is_null_allowed>
 					<on_target_delete>DEL_AUTO</on_target_delete>
 					<edit_mode>none</edit_mode>
@@ -611,13 +576,12 @@
 					<sql>virtinterfacemember_id</sql>
 					<target_class>GenericCommVirtInterface</target_class>
 					<is_null_allowed>true</is_null_allowed>
-					<on_target_delete>DEL_MANUAL</on_target_delete>
+					<on_target_delete>DEL_AUTO</on_target_delete>
 				</field>
 				<field id="virtinterfacemember_name" xsi:type="AttributeExternalField">
 					<extkey_attcode>virtinterfacemember_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
-				-->
 			</fields>
 			<methods>
 			</methods>
@@ -720,10 +684,8 @@
 						<!-- neigbour is used to select the alternatives in which this object is a participant -->
 						<neighbour id="genericcommvirtinterface">
 							<attribute>virtinterfacemember_id</attribute>
-							<!--
 							<query_down>SELECT GenericCommVirtInterface WHERE connectableci_id = :this-&gt;connectableci_id</query_down>
 							<query_up>SELECT GenericCommPhysInterface WHERE connectableci_id = :this-&gt;connectableci_id</query_up>
-							-->
 						</neighbour>
 					</neighbours>
 				</relation>
@@ -762,7 +724,6 @@
 				</obsolescence>
 			</properties>
 			<fields>
-				<!-- moved to GenericCommDevice
 				<field id="connectableci_id" xsi:type="AttributeExternalKey">
 					<sql>connectableci_id</sql>
 					<target_class>ConnectableCI</target_class>
@@ -773,7 +734,6 @@
 					<extkey_attcode>connectableci_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
-				-->
 				<field id="virtualcommredundancy_id" xsi:type="AttributeExternalKey">
 					<sql>virtualcommredundancy_id</sql>
 					<target_class>VirtualCommRedundancy</target_class>
@@ -790,7 +750,7 @@
 				<field id="redundancyType" xsi:type="AttributeRedundancySettings">
 					<sql>redundancytype</sql>
 					<relation_code>impacts</relation_code>
-					<from_class>GenericCommInterface</from_class>
+					<from_class>GenericCommPhysInterface</from_class>
 					<neighbour_id>genericcommvirtinterface</neighbour_id>
 					<enabled>true</enabled>
 					<enabled_mode>user</enabled_mode>
@@ -801,8 +761,8 @@
 				<!--
 				This field is to link the physicalinterfaces to this virtual interface
 				-->
-				<field id="genericcomminterface_list" xsi:type="AttributeLinkedSet">
-					<linked_class>GenericCommInterface</linked_class>
+				<field id="genericcommphysinterface_list" xsi:type="AttributeLinkedSet">
+					<linked_class>GenericCommPhysInterface</linked_class>
 					<ext_key_to_me>virtinterfacemember_id</ext_key_to_me>
 					<count_min>0</count_min>
 					<count_max>0</count_max>
@@ -845,7 +805,7 @@
 						<item id="redundancyType">
 							<rank>70</rank>
 						</item>
-						<item id="genericcomminterface_list">
+						<item id="genericcommphysinterface_list">
 							<rank>100</rank>
 						</item>
 					</items>
@@ -1022,17 +982,13 @@
 					<target_attcode>name</target_attcode>
 				</field>
 				<field id="genericcomm_port_id" xsi:type="AttributeExternalKey">
-					<!--<filter><![CDATA[SELECT GenericCommInterface WHERE connectableci_id = :this->genericcommdevice_id AND connected_to_id='NULL']]></filter>-->
-					<filter><![CDATA[SELECT GenericCommInterface WHERE connectableci_id = :this->genericcommdevice_id]]></filter>
+					<filter><![CDATA[SELECT GenericCommPhysInterface WHERE connectableci_id = :this->genericcommdevice_id AND connected_to_id='NULL']]></filter>
 					<dependencies>
 						<attribute id="connectableci_id"/>
 						<attribute id="genericcommdevice_id"/>
 					</dependencies>
 					<sql>genericcomm_port_id</sql>
-					<!-- test to connect also to virtualinterface
 					<target_class>GenericCommPhysInterface</target_class>
-					-->
-					<target_class>GenericCommInterface</target_class>
 					<is_null_allowed>false</is_null_allowed>
 					<on_target_delete>DEL_AUTO</on_target_delete>
 					<allow_target_creation>true</allow_target_creation>
@@ -1042,16 +998,12 @@
 					<target_attcode>name</target_attcode>
 				</field>
 				<field id="device_port_id" xsi:type="AttributeExternalKey">
-					<!--<filter><![CDATA[SELECT GenericCommInterface WHERE connectableci_id = :this->genericcommdevice_id AND connected_to_id='NULL']]></filter>-->
-					<filter><![CDATA[SELECT GenericCommInterface WHERE connectableci_id = :this->genericcommdevice_id]]></filter>
+					<filter><![CDATA[SELECT GenericCommPhysInterface WHERE connectableci_id = :this->connectableci_id AND connected_to_id='NULL']]></filter>
 					<dependencies>
 						<attribute id="connectableci_id"/>
 					</dependencies>
 					<sql>device_port_id</sql>
-					<!-- test to connect also to virtualinterface
 					<target_class>GenericCommPhysInterface</target_class>
-					-->
-					<target_class>GenericCommInterface</target_class>
 					<is_null_allowed>false</is_null_allowed>
 					<on_target_delete>DEL_AUTO</on_target_delete>
 					<allow_target_creation>true</allow_target_creation>
@@ -1105,12 +1057,12 @@
 				$oNewLink->DBInsert();
 			}
 		}
-		// time to feed the 'connected_to_id' in the GenericCommi(Phys)Interface table
+		// time to feed the 'connected_to_id' in the GenericCommPhysInterface table
 		// Step One : GenericCommDevice to edge
-		$oIntEdge = MetaModel::GetObject('GenericCommInterface', $this->Get('device_port_id'));
+		$oIntEdge = MetaModel::GetObject('GenericCommPhysInterface', $this->Get('device_port_id'));
 		if (is_object($oIntEdge))
 		{
-			$sOQL = "SELECT GenericCommInterface WHERE id = :id";
+			$sOQL = "SELECT GenericCommPhysInterface WHERE id = :id";
 			$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('id' => $this->Get('device_port_id'),));
 			// There should be one link - do it in a safe manner anyway
 			while ($oConnection = $oConnectionSet->Fetch())
@@ -1120,10 +1072,10 @@
 			}
 		}
 		// Step Two : Edge to GenericCommDevice
-		$oIntNet = MetaModel::GetObject('GenericCommInterface', $this->Get('genericcomm_port_id'));
+		$oIntNet = MetaModel::GetObject('GenericCommPhysInterface', $this->Get('genericcomm_port_id'));
 		if (is_object($oIntNet))
 		{
-			$sOQL = "SELECT GenericCommInterface WHERE id = :id";
+			$sOQL = "SELECT GenericCommPhysInterface WHERE id = :id";
 			$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('id' => $this->Get('genericcomm_port_id'),));
 			// There should be one link - do it in a safe manner anyway
 			while ($oConnection = $oConnectionSet->Fetch())
@@ -1172,7 +1124,7 @@
 		// basically, if there was only one move on the connection, I delete
 		// and recreate the other for nothing
 		// Step One : Delete existing connections
-		$sOQLEdge = "SELECT GenericCommInterface WHERE connected_to_id = :id";
+		$sOQLEdge = "SELECT GenericCommPhysInterface WHERE connected_to_id = :id";
 		$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQLEdge), array(), array('id' => $this->Get('device_port_id'),));
 		// There should be one link - do it in a safe manner anyway
 		while ($oConnection = $oConnectionSet->Fetch())
@@ -1180,7 +1132,7 @@
 			$oConnection->Set('connected_to_id', NULL);
 			$oConnection->DBUpdate();
 		}
-		$sOQLNet = "SELECT GenericCommInterface WHERE connected_to_id = :id";
+		$sOQLNet = "SELECT GenericCommPhysInterface WHERE connected_to_id = :id";
 		$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQLNet), array(), array('id' => $this->Get('genericcomm_port_id'),));
 		// There should be one link - do it in a safe manner anyway
 		while ($oConnection = $oConnectionSet->Fetch())
@@ -1189,10 +1141,10 @@
 			$oConnection->DBUpdate();
 		}
 		// Step Two : rebuild the connections
-		$oIntEdge = MetaModel::GetObject('GenericCommInterface', $this->Get('device_port_id'));
+		$oIntEdge = MetaModel::GetObject('GenericCommPhysInterface', $this->Get('device_port_id'));
 		if (is_object($oIntEdge))
 		{
-			$sOQL = "SELECT GenericCommInterface WHERE id = :id";
+			$sOQL = "SELECT GenericCommPhysInterface WHERE id = :id";
 			$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('id' => $this->Get('device_port_id'),));
 			// There should be one link - do it in a safe manner anyway
 			while ($oConnection = $oConnectionSet->Fetch())
@@ -1201,10 +1153,10 @@
 				$oConnection->DBUpdate();
 			}
 		}
-		$oIntNet = MetaModel::GetObject('GenericCommInterface', $this->Get('genericcomm_port_id'));
+		$oIntNet = MetaModel::GetObject('GenericCommPhysInterface', $this->Get('genericcomm_port_id'));
 		if (is_object($oIntNet))
 		{
-			$sOQL = "SELECT GenericCommInterface WHERE id = :id";
+			$sOQL = "SELECT GenericCommPhysInterface WHERE id = :id";
 			$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('id' => $this->Get('genericcomm_port_id'),));
 			// There should be one link - do it in a safe manner anyway
 			while ($oConnection = $oConnectionSet->Fetch())
@@ -1242,10 +1194,10 @@
 				$oConnection->DBDelete();
 			}
 		}	
-		// time to clean up the 'connected_to_id' in the GenericCommInterface table
+		// time to clean up the 'connected_to_id' in the GenericCommPhysInterface table
 		// The cleanup is a little harsh. Search for all occurences of the disconnected port
 		// Step One : GenericCommDevice to Edge
-		$sOQL = "SELECT GenericCommInterface WHERE connected_to_id = :id";
+		$sOQL = "SELECT GenericCommPhysInterface WHERE connected_to_id = :id";
 		$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('id' => $this->Get('device_port_id'),));
 		// There should be one link - do it in a safe manner anyway
 		while ($oConnection = $oConnectionSet->Fetch())
@@ -1254,7 +1206,7 @@
 			$oConnection->DBUpdate();
 		}
 		// Step Two : Edge to GenericCommDevice
-		$sOQL = "SELECT GenericCommInterface WHERE connected_to_id = :id";
+		$sOQL = "SELECT GenericCommPhysInterface WHERE connected_to_id = :id";
 		$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('id' => $this->Get('genericcomm_port_id'),));
 		// There should be one link - do it in a safe manner anyway
 		while ($oConnection = $oConnectionSet->Fetch())
