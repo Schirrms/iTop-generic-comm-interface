@@ -990,7 +990,10 @@
 						<attribute id="genericcommdevice_id"/>
 					</dependencies>
 					<sql>genericcomm_port_id</sql>
+					<!-- test to connect also to virtualinterface
 					<target_class>GenericCommPhysInterface</target_class>
+					-->
+					<target_class>GenericCommInterface</target_class>
 					<is_null_allowed>false</is_null_allowed>
 					<on_target_delete>DEL_AUTO</on_target_delete>
 					<allow_target_creation>true</allow_target_creation>
@@ -1005,7 +1008,10 @@
 						<attribute id="connectableci_id"/>
 					</dependencies>
 					<sql>device_port_id</sql>
+					<!-- test to connect also to virtualinterface
 					<target_class>GenericCommPhysInterface</target_class>
+					-->
+					<target_class>GenericCommInterface</target_class>
 					<is_null_allowed>false</is_null_allowed>
 					<on_target_delete>DEL_AUTO</on_target_delete>
 					<allow_target_creation>true</allow_target_creation>
@@ -1059,12 +1065,12 @@
 				$oNewLink->DBInsert();
 			}
 		}
-		// time to feed the 'connected_to_id' in the GenericCommPhysInterface table
+		// time to feed the 'connected_to_id' in the GenericCommi(Phys)Interface table
 		// Step One : GenericCommDevice to edge
-		$oIntEdge = MetaModel::GetObject('GenericCommPhysInterface', $this->Get('device_port_id'));
+		$oIntEdge = MetaModel::GetObject('GenericCommInterface', $this->Get('device_port_id'));
 		if (is_object($oIntEdge))
 		{
-			$sOQL = "SELECT GenericCommPhysInterface WHERE id = :id";
+			$sOQL = "SELECT GenericCommInterface WHERE id = :id";
 			$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('id' => $this->Get('device_port_id'),));
 			// There should be one link - do it in a safe manner anyway
 			while ($oConnection = $oConnectionSet->Fetch())
@@ -1074,10 +1080,10 @@
 			}
 		}
 		// Step Two : Edge to GenericCommDevice
-		$oIntNet = MetaModel::GetObject('GenericCommPhysInterface', $this->Get('genericcomm_port_id'));
+		$oIntNet = MetaModel::GetObject('GenericCommInterface', $this->Get('genericcomm_port_id'));
 		if (is_object($oIntNet))
 		{
-			$sOQL = "SELECT GenericCommPhysInterface WHERE id = :id";
+			$sOQL = "SELECT GenericCommInterface WHERE id = :id";
 			$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('id' => $this->Get('genericcomm_port_id'),));
 			// There should be one link - do it in a safe manner anyway
 			while ($oConnection = $oConnectionSet->Fetch())
@@ -1126,7 +1132,7 @@
 		// basically, if there was only one move on the connection, I delete
 		// and recreate the other for nothing
 		// Step One : Delete existing connections
-		$sOQLEdge = "SELECT GenericCommPhysInterface WHERE connected_to_id = :id";
+		$sOQLEdge = "SELECT GenericCommInterface WHERE connected_to_id = :id";
 		$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQLEdge), array(), array('id' => $this->Get('device_port_id'),));
 		// There should be one link - do it in a safe manner anyway
 		while ($oConnection = $oConnectionSet->Fetch())
@@ -1134,7 +1140,7 @@
 			$oConnection->Set('connected_to_id', NULL);
 			$oConnection->DBUpdate();
 		}
-		$sOQLNet = "SELECT GenericCommPhysInterface WHERE connected_to_id = :id";
+		$sOQLNet = "SELECT GenericCommInterface WHERE connected_to_id = :id";
 		$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQLNet), array(), array('id' => $this->Get('genericcomm_port_id'),));
 		// There should be one link - do it in a safe manner anyway
 		while ($oConnection = $oConnectionSet->Fetch())
@@ -1143,10 +1149,10 @@
 			$oConnection->DBUpdate();
 		}
 		// Step Two : rebuild the connections
-		$oIntEdge = MetaModel::GetObject('GenericCommPhysInterface', $this->Get('device_port_id'));
+		$oIntEdge = MetaModel::GetObject('GenericCommInterface', $this->Get('device_port_id'));
 		if (is_object($oIntEdge))
 		{
-			$sOQL = "SELECT GenericCommPhysInterface WHERE id = :id";
+			$sOQL = "SELECT GenericCommInterface WHERE id = :id";
 			$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('id' => $this->Get('device_port_id'),));
 			// There should be one link - do it in a safe manner anyway
 			while ($oConnection = $oConnectionSet->Fetch())
@@ -1155,10 +1161,10 @@
 				$oConnection->DBUpdate();
 			}
 		}
-		$oIntNet = MetaModel::GetObject('GenericCommPhysInterface', $this->Get('genericcomm_port_id'));
+		$oIntNet = MetaModel::GetObject('GenericCommInterface', $this->Get('genericcomm_port_id'));
 		if (is_object($oIntNet))
 		{
-			$sOQL = "SELECT GenericCommPhysInterface WHERE id = :id";
+			$sOQL = "SELECT GenericCommInterface WHERE id = :id";
 			$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('id' => $this->Get('genericcomm_port_id'),));
 			// There should be one link - do it in a safe manner anyway
 			while ($oConnection = $oConnectionSet->Fetch())
@@ -1196,10 +1202,10 @@
 				$oConnection->DBDelete();
 			}
 		}	
-		// time to clean up the 'connected_to_id' in the GenericCommPhysInterface table
+		// time to clean up the 'connected_to_id' in the GenericCommInterface table
 		// The cleanup is a little harsh. Search for all occurences of the disconnected port
 		// Step One : GenericCommDevice to Edge
-		$sOQL = "SELECT GenericCommPhysInterface WHERE connected_to_id = :id";
+		$sOQL = "SELECT GenericCommInterface WHERE connected_to_id = :id";
 		$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('id' => $this->Get('device_port_id'),));
 		// There should be one link - do it in a safe manner anyway
 		while ($oConnection = $oConnectionSet->Fetch())
@@ -1208,7 +1214,7 @@
 			$oConnection->DBUpdate();
 		}
 		// Step Two : Edge to GenericCommDevice
-		$sOQL = "SELECT GenericCommPhysInterface WHERE connected_to_id = :id";
+		$sOQL = "SELECT GenericCommInterface WHERE connected_to_id = :id";
 		$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('id' => $this->Get('genericcomm_port_id'),));
 		// There should be one link - do it in a safe manner anyway
 		while ($oConnection = $oConnectionSet->Fetch())
