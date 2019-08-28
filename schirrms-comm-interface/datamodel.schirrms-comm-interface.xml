@@ -683,7 +683,7 @@
 					<neighbours>
 						<!-- neigbour is used to select the alternatives in which this object is a participant -->
 						<neighbour id="genericcommvirtinterface">
-							<attribute>virtinterfacemember_id</attribute>
+							<!--<attribute>virtinterfacemember_id</attribute>-->
 							<query_down>SELECT GenericCommVirtInterface WHERE connectableci_id = :this-&gt;connectableci_id</query_down>
 							<query_up>SELECT GenericCommPhysInterface WHERE connectableci_id = :this-&gt;connectableci_id</query_up>
 						</neighbour>
