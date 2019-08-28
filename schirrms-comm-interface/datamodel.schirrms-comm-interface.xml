@@ -465,6 +465,16 @@
 					<extkey_attcode>connectableci_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
+				<field id="virtinterfacemember_id" xsi:type="AttributeExternalKey">
+					<sql>virtinterfacemember_id</sql>
+					<target_class>GenericCommVirtInterface</target_class>
+					<is_null_allowed>true</is_null_allowed>
+					<on_target_delete>DEL_MANUAL</on_target_delete>
+				</field>
+				<field id="virtinterfacemember_name" xsi:type="AttributeExternalField">
+					<extkey_attcode>virtinterfacemember_id</extkey_attcode>
+					<target_attcode>name</target_attcode>
+				</field>
 			</fields>
 			<methods/>
 			<presentation>
@@ -584,6 +594,8 @@
 					<extkey_attcode>connected_to_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
+				<!-- Moved to GenericCommDevice : it should permit a virtual interface
+				to be memeber of another virtual interface
 				<field id="virtinterfacemember_id" xsi:type="AttributeExternalKey">
 					<sql>virtinterfacemember_id</sql>
 					<target_class>GenericCommVirtInterface</target_class>
@@ -594,6 +606,7 @@
 					<extkey_attcode>virtinterfacemember_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
+				-->
 			</fields>
 			<methods>
 			</methods>
