@@ -563,7 +563,7 @@
 				</field>
 				<field id="connected_to_id" xsi:type="AttributeExternalKey">
 					<sql>connected_to_id</sql>
-					<target_class>GenericCommPhysInterface</target_class>
+					<target_class>GenericCommInterface</target_class>
 					<is_null_allowed>true</is_null_allowed>
 					<on_target_delete>DEL_AUTO</on_target_delete>
 					<edit_mode>none</edit_mode>
@@ -752,7 +752,7 @@
 				<field id="redundancyType" xsi:type="AttributeRedundancySettings">
 					<sql>redundancytype</sql>
 					<relation_code>impacts</relation_code>
-					<from_class>GenericCommPhysInterface</from_class>
+					<from_class>GenericCommInterface</from_class>
 					<neighbour_id>genericcommvirtinterface</neighbour_id>
 					<enabled>true</enabled>
 					<enabled_mode>user</enabled_mode>
@@ -764,7 +764,7 @@
 				This field is to link the physicalinterfaces to this virtual interface
 				-->
 				<field id="genericcommphysinterface_list" xsi:type="AttributeLinkedSet">
-					<linked_class>GenericCommPhysInterface</linked_class>
+					<linked_class>GenericCommInterface</linked_class>
 					<ext_key_to_me>virtinterfacemember_id</ext_key_to_me>
 					<count_min>0</count_min>
 					<count_max>0</count_max>
@@ -807,7 +807,7 @@
 						<item id="redundancyType">
 							<rank>70</rank>
 						</item>
-						<item id="genericcommphysinterface_list">
+						<item id="genericcomminterface_list">
 							<rank>100</rank>
 						</item>
 					</items>
@@ -984,7 +984,7 @@
 					<target_attcode>name</target_attcode>
 				</field>
 				<field id="genericcomm_port_id" xsi:type="AttributeExternalKey">
-					<filter><![CDATA[SELECT GenericCommPhysInterface WHERE connectableci_id = :this->genericcommdevice_id AND connected_to_id='NULL']]></filter>
+					<filter><![CDATA[SELECT GenericCommInterface WHERE connectableci_id = :this->genericcommdevice_id AND connected_to_id='NULL']]></filter>
 					<dependencies>
 						<attribute id="connectableci_id"/>
 						<attribute id="genericcommdevice_id"/>
@@ -1003,7 +1003,7 @@
 					<target_attcode>name</target_attcode>
 				</field>
 				<field id="device_port_id" xsi:type="AttributeExternalKey">
-					<filter><![CDATA[SELECT GenericCommPhysInterface WHERE connectableci_id = :this->connectableci_id AND connected_to_id='NULL']]></filter>
+					<filter><![CDATA[SELECT GenericCommInterface WHERE connectableci_id = :this->connectableci_id AND connected_to_id='NULL']]></filter>
 					<dependencies>
 						<attribute id="connectableci_id"/>
 					</dependencies>
