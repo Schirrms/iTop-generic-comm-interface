@@ -5,11 +5,7 @@
 
 SetupWebPage::AddModule(
 	__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-<<<<<<< HEAD
-	'schirrms-comm-interface/0.5.4',
-=======
 	'schirrms-comm-interface/0.5.7',
->>>>>>> devel
 	array(
 		// Identification
 		//
