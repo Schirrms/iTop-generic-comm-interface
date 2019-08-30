@@ -1683,6 +1683,8 @@
 				<!-- add a redundancy field from GenericCommDevices to ConnectableCI
 				should be a logical link, built from the physical connections -->
 				<field id="logicalredundancy" xsi:type="AttributeRedundancySettings" _delta="define">
+					<!-- Noidea if a filter is applicable here... -->
+					<filter><![CDATA[SELECT lnkConnectableCIToGenericCommDevice WHERE type="downlink"]]></filter>
 					<sql>logicalredundancy</sql>
 					<relation_code>impacts</relation_code>
 					<from_class>GenericCommDevice</from_class>
