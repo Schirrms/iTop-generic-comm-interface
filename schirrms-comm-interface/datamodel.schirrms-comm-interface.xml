@@ -1690,7 +1690,7 @@
 					<enabled>true</enabled>
 					<enabled_mode>user</enabled_mode>
 					<min_up>1</min_up>
-					<min_up>count</min_up>
+					<min_up_type>count</min_up_type>
 					<min_up_mode>user</min_up_mode>
 				</field>
 			</fields>
