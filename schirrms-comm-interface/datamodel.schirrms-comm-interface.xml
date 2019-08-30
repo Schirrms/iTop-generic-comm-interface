@@ -1641,11 +1641,10 @@
 				<relation id="impacts">
 					<neighbours>
 						<neighbour id="connectableci">
-							<!-- some changes due to the redundancy (at least, I think so)
+							<!-- If using <attribute>connectablecis_list</attribute> then the downlink isn't honoured -->
+							<!-- I shamelesly copied this script but I'm not sure it cover all cases of commDevice interconnection... -->
 							<query_down>SELECT ConnectableCI AS d JOIN lnkConnectableCIToGenericCommDevice AS l1 ON l1.connectableci_id = d.id WHERE l1.genericcommdevice_id = :this-&gt;id AND l1.connection_type='downlink'</query_down>
 							<query_up>SELECT GenericCommDevice AS gc JOIN lnkConnectableCIToGenericCommDevice AS l1 ON l1.genericcommdevice_id = gc.id WHERE l1.connectableci_id = :this-&gt;id AND l1.connection_type='downlink'</query_up>
-							-->
-							<attribute>connectablecis_list</attribute> 
 						</neighbour>
 					</neighbours>
 				</relation>
@@ -1683,8 +1682,6 @@
 				<!-- add a redundancy field from GenericCommDevices to ConnectableCI
 				should be a logical link, built from the physical connections -->
 				<field id="logicalredundancy" xsi:type="AttributeRedundancySettings" _delta="define">
-					<!-- Noidea if a filter is applicable here... -->
-					<filter><![CDATA[SELECT lnkConnectableCIToGenericCommDevice WHERE type="downlink"]]></filter>
 					<sql>logicalredundancy</sql>
 					<relation_code>impacts</relation_code>
 					<from_class>GenericCommDevice</from_class>
