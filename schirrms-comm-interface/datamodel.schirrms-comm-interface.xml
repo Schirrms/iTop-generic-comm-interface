@@ -1641,8 +1641,11 @@
 				<relation id="impacts">
 					<neighbours>
 						<neighbour id="connectableci">
+							<!-- some changes due to the redundancy (at least, I think so)
 							<query_down>SELECT ConnectableCI AS d JOIN lnkConnectableCIToGenericCommDevice AS l1 ON l1.connectableci_id = d.id WHERE l1.genericcommdevice_id = :this-&gt;id AND l1.connection_type='downlink'</query_down>
 							<query_up>SELECT GenericCommDevice AS gc JOIN lnkConnectableCIToGenericCommDevice AS l1 ON l1.genericcommdevice_id = gc.id WHERE l1.connectableci_id = :this-&gt;id AND l1.connection_type='downlink'</query_up>
+							-->
+							<attribute>connectablecis_list</attribute> 
 						</neighbour>
 					</neighbours>
 				</relation>
@@ -1676,6 +1679,19 @@
 					<tracking_level>all</tracking_level>
 					<count_min>0</count_min>
 					<count_max>0</count_max>
+				</field>
+				<!-- add a redundancy field from GenericCommDevices to ConnectableCI
+				should be a logical link, built from the physical connections -->
+				<field id="logicalredundancy" xsi:type="AttributeRedundancySettings" _delta="define">
+					<sql>logicalredundancy</sql>
+					<relation_code>impacts</relation_code>
+					<from_class>GenericCommDevice</from_class>
+					<neighbour_id>connectableci</neighbour_id>
+					<enabled>true</enabled>
+					<enabled_mode>user</enabled_mode>
+					<min_up>1</min_up>
+					<min_up>count</min_up>
+					<min_up_mode>user</min_up_mode>
 				</field>
 			</fields>
 		</class>
