@@ -272,7 +272,7 @@
 							{
 								if ($dBitSpeed >= 10**$iLevel)
 								{
-									$sHumanSpeed = sprintf('%.3g ', $dBitSpeed / (10**$iLevel)) . substr($sUnit, $iLevel/3, 1);
+									$sHumanSpeed = sprintf('%.3g ', $dBitSpeed / (10**$iLevel)) . substr($sUnit, $iLevel/3, 1) . 'b/s';
 									break;
 								}
 							}
@@ -455,6 +455,38 @@
 					<extkey_attcode>humanspeed_id</extkey_attcode>
 					<target_attcode>humanspeed</target_attcode>
 				</field>
+				<field id="connectableci_id" xsi:type="AttributeExternalKey">
+					<sql>connectableci_id</sql>
+					<target_class>ConnectableCI</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+				</field>
+				<field id="connectableci_name" xsi:type="AttributeExternalField">
+					<extkey_attcode>connectableci_id</extkey_attcode>
+					<target_attcode>name</target_attcode>
+				</field>
+				<field id="connected_to_id" xsi:type="AttributeExternalKey">
+					<sql>connected_to_id</sql>
+					<target_class>GenericCommPhysInterface</target_class>
+					<is_null_allowed>true</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<edit_mode>none</edit_mode>
+				</field>
+				<field id="connected_to_name" xsi:type="AttributeExternalField">
+					<extkey_attcode>connected_to_id</extkey_attcode>
+					<target_attcode>name</target_attcode>
+				</field>
+				<field id="virtinterfacemember_id" xsi:type="AttributeExternalKey">
+					<filter><![CDATA[SELECT GenericCommVirtInterface WHERE connectableci_id = :this->connectableci_id AND commproto_id = :this->commproto_id]]></filter>
+					<sql>virtinterfacemember_id</sql>
+					<target_class>GenericCommVirtInterface</target_class>
+					<is_null_allowed>true</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+				</field>
+				<field id="virtinterfacemember_name" xsi:type="AttributeExternalField">
+					<extkey_attcode>virtinterfacemember_id</extkey_attcode>
+					<target_attcode>name</target_attcode>
+				</field>
 			</fields>
 			<methods/>
 			<presentation>
@@ -528,7 +560,7 @@
  					</attributes>
 				</naming>
 				<display_template/>
-				<icon/>
+				<icon>images/phys-interface.png</icon>
 				<reconciliation>
 					<attributes>
 						<attribute id="name"/>
@@ -541,6 +573,7 @@
 				</obsolescence>
 			</properties>
 			<fields>
+				<!-- fields moved to GenericCommInterface
 				<field id="connectableci_id" xsi:type="AttributeExternalKey">
 					<sql>connectableci_id</sql>
 					<target_class>ConnectableCI</target_class>
@@ -551,6 +584,7 @@
 					<extkey_attcode>connectableci_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
+				-->
 				<field id="physcommtype_id" xsi:type="AttributeExternalKey">
 					<sql>physcommtype_id</sql>
 					<target_class>GenericPhysCommConnector</target_class>
@@ -561,6 +595,7 @@
 					<extkey_attcode>physcommtype_id</extkey_attcode>
 					<target_attcode>type</target_attcode>
 				</field>
+				<!-- fields moved to GenericCommInterface
 				<field id="connected_to_id" xsi:type="AttributeExternalKey">
 					<sql>connected_to_id</sql>
 					<target_class>GenericCommPhysInterface</target_class>
@@ -573,17 +608,39 @@
 					<target_attcode>name</target_attcode>
 				</field>
 				<field id="virtinterfacemember_id" xsi:type="AttributeExternalKey">
+<<<<<<< HEAD
 					<sql>virtinterfacemember_id</sql>
 					<target_class>GenericCommVirtInterface</target_class>
 					<is_null_allowed>true</is_null_allowed>
 					<on_target_delete>DEL_MANUAL</on_target_delete>
+=======
+					<filter><![CDATA[SELECT GenericCommVirtInterface WHERE connectableci_id = :this->connectableci_id AND commproto_id = :this->commproto_id]]></filter>
+					<sql>virtinterfacemember_id</sql>
+					<target_class>GenericCommVirtInterface</target_class>
+					<is_null_allowed>true</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+>>>>>>> devel
 				</field>
 				<field id="virtinterfacemember_name" xsi:type="AttributeExternalField">
 					<extkey_attcode>virtinterfacemember_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
+<<<<<<< HEAD
+=======
+				-->
+>>>>>>> devel
 			</fields>
 			<methods>
+				<method id="GetRelationQueries">
+					<comment>/**
+					* Placeholder for backward compatibility (iTop &lt;= 2.1.0)
+					* in case an extension attempts to redefine this function...
+					*/</comment>
+					<static>true</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	public static function GetRelationQueries($sRelCode){return parent::GetRelationQueries($sRelCode);} ]]></code>
+				</method>
 			</methods>
 			<presentation>
 				<details>
@@ -605,6 +662,9 @@
 						</item>
 						<item id="humanspeed_id">
 							<rank>60</rank>
+						</item>
+						<item id="virtinterfacemember_id">
+							<rank>70</rank>
 						</item>
 						<item id="connected_to_id">
 							<rank>100</rank>
@@ -666,6 +726,9 @@
 						<item id="humanspeed_id">
 							<rank>60</rank>
 						</item>
+						<item id="virtinterfacemember_id">
+							<rank>70</rank>
+						</item>
 						<item id="connected_to_id">
 							<rank>100</rank>
 						</item>
@@ -675,9 +738,13 @@
 			<relations>
 				<relation id="impacts">
 					<neighbours>
-						<neighbour id="virtualinterfaces">
+						<!-- neigbour is used to select the alternatives in which this object is a participant -->
+						<neighbour id="genericcommvirtinterface">
+							<attribute>virtinterfacemember_id</attribute>
+							<!--
 							<query_down>SELECT GenericCommVirtInterface WHERE connectableci_id = :this-&gt;connectableci_id</query_down>
 							<query_up>SELECT GenericCommPhysInterface WHERE connectableci_id = :this-&gt;connectableci_id</query_up>
+							-->
 						</neighbour>
 					</neighbours>
 				</relation>
@@ -703,7 +770,7 @@
  					</attributes>
 				</naming>
 				<display_template/>
-				<icon/>
+				<icon>images/virt-interface.png</icon>
 				<reconciliation>
 					<attributes>
 						<attribute id="name"/>
@@ -716,6 +783,7 @@
 				</obsolescence>
 			</properties>
 			<fields>
+				<!-- moved to GenericCommInterface
 				<field id="connectableci_id" xsi:type="AttributeExternalKey">
 					<sql>connectableci_id</sql>
 					<target_class>ConnectableCI</target_class>
@@ -726,6 +794,7 @@
 					<extkey_attcode>connectableci_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
+				-->
 				<field id="virtualcommredundancy_id" xsi:type="AttributeExternalKey">
 					<sql>virtualcommredundancy_id</sql>
 					<target_class>VirtualCommRedundancy</target_class>
@@ -743,7 +812,7 @@
 					<sql>redundancytype</sql>
 					<relation_code>impacts</relation_code>
 					<from_class>GenericCommPhysInterface</from_class>
-					<neighbour_id>virtualinterfaces</neighbour_id>
+					<neighbour_id>genericcommvirtinterface</neighbour_id>
 					<enabled>true</enabled>
 					<enabled_mode>user</enabled_mode>
 					<min_up>1</min_up>
@@ -753,7 +822,11 @@
 				<!--
 				This field is to link the physicalinterfaces to this virtual interface
 				-->
+<<<<<<< HEAD
 				<field id="physicalinterfaces_list" xsi:type="AttributeLinkedSet">
+=======
+				<field id="genericcommphysinterface_list" xsi:type="AttributeLinkedSet">
+>>>>>>> devel
 					<linked_class>GenericCommPhysInterface</linked_class>
 					<ext_key_to_me>virtinterfacemember_id</ext_key_to_me>
 					<count_min>0</count_min>
@@ -762,6 +835,19 @@
 				</field>
 			</fields>
 			<methods>
+<<<<<<< HEAD
+=======
+				<method id="GetRelationQueries">
+					<comment>/**
+					* Placeholder for backward compatibility (iTop &lt;= 2.1.0)
+					* in case an extension attempts to redefine this function...
+					*/</comment>
+					<static>true</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	public static function GetRelationQueries($sRelCode){return parent::GetRelationQueries($sRelCode);} ]]></code>
+				</method>
+>>>>>>> devel
 			</methods>
 			<presentation>
 				<details>
@@ -787,7 +873,11 @@
 						<item id="redundancyType">
 							<rank>70</rank>
 						</item>
+<<<<<<< HEAD
 						<item id="physicalinterfaces_list">
+=======
+						<item id="genericcommphysinterface_list">
+>>>>>>> devel
 							<rank>100</rank>
 						</item>
 					</items>
@@ -850,6 +940,8 @@
 		-->
 		<!--
 		This class implements a GenericCommDeviceType
+		The idea is to put here the global function of the Device :
+		SAN switch, WAN Router ...
 		-->
 		<class id="GenericCommDeviceType" _delta="define">
 			<parent>Typology</parent>
@@ -1367,17 +1459,20 @@
 						<item id="genericcommphysinterface_list">
 							<rank>40</rank>
 						</item>
-						<item id="connectablecis_list">
+						<item id="genericcommvirtinterface_list">
 							<rank>50</rank>
 						</item>
-						<item id="providercontracts_list">
+						<item id="connectablecis_list">
 							<rank>60</rank>
 						</item>
-						<item id="services_list">
+						<item id="providercontracts_list">
 							<rank>70</rank>
 						</item>
-						<item id="col:col1">
+						<item id="services_list">
 							<rank>80</rank>
+						</item>
+						<item id="col:col1">
+							<rank>90</rank>
 							<items>
 								<item id="fieldset:Server:baseinfo">
 									<rank>10</rank>
@@ -1442,7 +1537,7 @@
 							</items>
 						</item>
 						<item id="col:col2">
-							<rank>90</rank>
+							<rank>100</rank>
 							<items>
 								<item id="fieldset:Server:Date">
 									<rank>10</rank>
@@ -1588,13 +1683,13 @@
 		<class id="ConnectableCI" _delta="must_exist">
 			<fields>
 				<field id="genericcommdevice_list" xsi:type="AttributeLinkedSetIndirect" _delta="define">
-                <linked_class>lnkConnectableCIToGenericCommDevice</linked_class>
-                <ext_key_to_me>connectableci_id</ext_key_to_me>
-                <count_min>0</count_min>
-                <count_max>0</count_max>
-                <ext_key_to_remote>genericcommdevice_id</ext_key_to_remote>
-                <duplicates>true</duplicates>
-              </field>
+					<linked_class>lnkConnectableCIToGenericCommDevice</linked_class>
+					<ext_key_to_me>connectableci_id</ext_key_to_me>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<ext_key_to_remote>genericcommdevice_id</ext_key_to_remote>
+					<duplicates>true</duplicates>
+				</field>
 				<field id="genericcommphysinterface_list" xsi:type="AttributeLinkedSet" _delta="define">
 					<linked_class>GenericCommPhysInterface</linked_class>
 					<ext_key_to_me>connectableci_id</ext_key_to_me>
@@ -1623,6 +1718,9 @@
 						<item id="genericcommvirtinterface_list" _delta="define">
 							<rank>56</rank>
 						</item>
+						<item id="genericcommdevice_list" _delta="define">
+							<rank>57</rank>
+						</item>
 					</items>
 				</details>
 			</presentation>
@@ -1637,14 +1735,32 @@
 						<item id="genericcommvirtinterface_list" _delta="define">
 							<rank>56</rank>
 						</item>
+						<item id="genericcommdevice_list" _delta="define">
+							<rank>57</rank>
+						</item>
 					</items>
 				</details>
 			</presentation>
+		</class>
+		<!--
+		Thanks to VDumas (again), the correct way to extend an AttributeEnum field
+		-->
+		<class id="Model" _delta="must_exist">
+			<fields>
+				<field id="type" xsi:type="AttributeEnum" _delta="must_exist">
+					<values>
+						<value id="GenericCommDevice" _delta="define">GenericCommDevice</value>	
+					</values>
+				</field>
+			</fields>
 		</class>
 	</classes>
 	<!-- 
 	I have no idea where (in witch menu) I'm adding The GenericCommDevice
 	I hope it will be in the list of 'new CIs'
+	-> Well yes, it is added in 'New devices', and also in 'Configuration Management -> Overview -> Infrastructure
+	-> For the record : Cell id=0 is the box order  top to bottom
+	-> <rnk>5</rank> is the horizontal order in the box. so seems also to be the dashlet id..
 	-->
 	<menus>
 		<menu id="ConfigManagementOverview" xsi:type="DashboardMenuNode" _delta="must_exist">
@@ -1660,6 +1776,35 @@
 							<dashlet id="99" xsi:type="DashletBadge" _delta="define">
 								<rank>5</rank>
 								<class>GenericCommDevice</class>
+							</dashlet>
+						</dashlets>
+					</cell>
+					<cell id="4" _delta="must_exist"> <!-- Dashboard -> Miscellaneous -->
+						<rank>0</rank>
+						<dashlets>
+							<dashlet id="90" xsi:type="DashletBadge" _delta="define">
+								<rank>6</rank>
+								<class>GenericCommSpeed</class>
+							</dashlet>
+							<dashlet id="91" xsi:type="DashletBadge" _delta="define">
+								<rank>7</rank>
+								<class>GenericPhysCommConnector</class>
+							</dashlet>
+							<dashlet id="92" xsi:type="DashletBadge" _delta="define">
+								<rank>8</rank>
+								<class>GenericCommProtocol</class>
+							</dashlet>
+							<dashlet id="93" xsi:type="DashletBadge" _delta="define">
+								<rank>9</rank>
+								<class>GenericCommDeviceType</class>
+							</dashlet>
+							<dashlet id="95" xsi:type="DashletBadge" _delta="define">
+								<rank>10</rank>
+								<class>GenericCommPhysInterface</class>
+							</dashlet>
+							<dashlet id="96" xsi:type="DashletBadge" _delta="define">
+								<rank>11</rank>
+								<class>GenericCommVirtInterface</class>
 							</dashlet>
 						</dashlets>
 					</cell>
