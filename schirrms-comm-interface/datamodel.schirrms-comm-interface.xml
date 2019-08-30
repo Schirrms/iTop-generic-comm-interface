@@ -455,7 +455,38 @@
 					<extkey_attcode>humanspeed_id</extkey_attcode>
 					<target_attcode>humanspeed</target_attcode>
 				</field>
+				<field id="connectableci_id" xsi:type="AttributeExternalKey">
+					<sql>connectableci_id</sql>
+					<target_class>ConnectableCI</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+				</field>
+				<field id="connectableci_name" xsi:type="AttributeExternalField">
+					<extkey_attcode>connectableci_id</extkey_attcode>
+					<target_attcode>name</target_attcode>
 			</fields>
+				<field id="connected_to_id" xsi:type="AttributeExternalKey">
+					<sql>connected_to_id</sql>
+					<target_class>GenericCommPhysInterface</target_class>
+					<is_null_allowed>true</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<edit_mode>none</edit_mode>
+				</field>
+				<field id="connected_to_name" xsi:type="AttributeExternalField">
+					<extkey_attcode>connected_to_id</extkey_attcode>
+					<target_attcode>name</target_attcode>
+				</field>
+				<field id="virtinterfacemember_id" xsi:type="AttributeExternalKey">
+					<filter><![CDATA[SELECT GenericCommVirtInterface WHERE connectableci_id = :this->connectableci_id AND commproto_id = :this->commproto_id]]></filter>
+					<sql>virtinterfacemember_id</sql>
+					<target_class>GenericCommVirtInterface</target_class>
+					<is_null_allowed>true</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+				</field>
+				<field id="virtinterfacemember_name" xsi:type="AttributeExternalField">
+					<extkey_attcode>virtinterfacemember_id</extkey_attcode>
+					<target_attcode>name</target_attcode>
+				</field>
 			<methods/>
 			<presentation>
 				<details>
@@ -541,6 +572,7 @@
 				</obsolescence>
 			</properties>
 			<fields>
+				<!-- fields moved to GenericCommInterface
 				<field id="connectableci_id" xsi:type="AttributeExternalKey">
 					<sql>connectableci_id</sql>
 					<target_class>ConnectableCI</target_class>
@@ -551,6 +583,7 @@
 					<extkey_attcode>connectableci_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
+				-->
 				<field id="physcommtype_id" xsi:type="AttributeExternalKey">
 					<sql>physcommtype_id</sql>
 					<target_class>GenericPhysCommConnector</target_class>
@@ -561,6 +594,7 @@
 					<extkey_attcode>physcommtype_id</extkey_attcode>
 					<target_attcode>type</target_attcode>
 				</field>
+				<!-- fields moved to GenericCommInterface
 				<field id="connected_to_id" xsi:type="AttributeExternalKey">
 					<sql>connected_to_id</sql>
 					<target_class>GenericCommPhysInterface</target_class>
@@ -583,6 +617,7 @@
 					<extkey_attcode>virtinterfacemember_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
+				-->
 			</fields>
 			<methods>
 				<method id="GetRelationQueries">
@@ -737,6 +772,7 @@
 				</obsolescence>
 			</properties>
 			<fields>
+				<!-- moved to GenericCommInterface
 				<field id="connectableci_id" xsi:type="AttributeExternalKey">
 					<sql>connectableci_id</sql>
 					<target_class>ConnectableCI</target_class>
@@ -747,6 +783,7 @@
 					<extkey_attcode>connectableci_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
+				-->
 				<field id="virtualcommredundancy_id" xsi:type="AttributeExternalKey">
 					<sql>virtualcommredundancy_id</sql>
 					<target_class>VirtualCommRedundancy</target_class>
