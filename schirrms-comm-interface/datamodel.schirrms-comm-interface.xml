@@ -623,7 +623,7 @@
 								// if this port connection_impact is 'depends' then the other side is 'impacts'
 								$sImpact = $this->Get('connection_impact');
 								$sConnImpact = ($sImpact == 'impacts') ? 'depends' : 'impacts';
-								$oDevice->Set('connected_to_id', $this->Get('id'));
+								$oDevice->Set('connected_to_id', $this->GetKey());
 								$oDevice->Set('connection_impact', $sConnImpact);
 								$oDevice->DBUpdate();
 							}
