@@ -692,7 +692,7 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function AfterInsert()
 						{
-							$this->ConnectRemotePort();
+							//$this->ConnectRemotePort();
 							parent::AfterInsert();
 				}]]></code>
 				</method>
@@ -702,8 +702,8 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function AfterUpdate()
 						{
-							$this->DisconnectRemotePort();
-							$this->ConnectRemotePort();
+							//$this->DisconnectRemotePort();
+							//$this->ConnectRemotePort();
 							parent::OnUpdate();
 				}]]></code>
 				</method>
@@ -713,7 +713,7 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function AfterDelete()
 						{
-							$this->DisconnectRemotePort();
+							//$this->DisconnectRemotePort();
 							parent::OnDelete();
 				}]]></code>
 				</method>
