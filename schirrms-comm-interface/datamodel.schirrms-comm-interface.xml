@@ -1698,6 +1698,7 @@
 				<relation id="impacts">
 					<neighbours>
 						<neighbour id="connectableci">
+						-->
 							<!-- If using <attribute>connectablecis_list</attribute> then the downlink isn't honoured -->
 							<!-- I shamelesly copied this script but I'm not sure it cover all cases of commDevice interconnection... --><!--
 							<query_down>SELECT ConnectableCI AS d JOIN lnkConnectableCIToGenericCommDevice AS l1 ON l1.connectableci_id = d.id WHERE l1.genericcommdevice_id = :this-&gt;id AND l1.connection_type='downlink'</query_down>
