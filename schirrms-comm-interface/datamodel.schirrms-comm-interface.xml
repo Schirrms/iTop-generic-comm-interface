@@ -465,7 +465,7 @@
 					<extkey_attcode>connectableci_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
-				<!-- as ofversion 0.6.0, connected_to_id returns to genericcommphysinterface as 
+				<!-- as of version 0.6.0, connected_to_id returns to genericcommphysinterface as 
 					 link between virtual an generic interface have to go trough an lnk table 
 					 (many to many relation) -->
 				<field id="virtinterfacemember_id" xsi:type="AttributeExternalKey">
@@ -579,7 +579,7 @@
 					<sql>connected_to_id</sql>
 					<target_class>GenericCommPhysInterface</target_class>
 					<is_null_allowed>true</is_null_allowed>
-					<on_target_delete>DEL_AUTO</on_target_delete>
+					<on_target_delete>DEL_MANUAL</on_target_delete>
 					<edit_mode>none</edit_mode>
 				</field>
 				<field id="connected_to_name" xsi:type="AttributeExternalField">
@@ -587,7 +587,7 @@
 					<target_attcode>name</target_attcode>
 				</field>
 				<!-- starting on version 0.6.0 connection impact down to port -->
-				<!-- not sure about the 'null allowed... -->
+				<!-- not sure about the 'null allowed'... -->
 				<field id="connection_impact" xsi:type="AttributeEnum">
 					<values>
 						<value id="impacts">impacts</value>
@@ -1714,6 +1714,7 @@
 		-->
 		<class id="ConnectableCI" _delta="must_exist">
 			<fields>
+			<!--
 				<field id="genericcommdevice_list" xsi:type="AttributeLinkedSetIndirect" _delta="define">
 					<linked_class>lnkConnectableCIToGenericCommDevice</linked_class>
 					<ext_key_to_me>connectableci_id</ext_key_to_me>
@@ -1722,6 +1723,7 @@
 					<ext_key_to_remote>genericcommdevice_id</ext_key_to_remote>
 					<duplicates>true</duplicates>
 				</field>
+				-->
 				<field id="genericcommphysinterface_list" xsi:type="AttributeLinkedSet" _delta="define">
 					<linked_class>GenericCommPhysInterface</linked_class>
 					<ext_key_to_me>connectableci_id</ext_key_to_me>
