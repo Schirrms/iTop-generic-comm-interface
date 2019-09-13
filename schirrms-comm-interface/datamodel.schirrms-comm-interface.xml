@@ -616,10 +616,13 @@
 					<type>Overload-cmdbAbstractObject</type>
 					<code><![CDATA[	protected function ConnectRemotePort()
 						{
+							print "ConnectRemotePort begins<BR>";
+							print "connected_to_name = ".$this->Get('Connected_to_name')."<br>";
 							// try to get the port this port is connected to
 							$oDevice = MetaModel::GetObject('GenericCommPhysInterface', $this->Get('connected_to_id'));
 							if (is_object($oDevice) && (get_class($oDevice) == 'GenericCommPhysInterface'))
 							{
+								print "Test Object OK<br>";
 								$sOQL = "SELECT GenericCommPhysInterface WHERE id = :device";
 								$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL),
 									array(),
