@@ -625,13 +625,13 @@
 								if (is_object($oDevice) && (get_class($oDevice) == 'GenericCommPhysInterface'))
 								{
 									print "Test Object OK<br>";
-								//	$sOQL = "SELECT GenericCommPhysInterface WHERE id = :device";
-								//	$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL),
-								//		array(),
-								//		array(
-								//			'device' => $this->Get('connected_to_id'),
-								//		)
-								//	);
+									$sOQL = "SELECT GenericCommPhysInterface WHERE id = :device";
+									$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL),
+										array(),
+										array(
+											'device' => $this->Get('connected_to_id'),
+										)
+									);
 
 									// There should be one link - do it in a safe manner anyway
 								//	while ($oConnection = $oConnectionSet->Fetch())
@@ -665,13 +665,13 @@
 								if (is_object($oDevice) && (get_class($oDevice) == 'GenericCommPhysInterface'))
 								{
 									print "Test Object OK<br>";
-								//	$sOQL = "SELECT GenericCommPhysInterface WHERE connected_to_id = :device";
-								//	$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL),
-								//		array(),
-								//		array(
-								//			'device' => $this->GetKey(),
-								//		)
-								//	);
+									$sOQL = "SELECT GenericCommPhysInterface WHERE connected_to_id = :device";
+									$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL),
+										array(),
+										array(
+											'device' => $this->GetKey(),
+										)
+									);
 
 									// There should be one link - do it in a safe manner anyway
 								//	while ($oConnection = $oConnectionSet->Fetch())
