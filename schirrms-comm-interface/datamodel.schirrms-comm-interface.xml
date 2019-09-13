@@ -610,7 +610,6 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	public static function GetRelationQueries($sRelCode){return parent::GetRelationQueries($sRelCode);} ]]></code>
 				</method>
-				<!--
 				<method id="ConnectRemotePort">
 					<static>false</static>
 					<access>protected</access>
@@ -621,12 +620,24 @@
 							$oDevice = MetaModel::GetObject('GenericCommPhysInterface', $this->Get('connected_to_id'));
 							if (is_object($oDevice) && (get_class($oDevice) == 'GenericCommPhysInterface'))
 							{
-								// if this port connection_impact is 'depends' then the other side is 'impacts'
-								$sImpact = $this->Get('connection_impact');
-								$sConnImpact = ($sImpact == 'impacts') ? 'depends' : 'impacts';
-								$oDevice->Set('connected_to_id', $this->GetKey());
-								$oDevice->Set('connection_impact', $sConnImpact);
-								$oDevice->DBUpdate();
+								$sOQL = "SELECT GenericCommPhysInterface WHERE id = :device";
+								$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL),
+									array(),
+									array(
+										'device' => $this->Get('connected_to_id'),
+									)
+								);
+
+								// There should be one link - do it in a safe manner anyway
+								while ($oConnection = $oConnectionSet->Fetch())
+								{
+									// if this port connection_impact is 'depends' then the other side is 'impacts'
+									$sImpact = $this->Get('connection_impact');
+									$sConnImpact = ($sImpact == 'impacts') ? 'depends' : 'impacts';
+									$oConnection->Set('connected_to_id', $this->GetKey());
+									$oConnection->Set('connection_impact', $sConnImpact);
+									$oConnection->DBUpdate();
+								}
 							}
 						}
 					]]>
@@ -642,13 +653,24 @@
 							$oDevice = MetaModel::GetObject('GenericCommPhysInterface', $this->GetOriginal('connected_to_id'));
 							if (is_object($oDevice) && (get_class($oDevice) == 'GenericCommPhysInterface'))
 							{
-								// connection_impact is by default 'depends'
-								$oDevice->Set('connected_to_id', '');
-								$oDevice->Set('connection_impact', 'depends');
-								$oDevice->DBUpdate();
+								$sOQL = "SELECT GenericCommPhysInterface WHERE connected_to_id = :device";
+								$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL),
+									array(),
+									array(
+										'device' => $this->GetKey(),
+									)
+								);
+
+								// There should be one link - do it in a safe manner anyway
+								while ($oConnection = $oConnectionSet->Fetch())
+								{
+									// connection_impact is by default 'depends'
+									$oConnection->Set('connected_to_id', '');
+									$oConnection->Set('connection_impact', 'depends');
+									$oConnection->DBUpdate();
+								}
 							}
-						}
-					]]>
+						}					]]>
 					</code>
 				</method>
 				<method id="AfterInsert">
@@ -682,7 +704,6 @@
 							parent::AfterDelete();
 				}]]></code>
 				</method>
-				-->
 			</methods>
 			<presentation>
 				<details>
