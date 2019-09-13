@@ -617,7 +617,7 @@
 					<code><![CDATA[	protected function ConnectRemotePort()
 						{
 							print "ConnectRemotePort begins<BR>";
-							print "connected_to_name = ".$this->Get('Connected_to_name')."<br>";
+							print "connected_to_name = ".$this->Get('connected_to_name')."<br>";
 							// try to get the port this port is connected to
 							$oDevice = MetaModel::GetObject('GenericCommPhysInterface', $this->Get('connected_to_id'));
 							if (is_object($oDevice) && (get_class($oDevice) == 'GenericCommPhysInterface'))
@@ -634,6 +634,7 @@
 								// There should be one link - do it in a safe manner anyway
 								while ($oConnection = $oConnectionSet->Fetch())
 								{
+									print "En cours sur : '".$oConnection->Get('name')."'<br>";
 									// if this port connection_impact is 'depends' then the other side is 'impacts'
 									$sImpact = $this->Get('connection_impact');
 									$sConnImpact = ($sImpact == 'impacts') ? 'depends' : 'impacts';
@@ -642,6 +643,8 @@
 									$oConnection->DBUpdate();
 								}
 							}
+							print "ConnectRemotePort ends<BR>";
+							sleep(5);
 						}
 					]]>
 					</code>
@@ -652,10 +655,13 @@
 					<type>Overload-cmdbAbstractObject</type>
 					<code><![CDATA[	protected function DisconnectRemotePort()
 						{
+							print "DisconnectRemotePort begins<BR>";
+							print "was connected_to_name = ".$this->GetOriginal('connected_to_name')."<br>";
 							// try to get the port this port was connected to
 							$oDevice = MetaModel::GetObject('GenericCommPhysInterface', $this->GetOriginal('connected_to_id'));
 							if (is_object($oDevice) && (get_class($oDevice) == 'GenericCommPhysInterface'))
 							{
+								print "Test Object OK<br>";
 								$sOQL = "SELECT GenericCommPhysInterface WHERE connected_to_id = :device";
 								$oConnectionSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL),
 									array(),
@@ -667,12 +673,15 @@
 								// There should be one link - do it in a safe manner anyway
 								while ($oConnection = $oConnectionSet->Fetch())
 								{
+									print "En cours sur : '".$oConnection->Get('name')."'<br>";
 									// connection_impact is by default 'depends'
 									$oConnection->Set('connected_to_id', '');
 									$oConnection->Set('connection_impact', 'depends');
 									$oConnection->DBUpdate();
 								}
 							}
+							print "DisconnectRemotePort ends<BR>";
+							sleep(5);
 						}
 					]]>
 					</code>
