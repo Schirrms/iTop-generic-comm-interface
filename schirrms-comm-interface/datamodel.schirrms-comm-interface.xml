@@ -634,16 +634,16 @@
 									);
 
 									// There should be one link - do it in a safe manner anyway
-								//	while ($oConnection = $oConnectionSet->Fetch())
-								//	{
-								//		print "En cours sur : '".$oConnection->Get('name')."'<br>";
-								//		// if this port connection_impact is 'depends' then the other side is 'impacts'
-								//		$sImpact = $this->Get('connection_impact');
-								//		$sConnImpact = ($sImpact == 'impacts') ? 'depends' : 'impacts';
-								//		$oConnection->Set('connected_to_id', $this->GetKey());
-								//		$oConnection->Set('connection_impact', $sConnImpact);
-								//		$oConnection->DBUpdate();
-								//	}
+									while ($oConnection = $oConnectionSet->Fetch())
+									{
+										print "En cours sur : '".$oConnection->Get('name')."'<br>";
+										// if this port connection_impact is 'depends' then the other side is 'impacts'
+										$sImpact = $this->Get('connection_impact');
+										$sConnImpact = ($sImpact == 'impacts') ? 'depends' : 'impacts';
+										$oConnection->Set('connected_to_id', $this->GetKey());
+										$oConnection->Set('connection_impact', $sConnImpact);
+										$oConnection->DBUpdate();
+									}
 								}
 							}
 							print "ConnectRemotePort ends<BR>";
@@ -674,14 +674,14 @@
 									);
 
 									// There should be one link - do it in a safe manner anyway
-								//	while ($oConnection = $oConnectionSet->Fetch())
-								//	{
-								//		print "En cours sur : '".$oConnection->Get('name')."'<br>";
-								//		// connection_impact is by default 'depends'
-								//		$oConnection->Set('connected_to_id', '');
-								//		$oConnection->Set('connection_impact', 'depends');
-								//		$oConnection->DBUpdate();
-								//	}
+									while ($oConnection = $oConnectionSet->Fetch())
+									{
+										print "En cours sur : '".$oConnection->Get('name')."'<br>";
+										// connection_impact is by default 'depends'
+										$oConnection->Set('connected_to_id', '');
+										$oConnection->Set('connection_impact', 'depends');
+										$oConnection->DBUpdate();
+									}
 								}
 							}
 							print "DisconnectRemotePort ends<BR>";
