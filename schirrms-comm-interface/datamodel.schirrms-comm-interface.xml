@@ -646,8 +646,7 @@
 							print "ConnectRemotePort ends<BR>";
 							sleep(5);
 						}
-					]]>
-					</code>
+					]]></code>
 				</method>
 					<method id="DisconnectRemotePort">
 					<static>false</static>
@@ -683,8 +682,7 @@
 							print "DisconnectRemotePort ends<BR>";
 							sleep(5);
 						}
-					]]>
-					</code>
+					]]></code>
 				</method>
 				<method id="AfterInsert">
 					<static>false</static>
@@ -692,7 +690,7 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function AfterInsert()
 						{
-							//$this->ConnectRemotePort();
+							$this->ConnectRemotePort();
 							parent::AfterInsert();
 				}]]></code>
 				</method>
@@ -702,8 +700,8 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function AfterUpdate()
 						{
-							//$this->DisconnectRemotePort();
-							//$this->ConnectRemotePort();
+							$this->DisconnectRemotePort();
+							$this->ConnectRemotePort();
 							parent::OnUpdate();
 				}]]></code>
 				</method>
@@ -713,7 +711,7 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function AfterDelete()
 						{
-							//$this->DisconnectRemotePort();
+							$this->DisconnectRemotePort();
 							parent::OnDelete();
 				}]]></code>
 				</method>
