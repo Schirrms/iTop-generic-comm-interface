@@ -610,7 +610,8 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	public static function GetRelationQueries($sRelCode){return parent::GetRelationQueries($sRelCode);} ]]></code>
 				</method>
-					<method id="ConnectRemotePort">
+				<!--
+				<method id="ConnectRemotePort">
 					<static>false</static>
 					<access>protected</access>
 					<type>Overload-cmdbAbstractObject</type>
@@ -681,6 +682,7 @@
 							parent::AfterDelete();
 				}]]></code>
 				</method>
+				-->
 			</methods>
 			<presentation>
 				<details>
