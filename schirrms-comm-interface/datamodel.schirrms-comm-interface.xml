@@ -1765,9 +1765,11 @@
 						<item id="genericcommvirtinterface_list" _delta="define">
 							<rank>56</rank>
 						</item>
+						<!--
 						<item id="genericcommdevice_list" _delta="define">
 							<rank>57</rank>
 						</item>
+						-->
 					</items>
 				</details>
 			</presentation>
@@ -1782,9 +1784,11 @@
 						<item id="genericcommvirtinterface_list" _delta="define">
 							<rank>56</rank>
 						</item>
+						<!--
 						<item id="genericcommdevice_list" _delta="define">
 							<rank>57</rank>
 						</item>
+						-->
 					</items>
 				</details>
 			</presentation>
