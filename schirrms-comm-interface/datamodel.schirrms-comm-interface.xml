@@ -617,7 +617,7 @@
 					<code><![CDATA[	protected function ConnectRemotePort()
 						{
 							print "ConnectRemotePort begins<BR>";
-							if not empty($this->Get('connected_to_id'))
+							if (!(empty($this->Get('connected_to_id'))))
 							{
 								print "connected_to_name = ".$this->Get('connected_to_name')."<br>";
 								// try to get the port this port is connected to
@@ -657,7 +657,7 @@
 					<code><![CDATA[	protected function DisconnectRemotePort()
 						{
 							print "DisconnectRemotePort begins<BR>";
-							if not empty($this->GetOriginal('connected_to_id'))
+							if (!(empty($this->GetOriginal('connected_to_id'))))
 							{
 								print "was connected_to_name = ".$this->GetOriginal('connected_to_name')."<br>";
 								// try to get the port this port was connected to
