@@ -661,7 +661,10 @@
 							{
 								print "was connected_to_name = ".$this->GetOriginal('connected_to_name')."<br>";
 								// try to get the port this port was connected to
-								$oDevice = MetaModel::GetObject('GenericCommPhysInterface', $this->GetOriginal('connected_to_id'));
+								// This one was hard to find : adding false in the next request allow a null answer
+								// witch is OK as we have to test after operations anyway
+								// see also $$mustBeFound value for MetaModel::GetObject
+								$oDevice = MetaModel::GetObject('GenericCommPhysInterface', $this->GetOriginal('connected_to_id'), false);
 								if (is_object($oDevice) && (get_class($oDevice) == 'GenericCommPhysInterface'))
 								{
 									print "Test Object OK<br>";
