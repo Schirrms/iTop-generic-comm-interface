@@ -763,10 +763,10 @@
 						<item id="virtinterfacemember_id">
 							<rank>70</rank>
 						</item>
-						<item id="connected_to_device_name">
+						<item id="connected_to_device_id">
 							<rank>90</rank>
 						</item>
-						<item id="connected_to_name">
+						<item id="connected_to_id">
 							<rank>100</rank>
 						</item>
 						<item id="connection_impact">
