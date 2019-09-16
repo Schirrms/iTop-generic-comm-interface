@@ -588,8 +588,8 @@
 					<on_target_delete>DEL_MANUAL</on_target_delete>
 					<filter>SELECT GenericCommPhysInterface AS G WHERE G.connected_to_id = '' AND G.id != :this->id AND G.connectableci_id = :this->connected_to_device_id AND G.commproto_id = :this->commproto_id</filter>
 					<dependencies>
-						<attribute id="connected_to_device_id">
-						<attribute id="commproto_id">
+						<attribute id="connected_to_device_id" />
+						<attribute id="commproto_id" />
 					</dependencies>
 				</field>
 				<field id="connected_to_name" xsi:type="AttributeExternalField">
