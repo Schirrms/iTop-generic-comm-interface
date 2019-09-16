@@ -575,12 +575,22 @@
 					<extkey_attcode>physcommtype_id</extkey_attcode>
 					<target_attcode>type</target_attcode>
 				</field>
+				<field id="connected_to_device_id" xsi:type="AttributeExternalKey">
+					<sql>connected_to_device_id</sql>
+					<is_null_allowed>true</is_null_allowed>
+					<target_class>ConnectableCI</target_class>
+					<on_target_delete>DEL_MANUAL</on_target_delete>
+				</field>
 				<field id="connected_to_id" xsi:type="AttributeExternalKey">
 					<sql>connected_to_id</sql>
 					<target_class>GenericCommPhysInterface</target_class>
 					<is_null_allowed>true</is_null_allowed>
 					<on_target_delete>DEL_MANUAL</on_target_delete>
-					<edit_mode>none</edit_mode>
+					<filter>SELECT GenericCommPhysInterface AS G WHERE G.connected_to_id = '' AND G.id != :this->id AND G.connectableci_id = :this->connected_to_device_id AND G.commproto_id = :this->commproto_id</filter>
+					<dependencies>
+						<attribute id="connected_to_device_id">
+						<attribute id="commproto_id">
+					</dependencies>
 				</field>
 				<field id="connected_to_name" xsi:type="AttributeExternalField">
 					<extkey_attcode>connected_to_id</extkey_attcode>
@@ -747,6 +757,9 @@
 						<item id="virtinterfacemember_id">
 							<rank>70</rank>
 						</item>
+						<item id="connected_to_device_id">
+							<rank>90</rank>
+						</item>
 						<item id="connected_to_id">
 							<rank>100</rank>
 						</item>
@@ -769,6 +782,9 @@
 						<item id="commproto_id">
 							<rank>50</rank>
 						</item>
+						<item id="connected_to_device_id">
+							<rank>90</rank>
+						</item>
 						<item id="connected_to_id">
 							<rank>100</rank>
 						</item>
@@ -787,6 +803,9 @@
 						</item>
 						<item id="commproto_id">
 							<rank>50</rank>
+						</item>
+						<item id="connected_to_device_id">
+							<rank>90</rank>
 						</item>
 						<item id="connected_to_id">
 							<rank>100</rank>
@@ -815,6 +834,9 @@
 						</item>
 						<item id="virtinterfacemember_id">
 							<rank>70</rank>
+						</item>
+						<item id="connected_to_device_id">
+							<rank>90</rank>
 						</item>
 						<item id="connected_to_id">
 							<rank>100</rank>
