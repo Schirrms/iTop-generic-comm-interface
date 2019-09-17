@@ -2,7 +2,7 @@
 /**
  * Localized data
  *
- * @copyright   Copyright (C) 2013 XXXXX
+ * @copyright   Copyright (C) 2019 Schirrms
  * @license     http://opensource.org/licenses/AGPL-3.0
  */
 
@@ -20,7 +20,7 @@ Dict::Add('EN US', 'English', 'English', array(
 	'Class:GenericCommProtocol/Attribute:genericcomminterface_list' => 'Interfaces using this protocol list',
 	'Class:GenericCommSpeed' => 'Interface Speed',
 	'Class:GenericCommSpeed/Attribute:humanspeed' => 'Human readable interface speed',
-	'Class:GenericCommSpeed/Attribute:humanspeed+' => 'This fiead is read only, and calculated from the speed in bit per second',
+	'Class:GenericCommSpeed/Attribute:humanspeed+' => 'This field is read only, and calculated from the speed in bit per second',
 	'Class:GenericCommSpeed/Attribute:bitspeed' => 'interface speed in bit per second',
 	'Class:GenericCommSpeed/Attribute:comment' => 'Comments',
 	'Class:GenericCommSpeed/Attribute:genericcomminterface_list' => 'Interfaces running at this speed',
@@ -33,5 +33,20 @@ Dict::Add('EN US', 'English', 'English', array(
 	'Class:GenericCommInterface/Attribute:name' => 'Name',
 	'Class:GenericCommInterface/Attribute:comment' => 'Comments',
 	'Class:GenericCommInterface/Attribute:commproto_id' => 'Connection Protocol',
+	'Class:GenericCommInterface/Attribute:commproto_proto' => 'Connection Protocol',
+	'Class:GenericCommInterface/Attribute:humanspeed_id' => 'Human readable interface speed',
+	'Class:GenericCommInterface/Attribute:humanspeed_speed' => 'Human readable interface speed',
+	'Class:GenericCommInterface/Attribute:connectabledevice_id' => 'Local Device Name',
+	'Class:GenericCommInterface/Attribute:virtinterfacemember_id' => 'member of Virtual Interface',
+	'Class:GenericCommInterface/Attribute:virtinterfacemember_name' => 'member of Virtual Interface',
+	'Class:GenericCommPhysInterface' => 'Physical Connection Interface',
+	'Class:GenericCommPhysInterface/Attribute:physcommtype_id' => 'Physical connector type',
+	'Class:GenericCommPhysInterface/Attribute:physcommtype_type' => 'Physical connector type',
+	'Class:GenericCommPhysInterface/Attribute:connected_to_device_id' => 'Connected to remote device',
+	'Class:GenericCommPhysInterface/Attribute:connected_to_device_name' => 'Connected to remote device',
+	'Class:GenericCommPhysInterface/Attribute:connected_to_id' => 'Interface connected on remote device',
+	'Class:GenericCommPhysInterface/Attribute:connected_to_name' => 'Interface connected on remote device',
+	'Class:GenericCommPhysInterface/Attribute:connection_impact' => 'Impacts other side or depends on it ?',
+	'Class:GenericCommPhysInterface/Attribute:connection_impact+' => 'If the loss of this connection impacts me, I depend on it. If the loss impacts the other side, I impact',
 ));
 ?>
