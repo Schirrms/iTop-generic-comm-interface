@@ -797,6 +797,9 @@
 						<item id="connection_impact">
 							<rank>110</rank>
 						</item>
+						<item id="genericcommvirtinterface_list">
+							<rank>120</rank>
+						</item>
 					</items>
 				</details>
 				<default_search>
@@ -976,6 +979,7 @@
 					<count_min>0</count_min>
 					<count_max>0</count_max>
 					<ext_key_to_remote>genericcomminterface_id</ext_key_to_remote>
+					<filter>SELECT GenericCommInterface AS G AND G.connectableci_id = :this->connectable_id AND G.commproto_id = :this->commproto_id</filter>
 					<duplicates/>
 				</field>
 			</fields>
