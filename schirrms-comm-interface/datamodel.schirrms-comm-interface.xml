@@ -788,9 +788,6 @@
 						<item id="humanspeed_id">
 							<rank>60</rank>
 						</item>
-						<item id="virtinterfacemember_id">
-							<rank>70</rank>
-						</item>
 						<item id="connected_to_device_id">
 							<rank>90</rank>
 						</item>
@@ -866,9 +863,6 @@
 						<item id="humanspeed_id">
 							<rank>60</rank>
 						</item>
-						<item id="virtinterfacemember_id">
-							<rank>70</rank>
-						</item>
 						<item id="connected_to_device_name">
 							<rank>90</rank>
 						</item>
@@ -885,13 +879,14 @@
 				<relation id="impacts">
 					<neighbours>
 						<!-- neigbour is used to select the alternatives in which this object is a participant -->
+						<!--
 						<neighbour id="genericcommvirtinterface">
 							<attribute>virtinterfacemember_id</attribute>
 							<!--
 							<query_down>SELECT GenericCommVirtInterface WHERE connectableci_id = :this-&gt;connectableci_id</query_down>
 							<query_up>SELECT GenericCommPhysInterface WHERE connectableci_id = :this-&gt;connectableci_id</query_up>
-							-->
 						</neighbour>
+						-->
 					</neighbours>
 				</relation>
 			</relations>
