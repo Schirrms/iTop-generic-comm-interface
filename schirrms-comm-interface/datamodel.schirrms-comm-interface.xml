@@ -882,7 +882,6 @@
 						<!--
 						<neighbour id="genericcommvirtinterface">
 							<attribute>virtinterfacemember_id</attribute>
-							<!--
 							<query_down>SELECT GenericCommVirtInterface WHERE connectableci_id = :this-&gt;connectableci_id</query_down>
 							<query_up>SELECT GenericCommPhysInterface WHERE connectableci_id = :this-&gt;connectableci_id</query_up>
 						</neighbour>
