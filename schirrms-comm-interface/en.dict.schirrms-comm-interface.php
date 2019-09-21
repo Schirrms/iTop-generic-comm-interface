@@ -59,7 +59,7 @@ Dict::Add('EN US', 'English', 'English', array(
 	'Class:GenericCommDeviceType' => 'Generic Connection Device Category',
 	'Class:GenericCommDeviceType/Attribute:name' => 'Category Name',
 	'Class:GenericCommDeviceType/Attribute:genericcommdevices_list' => 'Devices of this category',
-	'Class:GenericCommDevice' => 'Generic Connection Device Category',
+	'Class:GenericCommDevice' => 'Generic Connection Device',
 	'Class:GenericCommDevice/Attribute:name' => 'Device Name',
 	'Class:GenericCommDevice/Attribute:genericcommdevicetype_id' => 'Device category',
 	'Class:GenericCommDevice/Attribute:genericcommdevicetype_name' => 'Device category',

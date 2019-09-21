@@ -468,6 +468,7 @@
 				<!-- as of version 0.6.0, connected_to_id returns to genericcommphysinterface as 
 					 link between virtual an generic interface have to go trough an lnk table 
 					 (many to many relation) -->
+				<!-- as of version 0.6.1 no direct link between virtul an generic interface
 				<field id="virtinterfacemember_id" xsi:type="AttributeExternalKey">
 					<filter><![CDATA[SELECT GenericCommVirtInterface WHERE connectableci_id = :this->connectableci_id AND commproto_id = :this->commproto_id]]></filter>
 					<sql>virtinterfacemember_id</sql>
@@ -479,6 +480,30 @@
 					<extkey_attcode>virtinterfacemember_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
+				-->
+				<field id="genericcommvirtinterface_list" xsi:type="AttributeLinkedSetIndirect">
+					<linked_class>lnkGenericCommInterfaceToGenericCommVirtInterface</linked_class>
+					<ext_key_to_me>genericcomminterface_id</ext_key_to_me>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<ext_key_to_remote>genericcommvirtinterface_id</ext_key_to_remote>
+					<duplicates/>
+				</field>
+				<!-- add a redundancy field from GenericCommDevices to ConnectableCI
+				should be a logical link, built from the physical connections -->
+				<!-- see you later :)
+				<field id="redundancy" xsi:type="AttributeRedundancySettings" _delta="define">
+					<sql>redundancy</sql>
+					<relation_code>impacts</relation_code>
+					<from_class>GenericCommVirtInterface</from_class>
+					<neighbour_id>connectableci</neighbour_id>
+					<enabled>true</enabled>
+					<enabled_mode>user</enabled_mode>
+					<min_up>1</min_up>
+					<min_up_type>count</min_up_type>
+					<min_up_mode>user</min_up_mode>
+				</field>
+				-->
 			</fields>
 			<methods/>
 			<presentation>
@@ -495,6 +520,9 @@
 						</item>
 						<item id="humanspeed_id">
 							<rank>60</rank>
+						</item>
+						<item id="genericcommvirtinterface_list">
+							<rank>100</rank>
 						</item>
 					</items>
 				</details>
@@ -939,12 +967,21 @@
 				</field>
 				<!--
 				This field is to link the physicalinterfaces to this virtual interface
-				-->
+				Staring in 0.6.1.0, this is replaced by a many to many link
 				<field id="genericcommphysinterface_list" xsi:type="AttributeLinkedSet">
 					<linked_class>GenericCommPhysInterface</linked_class>
 					<ext_key_to_me>virtinterfacemember_id</ext_key_to_me>
 					<count_min>0</count_min>
 					<count_max>0</count_max>
+					<duplicates/>
+				</field>
+				-->
+				<field id="genericcomminterface_list" xsi:type="AttributeLinkedSetIndirect">
+					<linked_class>lnkGenericCommInterfaceToGenericCommVirtInterface</linked_class>
+					<ext_key_to_me>genericcommvirtinterface_id</ext_key_to_me>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<ext_key_to_remote>genericcomminterface_id</ext_key_to_remote>
 					<duplicates/>
 				</field>
 			</fields>
@@ -984,7 +1021,7 @@
 						<item id="redundancyType">
 							<rank>70</rank>
 						</item>
-						<item id="genericcommphysinterface_list">
+						<item id="genericcomminterface_list">
 							<rank>100</rank>
 						</item>
 					</items>
@@ -1041,6 +1078,92 @@
 					</items>
 				</list>
 			</presentation>
+		</class>
+		<!--
+			This class create a many to many link between generic Interface and virtual Generic Interface
+			The idea is that the Virtual interface always depend from the generic interface
+			Also a virtual interface is member of the same device that the generic interface(s)
+		-->
+		<class id="lnkGenericCommInterfaceToGenericCommVirtInterface" _delta="define">
+			<parent>cmdbAbstractObject</parent>
+			<properties>
+				<is_link>1</is_link>
+				<category>bizmodel</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>lnkgenericcomminterfacetogenericcommvirtnterface</db_table>
+				<db_key_field>id</db_key_field>
+				<db_final_class_field/>
+				<naming>
+					<attributes>
+						<attribute id="genericcomminterface_id"/>
+						<attribute id="genericcommvirtinterface_id"/>
+					</attributes>
+				</naming>
+				<display_template/>
+				<icon/>
+				<reconciliation>
+					<attributes>
+						<attribute id="genericcomminterface_id"/>
+						<attribute id="genericcommvirtinterface_id"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+				<field id="genericcomminterface_id" xsi:type="AttributeExternalKey">
+					<sql>genericcomminterface_id</sql>
+					<target_class>GenericCommInterface</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+				</field>
+				<field id="genericcomminterface_name" xsi:type="AttributeExternalField">
+					<extkey_attcode>genericcomminterface_id</extkey_attcode>
+					<target_attcode>name</target_attcode>
+				</field>
+				<field id="genericcommvirtinterface_id" xsi:type="AttributeExternalKey">
+					<sql>genericcommvirtinterface_id</sql>
+					<target_class>GenericCommVirtInterface</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+				</field>
+				<field id="genericcommvirtinterface_name" xsi:type="AttributeExternalField">
+					<extkey_attcode>genericcommvirtinterface_id</extkey_attcode>
+					<target_attcode>name</target_attcode>
+				</field>
+			</fields>
+		<methods/>
+		<presentation>
+			<details>
+				<items>
+					<item id="genericcomminterface_id">
+						<rank>10</rank>
+					</item>
+					<item id="genericcommvirtinterface_id">
+						<rank>20</rank>
+					</item>
+				</items>
+			</details>
+			<search>
+				<items>
+					<item id="genericcomminterface_id">
+						<rank>10</rank>
+					</item>
+					<item id="genericcommvirtinterface_id">
+						<rank>20</rank>
+					</item>
+				</items>
+			</search>
+			<list>
+				<items>
+					<item id="genericcomminterface_id">
+						<rank>10</rank>
+					</item>
+					<item id="genericcommvirtinterface_id">
+						<rank>20</rank>
+					</item>
+				</items>
+			</list>
+		</presentation>
 		</class>
 		<!--
 				*** All the stuffs for the GenericCommDevices ***
