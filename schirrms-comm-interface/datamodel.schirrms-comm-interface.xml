@@ -618,7 +618,7 @@
 					<target_class>GenericCommPhysInterface</target_class>
 					<is_null_allowed>true</is_null_allowed>
 					<on_target_delete>DEL_MANUAL</on_target_delete>
-					<filter>SELECT GenericCommPhysInterface AS G WHERE G.connected_to_id = '' AND G.id != :this->id AND G.connectableci_id = :this->connected_to_device_id AND G.commproto_id = :this->commproto_id</filter>
+					<filter><![CDATA[SELECT GenericCommPhysInterface AS G WHERE G.connected_to_id = '' AND G.id != :this->id AND G.connectableci_id = :this->connected_to_device_id AND G.commproto_id = :this->commproto_id]]></filter>
 					<dependencies>
 						<attribute id="connected_to_device_id" />
 						<attribute id="commproto_id" />
@@ -974,12 +974,12 @@
 				</field>
 				-->
 				<field id="genericcomminterface_list" xsi:type="AttributeLinkedSetIndirect">
+					<filter><![CDATA[SELECT GenericCommInterface AS G WHERE G.connectableci_id = :this->connectable_id AND G.commproto_id = :this->commproto_id]]></filter>
 					<linked_class>lnkGenericCommInterfaceToGenericCommVirtInterface</linked_class>
 					<ext_key_to_me>genericcommvirtinterface_id</ext_key_to_me>
 					<count_min>0</count_min>
 					<count_max>0</count_max>
 					<ext_key_to_remote>genericcomminterface_id</ext_key_to_remote>
-					<filter>SELECT GenericCommInterface AS G AND G.connectableci_id = :this->connectable_id AND G.commproto_id = :this->commproto_id</filter>
 					<duplicates/>
 				</field>
 			</fields>
