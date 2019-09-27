@@ -1109,7 +1109,11 @@
 			</properties>
 			<fields>
 				<field id="genericcomminterface_id" xsi:type="AttributeExternalKey">
-					<filter><![CDATA[SELECT GenericCommInterface AS G WHERE G.connectableci_id = :this->connectableci_id AND G.commproto_id = :this->commproto_id]]></filter>
+					<filter><![CDATA[SELECT GenericCommInterface WHERE connectableci_id= :this->connectableci_id AND commproto_id= :this->commproto_id]]></filter>
+					<dependencies>
+						<attribute id="connectableci_id"/>
+						<attribute id="commproto_id"/>
+					</dependencies>
 					<sql>genericcomminterface_id</sql>
 					<target_class>GenericCommInterface</target_class>
 					<is_null_allowed>false</is_null_allowed>
