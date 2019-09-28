@@ -1115,7 +1115,7 @@
 					<target_class>GenericCommInterface</target_class>
 					<is_null_allowed>false</is_null_allowed>
 					<on_target_delete>DEL_AUTO</on_target_delete>
-					<filter><![CDATA[SELECT GenericCommInterface WHERE connectableci_id = :this->genericcommvirtdevice_id AND commproto_id = :this->genericcommvirtinterfaceproto_id]]></filter>
+					<filter><![CDATA[SELECT GenericCommInterface WHERE connectableci_id = 1130 AND commproto_id = 1]]></filter>
 					<dependencies>
 						<attribute id="genericcommvirtdevice_id"/>
 						<attribute id="genericcommvirtinterfaceproto_id"/>
