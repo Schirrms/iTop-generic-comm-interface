@@ -796,6 +796,7 @@
 									$aContextParam['filter']->ResetCondition();
 									$aContextParam['filter']->AddCondition('connectableci_id', $aContextParam['source_obj']->Get('connectableci_id'));
 									$aContextParam['filter']->AddCondition('commproto_id', $aContextParam['source_obj']->Get('commproto_id'));
+									$aContextParam['filter']->AddCondition('id',$aContextParam['source_obj']->GetKey(), '!=');
 								}
 							}
 						}]]>
@@ -1030,7 +1031,8 @@
 									$aContextParam['filter']->ResetCondition();
 									$aContextParam['filter']->AddCondition('connectableci_id', $aContextParam['source_obj']->Get('connectableci_id'));
 									$aContextParam['filter']->AddCondition('commproto_id', $aContextParam['source_obj']->Get('commproto_id'));
-								}
+									$aContextParam['filter']->AddCondition('id',$aContextParam['source_obj']->GetKey(), '!=');
+									}
 							}
 						}]]>
 					</code>
