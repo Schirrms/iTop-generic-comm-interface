@@ -996,6 +996,25 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	public static function GetRelationQueries($sRelCode){return parent::GetRelationQueries($sRelCode);} ]]></code>
 				</method>
+				<method id="PrefillSearchForm">
+					<code><![CDATA[
+						public function PrefillSearchForm(&$aContextParam)
+						{
+							file_put_contents('/tmp/dd.txt', "in the GenericCommVirtInterface Class\n");
+							file_put_contents('/tmp/dd.txt', print_r($aContextParam, true), FILE_APPEND);
+							if($aContextParam['dest_class'] == 'GenericCommInterface')
+							{
+								if(MetaModel::IsValidAttCode($aContextParam['dest_class'],'connectableci_id') && !empty($aContextParam['source_obj']->Get('connectableci_id')) && 
+								MetaModel::IsValidAttCode($aContextParam['dest_class'],'commproto_id') && !empty($aContextParam['source_obj']->Get('commproto_id')))
+								{
+									$aContextParam['filter']->ResetCondition();
+									$aContextParam['filter']->AddCondition('connectableci_id', $aContextParam['source_obj']->Get('connectableci_id'));
+									$aContextParam['filter']->AddCondition('commproto_id', $aContextParam['source_obj']->Get('commproto_id'));
+								}
+							}
+						}]]>
+					</code>
+				</method>
 			</methods>
 			<presentation>
 				<details>
@@ -1115,33 +1134,12 @@
 					<target_class>GenericCommInterface</target_class>
 					<is_null_allowed>false</is_null_allowed>
 					<on_target_delete>DEL_AUTO</on_target_delete>
-					<filter><![CDATA[SELECT GenericCommInterface AS G WHERE G.connectableci_id = 1130 AND G.commproto_id = 1]]></filter>
-					<dependencies>
-						<attribute id="genericcommvirtdevice_id"/>
-						<attribute id="genericcommvirtinterfaceproto_id"/>
-					</dependencies>
-				</field>
-				<field id="genericcomminterface_name" xsi:type="AttributeExternalField">
-					<extkey_attcode>genericcomminterface_id</extkey_attcode>
-					<target_attcode>name</target_attcode>
 				</field>
 				<field id="genericcommvirtinterface_id" xsi:type="AttributeExternalKey">
 					<sql>genericcommvirtinterface_id</sql>
 					<target_class>GenericCommVirtInterface</target_class>
 					<is_null_allowed>false</is_null_allowed>
 					<on_target_delete>DEL_AUTO</on_target_delete>
-				</field>
-				<field id="genericcommvirtinterface_name" xsi:type="AttributeExternalField">
-					<extkey_attcode>genericcommvirtinterface_id</extkey_attcode>
-					<target_attcode>name</target_attcode>
-				</field>
-				<field id="genericcommvirtdevice_id" xsi:type="AttributeExternalField">
-					<extkey_attcode>genericcommvirtinterface_id</extkey_attcode>
-					<target_attcode>connectableci_id</target_attcode>
-				</field>
-				<field id="genericcommvirtinterfaceproto_id" xsi:type="AttributeExternalField">
-					<extkey_attcode>genericcommvirtinterface_id</extkey_attcode>
-					<target_attcode>commproto_id</target_attcode>
 				</field>
 			</fields>
 		<methods/>
@@ -1173,12 +1171,6 @@
 					</item>
 					<item id="genericcommvirtinterface_id">
 						<rank>20</rank>
-					</item>
-					<item id="genericcommvirtdevice_id">
-						<rank>30</rank>
-					</item>
-					<item id="genericcommvirtinterfaceproto_id">
-						<rank>40</rank>
 					</item>
 				</items>
 			</list>
