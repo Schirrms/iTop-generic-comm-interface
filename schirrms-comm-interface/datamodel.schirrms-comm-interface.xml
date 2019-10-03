@@ -781,6 +781,26 @@
 							parent::OnDelete();
 				}]]></code>
 				</method>
+				<!-- This method filters the search interface for virtual to generic connections -->
+				<method id="PrefillSearchForm">
+					<code><![CDATA[
+						public function PrefillSearchForm(&$aContextParam)
+						{
+							//file_put_contents('/tmp/dd.txt', "in the GenericCommInterface Class\n");
+							//file_put_contents('/tmp/dd.txt', print_r($aContextParam, true), FILE_APPEND);
+							if($aContextParam['dest_class'] == 'GenericCommVirtInterface')
+							{
+								if(MetaModel::IsValidAttCode($aContextParam['dest_class'],'connectableci_id') && !empty($aContextParam['source_obj']->Get('connectableci_id')) && 
+								MetaModel::IsValidAttCode($aContextParam['dest_class'],'commproto_id') && !empty($aContextParam['source_obj']->Get('commproto_id')))
+								{
+									$aContextParam['filter']->ResetCondition();
+									$aContextParam['filter']->AddCondition('connectableci_id', $aContextParam['source_obj']->Get('connectableci_id'));
+									$aContextParam['filter']->AddCondition('commproto_id', $aContextParam['source_obj']->Get('commproto_id'));
+								}
+							}
+						}]]>
+					</code>
+				</method>
 			</methods>
 			<presentation>
 				<details>
@@ -1000,8 +1020,8 @@
 					<code><![CDATA[
 						public function PrefillSearchForm(&$aContextParam)
 						{
-							file_put_contents('/tmp/dd.txt', "in the GenericCommVirtInterface Class\n");
-							file_put_contents('/tmp/dd.txt', print_r($aContextParam, true), FILE_APPEND);
+							//file_put_contents('/tmp/dd.txt', "in the GenericCommVirtInterface Class\n");
+							//file_put_contents('/tmp/dd.txt', print_r($aContextParam, true), FILE_APPEND);
 							if($aContextParam['dest_class'] == 'GenericCommInterface')
 							{
 								if(MetaModel::IsValidAttCode($aContextParam['dest_class'],'connectableci_id') && !empty($aContextParam['source_obj']->Get('connectableci_id')) && 
