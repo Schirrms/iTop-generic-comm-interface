@@ -886,8 +886,8 @@
 				<relation id="impacts">
 					<neighbours>
 						<neighbour id="genericgommphysinterface">
-							<query_down>SELECT GenericCommPhysInterface WHERE connected_to_id = :this-&gt;id AND connection_impact = 'impacts'</query_down>
-							<query_up>SELECT GenericCommPhysInterface WHERE connected_to_id = :this-&gt;id AND connection_impact = 'depends'</query_up>
+							<query_down>SELECT GenericCommPhysInterface WHERE connected_to_id = :this-&gt;id AND connection_impact = 'depends'</query_down>
+							<query_up>SELECT GenericCommPhysInterface WHERE connected_to_id = :this-&gt;id AND connection_impact = 'impacts'</query_up>
 						</neighbour>
 					</neighbours>
 				</relation>
