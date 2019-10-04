@@ -575,6 +575,15 @@
 					</items>
 				</list>
 			</presentation>
+			<relations>
+				<relation id="impacts">
+					<neighbours>
+						<neighbour id="VirtInterface"> <!-- A key  that is the link with the neighbour_id in the Child AttributeRedundancySettings -->
+							<attribute>genericcommvirtinterface_list</attribute> <!-- local key (direct/indirect) to the childCI -->
+						</neighbour>
+					</neighbours>
+				</relation>
+			</relations>
 		</class>
 		<!--
 		this class defines the specific attributes of a Generic Physical Communication interface
@@ -654,6 +663,17 @@
 					<default_value>depends</default_value>
 					<is_null_allowed>true</is_null_allowed>
 					<display_style>list</display_style>
+				</field>
+				<field id="virttogenericredundancy" xsi:type="AttributeRedundancySettings">
+					<sql>redundancy</sql>
+					<relation_code>impacts</relation_code>
+					<from_class>GenericCommInterface</from_class>
+					<neighbour_id>VirtInterface</neighbour_id>
+					<enabled>true</enabled>
+					<enabled_mode>user</enabled_mode>
+					<min_up>1</min_up>
+					<min_up_type>count</min_up_type>
+					<min_up_mode>user</min_up_mode>
 				</field>
 			</fields>
 			<methods>
