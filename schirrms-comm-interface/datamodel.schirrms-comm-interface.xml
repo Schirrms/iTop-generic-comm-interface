@@ -994,9 +994,6 @@
 						<item id="humanspeed_id">
 							<rank>60</rank>
 						</item>
-						<item id="redundancyType">
-							<rank>70</rank>
-						</item>
 						<item id="genericcomminterface_list">
 							<rank>100</rank>
 						</item>
