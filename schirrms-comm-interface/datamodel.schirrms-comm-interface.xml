@@ -465,22 +465,6 @@
 					<extkey_attcode>connectableci_id</extkey_attcode>
 					<target_attcode>name</target_attcode>
 				</field>
-				<!-- as of version 0.6.0, connected_to_id returns to genericcommphysinterface as 
-					 link between virtual an generic interface have to go trough an lnk table 
-					 (many to many relation) -->
-				<!-- as of version 0.6.1 no direct link between virtul an generic interface
-				<field id="virtinterfacemember_id" xsi:type="AttributeExternalKey">
-					<filter><![CDATA[SELECT GenericCommVirtInterface WHERE connectableci_id = :this->connectableci_id AND commproto_id = :this->commproto_id]]></filter>
-					<sql>virtinterfacemember_id</sql>
-					<target_class>GenericCommVirtInterface</target_class>
-					<is_null_allowed>true</is_null_allowed>
-					<on_target_delete>DEL_AUTO</on_target_delete>
-				</field>
-				<field id="virtinterfacemember_name" xsi:type="AttributeExternalField">
-					<extkey_attcode>virtinterfacemember_id</extkey_attcode>
-					<target_attcode>name</target_attcode>
-				</field>
-				-->
 				<field id="genericcommvirtinterface_list" xsi:type="AttributeLinkedSetIndirect">
 					<linked_class>lnkGenericCommInterfaceToGenericCommVirtInterface</linked_class>
 					<ext_key_to_me>genericcomminterface_id</ext_key_to_me>
@@ -489,21 +473,6 @@
 					<ext_key_to_remote>genericcommvirtinterface_id</ext_key_to_remote>
 					<duplicates/>
 				</field>
-				<!-- add a redundancy field from GenericCommDevices to ConnectableCI
-				should be a logical link, built from the physical connections -->
-				<!-- see you later :)
-				<field id="redundancy" xsi:type="AttributeRedundancySettings" _delta="define">
-					<sql>redundancy</sql>
-					<relation_code>impacts</relation_code>
-					<from_class>GenericCommVirtInterface</from_class>
-					<neighbour_id>connectableci</neighbour_id>
-					<enabled>true</enabled>
-					<enabled_mode>user</enabled_mode>
-					<min_up>1</min_up>
-					<min_up_type>count</min_up_type>
-					<min_up_mode>user</min_up_mode>
-				</field>
-				-->
 			</fields>
 			<methods/>
 			<presentation>
@@ -664,29 +633,8 @@
 					<is_null_allowed>true</is_null_allowed>
 					<display_style>list</display_style>
 				</field>
-				<field id="virttogenericredundancy" xsi:type="AttributeRedundancySettings">
-					<sql>redundancy</sql>
-					<relation_code>impacts</relation_code>
-					<from_class>GenericCommInterface</from_class>
-					<neighbour_id>VirtInterface</neighbour_id>
-					<enabled>true</enabled>
-					<enabled_mode>user</enabled_mode>
-					<min_up>1</min_up>
-					<min_up_type>count</min_up_type>
-					<min_up_mode>user</min_up_mode>
-				</field>
 			</fields>
 			<methods>
-				<method id="GetRelationQueries">
-					<comment>/**
-					* Placeholder for backward compatibility (iTop &lt;= 2.1.0)
-					* in case an extension attempts to redefine this function...
-					*/</comment>
-					<static>true</static>
-					<access>public</access>
-					<type>Overload-DBObject</type>
-					<code><![CDATA[	public static function GetRelationQueries($sRelCode){return parent::GetRelationQueries($sRelCode);} ]]></code>
-				</method>
 				<method id="ConnectRemotePort">
 					<static>false</static>
 					<access>protected</access>
@@ -935,18 +883,6 @@
 				</list>
 			</presentation>
 			<relations>
-				<relation id="impacts">
-					<neighbours>
-						<!-- neigbour is used to select the alternatives in which this object is a participant -->
-						<!--
-						<neighbour id="genericcommvirtinterface">
-							<attribute>virtinterfacemember_id</attribute>
-							<query_down>SELECT GenericCommVirtInterface WHERE connectableci_id = :this-&gt;connectableci_id</query_down>
-							<query_up>SELECT GenericCommPhysInterface WHERE connectableci_id = :this-&gt;connectableci_id</query_up>
-						</neighbour>
-						-->
-					</neighbours>
-				</relation>
 			</relations>
 		</class>
 		<!--
@@ -995,28 +931,17 @@
 				<!--
 				Next field for the actual redundancy : see also virtualinterfaces in GenericCommPhysInterface
 				-->
-				<field id="redundancyType" xsi:type="AttributeRedundancySettings">
-					<sql>redundancytype</sql>
+				<field id="virttogenericredundancy" xsi:type="AttributeRedundancySettings">
+					<sql>redundancy</sql>
 					<relation_code>impacts</relation_code>
-					<from_class>GenericCommPhysInterface</from_class>
-					<neighbour_id>genericcommvirtinterface</neighbour_id>
+					<from_class>GenericCommInterface</from_class>
+					<neighbour_id>VirtInterface</neighbour_id>
 					<enabled>true</enabled>
 					<enabled_mode>user</enabled_mode>
 					<min_up>1</min_up>
 					<min_up_type>count</min_up_type>
 					<min_up_mode>user</min_up_mode>
 				</field>
-				<!--
-				This field is to link the physicalinterfaces to this virtual interface
-				Staring in 0.6.1.0, this is replaced by a many to many link
-				<field id="genericcommphysinterface_list" xsi:type="AttributeLinkedSet">
-					<linked_class>GenericCommPhysInterface</linked_class>
-					<ext_key_to_me>virtinterfacemember_id</ext_key_to_me>
-					<count_min>0</count_min>
-					<count_max>0</count_max>
-					<duplicates/>
-				</field>
-				-->
 				<field id="genericcomminterface_list" xsi:type="AttributeLinkedSetIndirect">
 					<linked_class>lnkGenericCommInterfaceToGenericCommVirtInterface</linked_class>
 					<ext_key_to_me>genericcommvirtinterface_id</ext_key_to_me>
@@ -1027,16 +952,6 @@
 				</field>
 			</fields>
 			<methods>
-				<method id="GetRelationQueries">
-					<comment>/**
-					* Placeholder for backward compatibility (iTop &lt;= 2.1.0)
-					* in case an extension attempts to redefine this function...
-					*/</comment>
-					<static>true</static>
-					<access>public</access>
-					<type>Overload-DBObject</type>
-					<code><![CDATA[	public static function GetRelationQueries($sRelCode){return parent::GetRelationQueries($sRelCode);} ]]></code>
-				</method>
 				<method id="PrefillSearchForm">
 					<code><![CDATA[
 						public function PrefillSearchForm(&$aContextParam)
