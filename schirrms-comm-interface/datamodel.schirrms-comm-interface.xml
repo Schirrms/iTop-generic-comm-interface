@@ -481,7 +481,8 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function UpdateCIDependencies()
 						{
-							file_put_contents('/glpi/debug/dd.txt', "BEGIN : in the GenericCommInterface Class\n", FILE_APPEND);
+							$sDebugFile=$_SERVER['DOCUMENT_ROOT']."glpi/debug/dd.txt";
+							file_put_contents($sDebugFile, "BEGIN : in the GenericCommInterface Class\n", FILE_APPEND);
 							$aConnInt = array();
 							$oDevice = MetaModel::GetObject('ConnectableCI', $this->Get('connectableci_id'));
 								if (is_object($oDevice))
@@ -499,8 +500,8 @@
 										$aConnInt[$oPhysInterface->GetKey()] = $aInt;
 									}
 								}
-							file_put_contents('/glpi/debug/dd.txt', "Contents of the array \$aConnInt\n", FILE_APPEND);
-							file_put_contents('/glpi/debug/dd.txt', print_r($aConnInt, true), FILE_APPEND);
+							file_put_contents($sDebugFile, "Contents of the array \$aConnInt\n", FILE_APPEND);
+							file_put_contents($sDebugFile, print_r($aConnInt, true), FILE_APPEND);
 						}]]>
 					</code>
 				</method>
@@ -817,7 +818,8 @@
 					<code><![CDATA[
 						public function PrefillSearchForm(&$aContextParam)
 						{
-							file_put_contents('/glpi/debug/dd.txt', "in the GenericCommInterface Class\n");
+							$sDebugFile=$_SERVER['DOCUMENT_ROOT']."glpi/debug/dd.txt";
+							file_put_contents($sDebugFile, "in the GenericCommInterface Class\n");
 							//file_put_contents('/tmp/dd.txt', print_r($aContextParam, true), FILE_APPEND);
 							if($aContextParam['dest_class'] == 'GenericCommVirtInterface')
 							{
