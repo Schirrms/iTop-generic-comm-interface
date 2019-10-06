@@ -481,6 +481,7 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function UpdateCIDependencies()
 						{
+							file_put_contents('debug/dd.txt', "BEGIN : in the GenericCommInterface Class\n", FILE_APPEND);
 							$aConnInt = array();
 							$oDevice = MetaModel::GetObject('ConnectableCI', $this->Get('connectableci_id'));
 								if (is_object($oDevice))
@@ -498,9 +499,8 @@
 										$aConnInt[$oPhysInterface->GetKey()] = $aInt;
 									}
 								}
-							file_put_contents('/tmp/dd.txt', "in the GenericCommInterface Class\n");
-							file_put_contents('/tmp/dd.txt', "Contents of the array \$aConnInt\n", FILE_APPEND);
-							file_put_contents('/tmp/dd.txt', print_r($aConnInt, true), FILE_APPEND);
+							file_put_contents('debug/dd.txt', "Contents of the array \$aConnInt\n", FILE_APPEND);
+							file_put_contents('debug/dd.txt', print_r($aConnInt, true), FILE_APPEND);
 						}]]>
 					</code>
 				</method>
@@ -788,6 +788,7 @@
 					<code><![CDATA[	protected function AfterInsert()
 						{
 							$this->ConnectRemotePort();
+							$parent->UpdateCIDependencies();
 							parent::AfterInsert();
 				}]]></code>
 				</method>
@@ -802,6 +803,17 @@
 							parent::OnUpdate();
 				}]]></code>
 				</method>
+				<method id="AfterUpdate">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	protected function AfterUpdate()
+						{
+							$parent->UpdateCIDependencies();
+							parent::AfterUpdate();
+						}]]>
+					</code>
+				</method>
 				<method id="OnDelete">
 					<static>false</static>
 					<access>protected</access>
@@ -811,6 +823,16 @@
 							$this->DisconnectRemotePort();
 							parent::OnDelete();
 				}]]></code>
+				<method id="AfterDelete">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	protected function AfterDelete()
+						{
+							$parent->UpdateCIDependencies();
+							parent::AfterDelete();
+						}]]>
+					</code>
 				</method>
 				<!-- This method filters the search interface for virtual to generic connections -->
 				<method id="PrefillSearchForm">
