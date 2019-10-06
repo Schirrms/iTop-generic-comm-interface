@@ -495,7 +495,8 @@
 									while ($oPhysInterface = $oPhysInterfaceSet->Fetch())
 									{
 										$aInt = array($oPhysInterface->Get('connected_to_id'), $oPhysInterface->Get('connected_to_device_id'), $oPhysInterface->Get('connection_impact'));
-										$aConnInt([$oPhysInterface->GetKey()]) = $aInt;
+										$iKey = $oPhysInterface->GetKey();
+										$aConnInt($iKey) = $aInt;
 									}
 								}
 							file_put_contents('/tmp/dd.txt', "in the GenericCommInterface Class\n");
