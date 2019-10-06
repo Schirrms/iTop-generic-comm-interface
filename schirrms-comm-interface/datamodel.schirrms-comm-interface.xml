@@ -474,7 +474,70 @@
 					<duplicates/>
 				</field>
 			</fields>
-			<methods/>
+			<methods>
+				<method id="UpdateCIDependencies">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	protected function UpdateCIDependencies()
+						{
+							$aConnInt = array();
+							$oDevice = MetaModel::GetObject('ConnectableCI', $this->Get('connectableci_id'));
+								if (is_object($oDevice))
+								{
+									$sOQL = "SELECT	GenericCommPhysInterface WHERE connectableci_id = :device";
+									$oPhysInterfaceSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL),
+										array(),
+										array(
+										'device' => $this->Get('networkdevice_id'),
+										)
+									);
+									while ($oPhysInterface = $oPhysInterfaceSet->Fetch())
+									{
+										$aInt = array($oPhysInterface->Get('connected_to_id'), $oPhysInterface->Get('connected_to_device_id'), $oPhysInterface->Get('connection_impact'));
+										$aConnInt([$oPhysInterface->GetKey()]) = $aInt;
+									}
+								}
+							file_put_contents('/tmp/dd.txt', "in the GenericCommInterface Class\n");
+							file_put_contents('/tmp/dd.txt', "Contents of the array \$aConnInt\n", FILE_APPEND);
+							file_put_contents('/tmp/dd.txt', print_r($aConnInt, true), FILE_APPEND);
+						}]]>
+					</code>
+				</method>
+				<method id="AfterInsert">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	protected function AfterInsert()
+						{
+							$this->UpdateCIDependencies();
+							parent::AfterInsert();
+						}]]>
+					</code>
+				</method>
+				<method id="AfterUpdate">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	protected function AfterUpdate()
+						{
+							$this->UpdateCIDependencies();
+							parent::AfterUpdate();
+						}]]>
+					</code>
+				</method>
+				<method id="AfterDelete">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	protected function AfterDelete()
+						{
+							$this->UpdateCIDependencies();
+							parent::AfterDelete();
+						}]]>
+					</code>
+				</method>
+			</methods>
 			<presentation>
 				<details>
 					<items>
