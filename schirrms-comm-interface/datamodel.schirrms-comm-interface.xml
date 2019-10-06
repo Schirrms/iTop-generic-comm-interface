@@ -788,7 +788,6 @@
 					<code><![CDATA[	protected function AfterInsert()
 						{
 							$this->ConnectRemotePort();
-							GenericCommInterface::UpdateCIDependencies();
 							parent::AfterInsert();
 				}]]></code>
 				</method>
@@ -803,17 +802,6 @@
 							parent::OnUpdate();
 				}]]></code>
 				</method>
-				<method id="AfterUpdate">
-					<static>false</static>
-					<access>protected</access>
-					<type>Overload-DBObject</type>
-					<code><![CDATA[	protected function AfterUpdate()
-						{
-							GenericCommInterface::UpdateCIDependencies();
-							parent::AfterUpdate();
-						}]]>
-					</code>
-				</method>
 				<method id="OnDelete">
 					<static>false</static>
 					<access>protected</access>
@@ -823,17 +811,6 @@
 							$this->DisconnectRemotePort();
 							parent::OnDelete();
 				}]]></code>
-				</method>
-				<method id="AfterDelete">
-					<static>false</static>
-					<access>protected</access>
-					<type>Overload-DBObject</type>
-					<code><![CDATA[	protected function AfterDelete()
-						{
-							GenericCommInterface::UpdateCIDependencies();
-							parent::AfterDelete();
-						}]]>
-					</code>
 				</method>
 				<!-- This method filters the search interface for virtual to generic connections -->
 				<method id="PrefillSearchForm">
