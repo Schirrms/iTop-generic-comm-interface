@@ -2338,6 +2338,9 @@
 					<neighbour_id>gencommredundancy0</neighbour_id>
 					<enabled>false</enabled>
 					<enabled_mode>fixed</enabled_mode>
+					<min_up>1</min_up>
+					<min_up_type>count</min_up_type>
+					<min_up_mode>fixed</min_up_mode>
 				</field>
 				<!-- Set 1 -->
 				<field id="dependantgencommci1_list" xsi:type="AttributeLinkedSetIndirect" _delta="define">
