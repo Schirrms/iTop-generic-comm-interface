@@ -817,7 +817,7 @@
 					<code><![CDATA[
 						public function PrefillSearchForm(&$aContextParam)
 						{
-							//file_put_contents('/tmp/dd.txt', "in the GenericCommInterface Class\n");
+							file_put_contents('debug/dd.txt', "in the GenericCommInterface Class\n");
 							//file_put_contents('/tmp/dd.txt', print_r($aContextParam, true), FILE_APPEND);
 							if($aContextParam['dest_class'] == 'GenericCommVirtInterface')
 							{
