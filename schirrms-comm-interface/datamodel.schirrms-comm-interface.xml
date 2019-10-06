@@ -490,7 +490,7 @@
 									$oPhysInterfaceSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL),
 										array(),
 										array(
-										'device' => $this->Get('networkdevice_id'),
+										'device' => $this->Get('connectableci_id'),
 										)
 									);
 									while ($oPhysInterface = $oPhysInterfaceSet->Fetch())
