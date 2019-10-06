@@ -739,7 +739,7 @@
 						}
 					]]></code>
 				</method>
-					<method id="DisconnectRemotePort">
+				<method id="DisconnectRemotePort">
 					<static>false</static>
 					<access>protected</access>
 					<type>Overload-cmdbAbstractObject</type>
@@ -823,6 +823,7 @@
 							$this->DisconnectRemotePort();
 							parent::OnDelete();
 				}]]></code>
+				</method>
 				<method id="AfterDelete">
 					<static>false</static>
 					<access>protected</access>
