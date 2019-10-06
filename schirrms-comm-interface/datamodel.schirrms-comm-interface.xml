@@ -788,7 +788,7 @@
 					<code><![CDATA[	protected function AfterInsert()
 						{
 							$this->ConnectRemotePort();
-							$parent->UpdateCIDependencies();
+							GenericCommInterface::UpdateCIDependencies();
 							parent::AfterInsert();
 				}]]></code>
 				</method>
@@ -809,7 +809,7 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function AfterUpdate()
 						{
-							$parent->UpdateCIDependencies();
+							GenericCommInterface::UpdateCIDependencies();
 							parent::AfterUpdate();
 						}]]>
 					</code>
@@ -830,7 +830,7 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function AfterDelete()
 						{
-							$parent->UpdateCIDependencies();
+							GenericCommInterface::UpdateCIDependencies();
 							parent::AfterDelete();
 						}]]>
 					</code>
