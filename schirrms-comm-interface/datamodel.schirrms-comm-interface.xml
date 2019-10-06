@@ -1290,7 +1290,7 @@
 			<relations>
 			</relations>
 		</class>
-		<!-- Set 0 -->
+		<!-- Set 1 -->
 		<class id="lnkConnectableCIToConnectableCI1" _delta="define">
 			<parent>cmdbAbstractObject</parent>
 			<properties>
@@ -1378,6 +1378,559 @@
 				<abstract>false</abstract>
 				<key_type>autoincrement</key_type>
 				<db_table>lnkconnectablecitoconnectableci2</db_table>
+				<db_key_field>id</db_key_field>
+				<db_final_class_field/>
+				<naming>
+					<attributes>
+						<attribute id="impactorci_id"/>
+						<attribute id="dependantci_id"/>
+					</attributes>
+				</naming>
+				<display_template/>
+				<icon/>
+				<reconciliation>
+					<attributes>
+						<attribute id="impactorci_id"/>
+						<attribute id="dependantci_id"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+				<field id="impactorci_id" xsi:type="AttributeExternalKey">
+					<sql>impactorci_id</sql>
+					<target_class>ConnectableCI</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<allow_target_creation>true</allow_target_creation>
+				</field>
+				<field id="dependantci_id" xsi:type="AttributeExternalKey">
+					<sql>dependantci_id</sql>
+					<target_class>ConnectableCI</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<allow_target_creation>true</allow_target_creation>
+				</field>
+			</fields>
+			<methods>
+			</methods>
+			<presentation>
+				<details>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</details>
+				<list>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</list>
+				<search>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</search>
+			</presentation>
+			<relations>
+			</relations>
+		</class>
+		<!-- Set 3 -->
+		<class id="lnkConnectableCIToConnectableCI3" _delta="define">
+			<parent>cmdbAbstractObject</parent>
+			<properties>
+				<is_link>1</is_link>
+				<category>bizmodel</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>lnkconnectablecitoconnectableci3</db_table>
+				<db_key_field>id</db_key_field>
+				<db_final_class_field/>
+				<naming>
+					<attributes>
+						<attribute id="impactorci_id"/>
+						<attribute id="dependantci_id"/>
+					</attributes>
+				</naming>
+				<display_template/>
+				<icon/>
+				<reconciliation>
+					<attributes>
+						<attribute id="impactorci_id"/>
+						<attribute id="dependantci_id"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+				<field id="impactorci_id" xsi:type="AttributeExternalKey">
+					<sql>impactorci_id</sql>
+					<target_class>ConnectableCI</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<allow_target_creation>true</allow_target_creation>
+				</field>
+				<field id="dependantci_id" xsi:type="AttributeExternalKey">
+					<sql>dependantci_id</sql>
+					<target_class>ConnectableCI</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<allow_target_creation>true</allow_target_creation>
+				</field>
+			</fields>
+			<methods>
+			</methods>
+			<presentation>
+				<details>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</details>
+				<list>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</list>
+				<search>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</search>
+			</presentation>
+			<relations>
+			</relations>
+		</class>
+		<!-- Set 4 -->
+		<class id="lnkConnectableCIToConnectableCI4" _delta="define">
+			<parent>cmdbAbstractObject</parent>
+			<properties>
+				<is_link>1</is_link>
+				<category>bizmodel</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>lnkconnectablecitoconnectableci4</db_table>
+				<db_key_field>id</db_key_field>
+				<db_final_class_field/>
+				<naming>
+					<attributes>
+						<attribute id="impactorci_id"/>
+						<attribute id="dependantci_id"/>
+					</attributes>
+				</naming>
+				<display_template/>
+				<icon/>
+				<reconciliation>
+					<attributes>
+						<attribute id="impactorci_id"/>
+						<attribute id="dependantci_id"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+				<field id="impactorci_id" xsi:type="AttributeExternalKey">
+					<sql>impactorci_id</sql>
+					<target_class>ConnectableCI</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<allow_target_creation>true</allow_target_creation>
+				</field>
+				<field id="dependantci_id" xsi:type="AttributeExternalKey">
+					<sql>dependantci_id</sql>
+					<target_class>ConnectableCI</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<allow_target_creation>true</allow_target_creation>
+				</field>
+			</fields>
+			<methods>
+			</methods>
+			<presentation>
+				<details>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</details>
+				<list>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</list>
+				<search>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</search>
+			</presentation>
+			<relations>
+			</relations>
+		</class>
+		<!-- Set 5 -->
+		<class id="lnkConnectableCIToConnectableCI5" _delta="define">
+			<parent>cmdbAbstractObject</parent>
+			<properties>
+				<is_link>1</is_link>
+				<category>bizmodel</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>lnkconnectablecitoconnectableci5</db_table>
+				<db_key_field>id</db_key_field>
+				<db_final_class_field/>
+				<naming>
+					<attributes>
+						<attribute id="impactorci_id"/>
+						<attribute id="dependantci_id"/>
+					</attributes>
+				</naming>
+				<display_template/>
+				<icon/>
+				<reconciliation>
+					<attributes>
+						<attribute id="impactorci_id"/>
+						<attribute id="dependantci_id"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+				<field id="impactorci_id" xsi:type="AttributeExternalKey">
+					<sql>impactorci_id</sql>
+					<target_class>ConnectableCI</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<allow_target_creation>true</allow_target_creation>
+				</field>
+				<field id="dependantci_id" xsi:type="AttributeExternalKey">
+					<sql>dependantci_id</sql>
+					<target_class>ConnectableCI</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<allow_target_creation>true</allow_target_creation>
+				</field>
+			</fields>
+			<methods>
+			</methods>
+			<presentation>
+				<details>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</details>
+				<list>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</list>
+				<search>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</search>
+			</presentation>
+			<relations>
+			</relations>
+		</class>
+		<!-- Set 6 -->
+		<class id="lnkConnectableCIToConnectableCI6" _delta="define">
+			<parent>cmdbAbstractObject</parent>
+			<properties>
+				<is_link>1</is_link>
+				<category>bizmodel</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>lnkconnectablecitoconnectableci6</db_table>
+				<db_key_field>id</db_key_field>
+				<db_final_class_field/>
+				<naming>
+					<attributes>
+						<attribute id="impactorci_id"/>
+						<attribute id="dependantci_id"/>
+					</attributes>
+				</naming>
+				<display_template/>
+				<icon/>
+				<reconciliation>
+					<attributes>
+						<attribute id="impactorci_id"/>
+						<attribute id="dependantci_id"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+				<field id="impactorci_id" xsi:type="AttributeExternalKey">
+					<sql>impactorci_id</sql>
+					<target_class>ConnectableCI</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<allow_target_creation>true</allow_target_creation>
+				</field>
+				<field id="dependantci_id" xsi:type="AttributeExternalKey">
+					<sql>dependantci_id</sql>
+					<target_class>ConnectableCI</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<allow_target_creation>true</allow_target_creation>
+				</field>
+			</fields>
+			<methods>
+			</methods>
+			<presentation>
+				<details>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</details>
+				<list>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</list>
+				<search>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</search>
+			</presentation>
+			<relations>
+			</relations>
+		</class>
+		<!-- Set 7 -->
+		<class id="lnkConnectableCIToConnectableCI7" _delta="define">
+			<parent>cmdbAbstractObject</parent>
+			<properties>
+				<is_link>1</is_link>
+				<category>bizmodel</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>lnkconnectablecitoconnectableci7</db_table>
+				<db_key_field>id</db_key_field>
+				<db_final_class_field/>
+				<naming>
+					<attributes>
+						<attribute id="impactorci_id"/>
+						<attribute id="dependantci_id"/>
+					</attributes>
+				</naming>
+				<display_template/>
+				<icon/>
+				<reconciliation>
+					<attributes>
+						<attribute id="impactorci_id"/>
+						<attribute id="dependantci_id"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+				<field id="impactorci_id" xsi:type="AttributeExternalKey">
+					<sql>impactorci_id</sql>
+					<target_class>ConnectableCI</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<allow_target_creation>true</allow_target_creation>
+				</field>
+				<field id="dependantci_id" xsi:type="AttributeExternalKey">
+					<sql>dependantci_id</sql>
+					<target_class>ConnectableCI</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<allow_target_creation>true</allow_target_creation>
+				</field>
+			</fields>
+			<methods>
+			</methods>
+			<presentation>
+				<details>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</details>
+				<list>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</list>
+				<search>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</search>
+			</presentation>
+			<relations>
+			</relations>
+		</class>
+		<!-- Set 8 -->
+		<class id="lnkConnectableCIToConnectableCI8" _delta="define">
+			<parent>cmdbAbstractObject</parent>
+			<properties>
+				<is_link>1</is_link>
+				<category>bizmodel</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>lnkconnectablecitoconnectableci8</db_table>
+				<db_key_field>id</db_key_field>
+				<db_final_class_field/>
+				<naming>
+					<attributes>
+						<attribute id="impactorci_id"/>
+						<attribute id="dependantci_id"/>
+					</attributes>
+				</naming>
+				<display_template/>
+				<icon/>
+				<reconciliation>
+					<attributes>
+						<attribute id="impactorci_id"/>
+						<attribute id="dependantci_id"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+				<field id="impactorci_id" xsi:type="AttributeExternalKey">
+					<sql>impactorci_id</sql>
+					<target_class>ConnectableCI</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<allow_target_creation>true</allow_target_creation>
+				</field>
+				<field id="dependantci_id" xsi:type="AttributeExternalKey">
+					<sql>dependantci_id</sql>
+					<target_class>ConnectableCI</target_class>
+					<is_null_allowed>false</is_null_allowed>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<allow_target_creation>true</allow_target_creation>
+				</field>
+			</fields>
+			<methods>
+			</methods>
+			<presentation>
+				<details>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</details>
+				<list>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</list>
+				<search>
+					<items>
+						<item id="impactorci_id">
+							<rank>10</rank>
+						</item>
+						<item id="dependantci_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</search>
+			</presentation>
+			<relations>
+			</relations>
+		</class>
+		<!-- Set 9 -->
+		<class id="lnkConnectableCIToConnectableCI9" _delta="define">
+			<parent>cmdbAbstractObject</parent>
+			<properties>
+				<is_link>1</is_link>
+				<category>bizmodel</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>lnkconnectablecitoconnectableci9</db_table>
 				<db_key_field>id</db_key_field>
 				<db_final_class_field/>
 				<naming>
@@ -1844,6 +2397,202 @@
 					<min_up_type>count</min_up_type>
 					<min_up_mode>user</min_up_mode>
 				</field>
+				<!-- Set 3 -->
+				<field id="dependantgencommci3_list" xsi:type="AttributeLinkedSetIndirect" _delta="define">
+					<linked_class>lnkConnectableCIToConnectableCI3</linked_class>
+					<ext_key_to_me>impactorci_id</ext_key_to_me>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<ext_key_to_remote>dependantci_id</ext_key_to_remote>
+					<duplicates/>
+				</field>
+				<field id="impactorgencommci3_list" xsi:type="AttributeLinkedSetIndirect" _delta="define">
+					<linked_class>lnkConnectableCIToConnectableCI3</linked_class>
+					<ext_key_to_me>dependantci_id</ext_key_to_me>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<ext_key_to_remote>impactorci_id</ext_key_to_remote>
+					<duplicates/>
+				</field>
+				<field id="GenCommRedundancy3" xsi:type="AttributeRedundancySettings" _delta="define">
+					<sql>gencommredundancy3</sql>
+					<relation_code>impacts</relation_code>
+					<from_class>ConnectableCI</from_class>
+					<neighbour_id>gencommredundancy3</neighbour_id>
+					<enabled>true</enabled>
+					<enabled_mode>user</enabled_mode>
+					<min_up>1</min_up>
+					<min_up_type>count</min_up_type>
+					<min_up_mode>user</min_up_mode>
+				</field>
+				<!-- Set 4 -->
+				<field id="dependantgencommci4_list" xsi:type="AttributeLinkedSetIndirect" _delta="define">
+					<linked_class>lnkConnectableCIToConnectableCI4</linked_class>
+					<ext_key_to_me>impactorci_id</ext_key_to_me>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<ext_key_to_remote>dependantci_id</ext_key_to_remote>
+					<duplicates/>
+				</field>
+				<field id="impactorgencommci4_list" xsi:type="AttributeLinkedSetIndirect" _delta="define">
+					<linked_class>lnkConnectableCIToConnectableCI4</linked_class>
+					<ext_key_to_me>dependantci_id</ext_key_to_me>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<ext_key_to_remote>impactorci_id</ext_key_to_remote>
+					<duplicates/>
+				</field>
+				<field id="GenCommRedundancy4" xsi:type="AttributeRedundancySettings" _delta="define">
+					<sql>gencommredundancy4</sql>
+					<relation_code>impacts</relation_code>
+					<from_class>ConnectableCI</from_class>
+					<neighbour_id>gencommredundancy4</neighbour_id>
+					<enabled>true</enabled>
+					<enabled_mode>user</enabled_mode>
+					<min_up>1</min_up>
+					<min_up_type>count</min_up_type>
+					<min_up_mode>user</min_up_mode>
+				</field>
+				<!-- Set 5 -->
+				<field id="dependantgencommci5_list" xsi:type="AttributeLinkedSetIndirect" _delta="define">
+					<linked_class>lnkConnectableCIToConnectableCI5</linked_class>
+					<ext_key_to_me>impactorci_id</ext_key_to_me>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<ext_key_to_remote>dependantci_id</ext_key_to_remote>
+					<duplicates/>
+				</field>
+				<field id="impactorgencommci5_list" xsi:type="AttributeLinkedSetIndirect" _delta="define">
+					<linked_class>lnkConnectableCIToConnectableCI5</linked_class>
+					<ext_key_to_me>dependantci_id</ext_key_to_me>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<ext_key_to_remote>impactorci_id</ext_key_to_remote>
+					<duplicates/>
+				</field>
+				<field id="GenCommRedundancy5" xsi:type="AttributeRedundancySettings" _delta="define">
+					<sql>gencommredundancy5</sql>
+					<relation_code>impacts</relation_code>
+					<from_class>ConnectableCI</from_class>
+					<neighbour_id>gencommredundancy5</neighbour_id>
+					<enabled>true</enabled>
+					<enabled_mode>user</enabled_mode>
+					<min_up>1</min_up>
+					<min_up_type>count</min_up_type>
+					<min_up_mode>user</min_up_mode>
+				</field>
+				<!-- Set 6 -->
+				<field id="dependantgencommci6_list" xsi:type="AttributeLinkedSetIndirect" _delta="define">
+					<linked_class>lnkConnectableCIToConnectableCI6</linked_class>
+					<ext_key_to_me>impactorci_id</ext_key_to_me>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<ext_key_to_remote>dependantci_id</ext_key_to_remote>
+					<duplicates/>
+				</field>
+				<field id="impactorgencommci6_list" xsi:type="AttributeLinkedSetIndirect" _delta="define">
+					<linked_class>lnkConnectableCIToConnectableCI6</linked_class>
+					<ext_key_to_me>dependantci_id</ext_key_to_me>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<ext_key_to_remote>impactorci_id</ext_key_to_remote>
+					<duplicates/>
+				</field>
+				<field id="GenCommRedundancy6" xsi:type="AttributeRedundancySettings" _delta="define">
+					<sql>gencommredundancy6</sql>
+					<relation_code>impacts</relation_code>
+					<from_class>ConnectableCI</from_class>
+					<neighbour_id>gencommredundancy6</neighbour_id>
+					<enabled>true</enabled>
+					<enabled_mode>user</enabled_mode>
+					<min_up>1</min_up>
+					<min_up_type>count</min_up_type>
+					<min_up_mode>user</min_up_mode>
+				</field>
+				<!-- Set 7 -->
+				<field id="dependantgencommci7_list" xsi:type="AttributeLinkedSetIndirect" _delta="define">
+					<linked_class>lnkConnectableCIToConnectableCI7</linked_class>
+					<ext_key_to_me>impactorci_id</ext_key_to_me>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<ext_key_to_remote>dependantci_id</ext_key_to_remote>
+					<duplicates/>
+				</field>
+				<field id="impactorgencommci7_list" xsi:type="AttributeLinkedSetIndirect" _delta="define">
+					<linked_class>lnkConnectableCIToConnectableCI7</linked_class>
+					<ext_key_to_me>dependantci_id</ext_key_to_me>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<ext_key_to_remote>impactorci_id</ext_key_to_remote>
+					<duplicates/>
+				</field>
+				<field id="GenCommRedundancy7" xsi:type="AttributeRedundancySettings" _delta="define">
+					<sql>gencommredundancy7</sql>
+					<relation_code>impacts</relation_code>
+					<from_class>ConnectableCI</from_class>
+					<neighbour_id>gencommredundancy7</neighbour_id>
+					<enabled>true</enabled>
+					<enabled_mode>user</enabled_mode>
+					<min_up>1</min_up>
+					<min_up_type>count</min_up_type>
+					<min_up_mode>user</min_up_mode>
+				</field>
+				<!-- Set 8 -->
+				<field id="dependantgencommci8_list" xsi:type="AttributeLinkedSetIndirect" _delta="define">
+					<linked_class>lnkConnectableCIToConnectableCI8</linked_class>
+					<ext_key_to_me>impactorci_id</ext_key_to_me>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<ext_key_to_remote>dependantci_id</ext_key_to_remote>
+					<duplicates/>
+				</field>
+				<field id="impactorgencommci8_list" xsi:type="AttributeLinkedSetIndirect" _delta="define">
+					<linked_class>lnkConnectableCIToConnectableCI8</linked_class>
+					<ext_key_to_me>dependantci_id</ext_key_to_me>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<ext_key_to_remote>impactorci_id</ext_key_to_remote>
+					<duplicates/>
+				</field>
+				<field id="GenCommRedundancy8" xsi:type="AttributeRedundancySettings" _delta="define">
+					<sql>gencommredundancy8</sql>
+					<relation_code>impacts</relation_code>
+					<from_class>ConnectableCI</from_class>
+					<neighbour_id>gencommredundancy8</neighbour_id>
+					<enabled>true</enabled>
+					<enabled_mode>user</enabled_mode>
+					<min_up>1</min_up>
+					<min_up_type>count</min_up_type>
+					<min_up_mode>user</min_up_mode>
+				</field>
+				<!-- Set 9 -->
+				<field id="dependantgencommci9_list" xsi:type="AttributeLinkedSetIndirect" _delta="define">
+					<linked_class>lnkConnectableCIToConnectableCI9</linked_class>
+					<ext_key_to_me>impactorci_id</ext_key_to_me>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<ext_key_to_remote>dependantci_id</ext_key_to_remote>
+					<duplicates/>
+				</field>
+				<field id="impactorgencommci9_list" xsi:type="AttributeLinkedSetIndirect" _delta="define">
+					<linked_class>lnkConnectableCIToConnectableCI9</linked_class>
+					<ext_key_to_me>dependantci_id</ext_key_to_me>
+					<count_min>0</count_min>
+					<count_max>0</count_max>
+					<ext_key_to_remote>impactorci_id</ext_key_to_remote>
+					<duplicates/>
+				</field>
+				<field id="GenCommRedundancy9" xsi:type="AttributeRedundancySettings" _delta="define">
+					<sql>gencommredundancy9</sql>
+					<relation_code>impacts</relation_code>
+					<from_class>ConnectableCI</from_class>
+					<neighbour_id>gencommredundancy9</neighbour_id>
+					<enabled>true</enabled>
+					<enabled_mode>user</enabled_mode>
+					<min_up>1</min_up>
+					<min_up_type>count</min_up_type>
+					<min_up_mode>user</min_up_mode>
+				</field>
 			</fields>
 			<relations>
 				<relation id="impacts" _delta="define">
@@ -1856,6 +2605,27 @@
 						</neighbour>
 						<neighbour id="gencommredundancy2" _delta="define">
 							<attribute>dependantgencommci2_list</attribute>
+						</neighbour>
+						<neighbour id="gencommredundancy3" _delta="define">
+							<attribute>dependantgencommci3_list</attribute>
+						</neighbour>
+						<neighbour id="gencommredundancy4" _delta="define">
+							<attribute>dependantgencommci4_list</attribute>
+						</neighbour>
+						<neighbour id="gencommredundancy5" _delta="define">
+							<attribute>dependantgencommci5_list</attribute>
+						</neighbour>
+						<neighbour id="gencommredundancy6" _delta="define">
+							<attribute>dependantgencommci6_list</attribute>
+						</neighbour>
+						<neighbour id="gencommredundancy7" _delta="define">
+							<attribute>dependantgencommci7_list</attribute>
+						</neighbour>
+						<neighbour id="gencommredundancy8" _delta="define">
+							<attribute>dependantgencommci8_list</attribute>
+						</neighbour>
+						<neighbour id="gencommredundancy9" _delta="define">
+							<attribute>dependantgencommci9_list</attribute>
 						</neighbour>
 					</neighbours>
 				</relation>
