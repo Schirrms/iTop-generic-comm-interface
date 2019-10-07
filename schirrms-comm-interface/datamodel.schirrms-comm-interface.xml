@@ -814,19 +814,6 @@
 							parent::OnUpdate();
 				}]]></code>
 				</method>
-				<method id="AfterUpdate">
-					<static>false</static>
-					<access>protected</access>
-					<type>Overload-DBObject</type>
-					<code><![CDATA[	protected function AfterUpdate()
-						{
-							$sDebugFile=$_SERVER['CONTEXT_DOCUMENT_ROOT']."/debug/dd-".date("Y-m-d").".txt";
-							file_put_contents($sDebugFile, "BEGIN : in the GenericCommPhysInterface Class, AfterUpdate Method\n", FILE_APPEND);
-							GenericCommInterface::UpdateCIDependencies();
-							parent::AfterUpdate();
-						}]]>
-					</code>
-				</method>
 				<method id="OnDelete">
 					<static>false</static>
 					<access>protected</access>
