@@ -508,7 +508,7 @@
 								$aLnkTable = array();
 								for ($i=0; $i<10; $i++)
 								{
-									$sOQL = "SELECT	lnkConnectableCIToConnectableCI".$i." WHERE impactorci_id != NULL";
+									$sOQL = "SELECT	lnkConnectableCIToConnectableCI".$i." WHERE impactorci_id != 'NULL'";
 									$aLnkTable[$i] = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array());
 									file_put_contents($sDebugFile, "lnkConnectableCIToConnectableCI".$i."->Count = ".$aLnkTable[$i]->count."\n", FILE_APPEND);
 								}
