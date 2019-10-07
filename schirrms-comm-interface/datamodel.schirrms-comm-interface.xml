@@ -485,25 +485,34 @@
 							file_put_contents($sDebugFile, "BEGIN : in the GenericCommInterface Class\n", FILE_APPEND);
 							// no $aContextParam in this case...
 							// file_put_contents($sDebugFile, print_r($aContextParam, true), FILE_APPEND);
+							// get all GenericCommInterface of the current device
 							$aConnInt = array();
 							$oDevice = MetaModel::GetObject('ConnectableCI', $this->Get('connectableci_id'));
-								if (is_object($oDevice))
+							if (is_object($oDevice))
+							{
+								$sOQL = "SELECT	GenericCommPhysInterface WHERE connectableci_id = :device";
+								$oPhysInterfaceSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL),
+									array(),
+									array(
+									'device' => $this->Get('connectableci_id'),
+									)
+								);
+								while ($oPhysInterface = $oPhysInterfaceSet->Fetch())
 								{
-									$sOQL = "SELECT	GenericCommPhysInterface WHERE connectableci_id = :device";
-									$oPhysInterfaceSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL),
-										array(),
-										array(
-										'device' => $this->Get('connectableci_id'),
-										)
-									);
-									while ($oPhysInterface = $oPhysInterfaceSet->Fetch())
-									{
-										$aInt = array($oPhysInterface->Get('connected_to_id'), $oPhysInterface->Get('connected_to_device_id'), $oPhysInterface->Get('connection_impact'));
-										$aConnInt[$oPhysInterface->GetKey()] = $aInt;
-									}
+									$aInt = array($oPhysInterface->Get('connected_to_id'), $oPhysInterface->Get('connected_to_device_id'), $oPhysInterface->Get('connection_impact'));
+									$aConnInt[$oPhysInterface->GetKey()] = $aInt;
 								}
-							file_put_contents($sDebugFile, "Contents of the array \$aConnInt\n", FILE_APPEND);
-							file_put_contents($sDebugFile, print_r($aConnInt, true), FILE_APPEND);
+								file_put_contents($sDebugFile, "Contents of the array \$aConnInt (list of GenInterfaces of this device)\n", FILE_APPEND);
+								file_put_contents($sDebugFile, print_r($aConnInt, true), FILE_APPEND);
+								// scan all lnk tables, to see if the interfaces local interfaces are present
+								$aLnkTable = array();
+								for ($i=0; $i<10; $i++)
+								{
+									$sOQL = "SELECT	lnkConnectableCIToConnectableCI".$i" WHERE impactorci_id != NULL";
+									$aLnkTable[$i] = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array());
+									file_put_contents($sDebugFile, "lnkConnectableCIToConnectableCI".$i."->Count = ".$aLnkTable[$i]->count."\n", FILE_APPEND);
+								}
+							}
 						}]]>
 					</code>
 				</method>
@@ -804,6 +813,19 @@
 							$this->ConnectRemotePort();
 							parent::OnUpdate();
 				}]]></code>
+				</method>
+				<method id="AfterUpdate">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	protected function AfterUpdate()
+						{
+							$sDebugFile=$_SERVER['CONTEXT_DOCUMENT_ROOT']."/debug/dd-".date("Y-m-d").".txt";
+							file_put_contents($sDebugFile, "BEGIN : in the GenericCommPhysInterface Class, AfterUpdate Method\n", FILE_APPEND);
+							GenericCommInterface::UpdateCIDependencies();
+							parent::AfterUpdate();
+						}]]>
+					</code>
 				</method>
 				<method id="OnDelete">
 					<static>false</static>
