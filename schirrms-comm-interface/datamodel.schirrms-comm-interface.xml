@@ -481,7 +481,7 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function UpdateCIDependencies()
 						{
-							$sDebugFile=$_SERVER['DOCUMENT_ROOT']."/glpi/debug/dd.txt";
+							$sDebugFile=$_SERVER['CONTEXT_DOCUMENT_ROOT']."/debug/dd.txt";
 							file_put_contents($sDebugFile, "BEGIN : in the GenericCommInterface Class\n", FILE_APPEND);
 							$aConnInt = array();
 							$oDevice = MetaModel::GetObject('ConnectableCI', $this->Get('connectableci_id'));
@@ -818,9 +818,9 @@
 					<code><![CDATA[
 						public function PrefillSearchForm(&$aContextParam)
 						{
-							$sDebugFile=$_SERVER['DOCUMENT_ROOT']."/glpi/debug/dd.txt";
+							$sDebugFile=$_SERVER['CONTEXT_DOCUMENT_ROOT']."/glpi/debug/dd.txt";
 							file_put_contents($sDebugFile, "in the GenericCommInterface Class\n");
-							//file_put_contents('/tmp/dd.txt', print_r($aContextParam, true), FILE_APPEND);
+							//file_put_contents($sDebugFile, print_r($aContextParam, true), FILE_APPEND);
 							if($aContextParam['dest_class'] == 'GenericCommVirtInterface')
 							{
 								if(MetaModel::IsValidAttCode($aContextParam['dest_class'],'connectableci_id') && !empty($aContextParam['source_obj']->Get('connectableci_id')) && 
@@ -1029,8 +1029,9 @@
 					<code><![CDATA[
 						public function PrefillSearchForm(&$aContextParam)
 						{
-							//file_put_contents('/tmp/dd.txt', "in the GenericCommVirtInterface Class\n");
-							//file_put_contents('/tmp/dd.txt', print_r($aContextParam, true), FILE_APPEND);
+							$sDebugFile=$_SERVER['CONTEXT_DOCUMENT_ROOT']."/debug/dd.txt";
+							//file_put_contents($sDebugFile, "in the GenericCommVirtInterface Class\n");
+							//file_put_contents($sDebugFile, print_r($aContextParam, true), FILE_APPEND);
 							if($aContextParam['dest_class'] == 'GenericCommInterface')
 							{
 								if(MetaModel::IsValidAttCode($aContextParam['dest_class'],'connectableci_id') && !empty($aContextParam['source_obj']->Get('connectableci_id')) && 
