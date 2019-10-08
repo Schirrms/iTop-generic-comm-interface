@@ -490,9 +490,9 @@
 								$oVirtInterfaceSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL2), array(), array('interface' => $oLnkVirtInterface->Get('genericcommvirtinterface_id')));
 								while ($oVirtInterface = $oVirtInterfaceSet->Fetch())
 								{
-									if ($oVirtInterface->Get('redundancy') != NULL && $oVirtInterface->Get('redundancy') != 'disabled')
+									if ($oVirtInterface->Get('virttogenericredundancy') != NULL && $oVirtInterface->Get('virttogenericredundancy') != 'disabled')
 									{
-										$aVirtInterfaces[] = array($nLevel, $nRealInt_id, $oLnkVirtInterface->Get('genericcommvirtinterface_id'), $oVirtInterface->Get('redundancy'));
+										$aVirtInterfaces[] = array($nLevel, $nRealInt_id, $oLnkVirtInterface->Get('genericcommvirtinterface_id'), $oVirtInterface->Get('virttogenericredundancy'));
 										$aVirtInterfaces = $this->IterateVirtInterfaces($nLevel, $oLnkVirtInterface->Get('genericcommvirtinterface_id'), $oLnkVirtInterface->Get('genericcommvirtinterface_id'), $aVirtInterfaces);
 									}
 									else 
@@ -537,7 +537,7 @@
 										{
 											$aInt = array($oPhysInterface->Get('connected_to_id'), $oPhysInterface->GetKey(), '0');
 											$aConnDevDepends[$oPhysInterface->Get('connected_to_device_id')] = $aInt;
-											$aVirtInterfaces = $this->IterateVirtInterfaces(0, $oPhysInterface->GetKey(), $aVirtInterfaces);
+											$aVirtInterfaces = $this->IterateVirtInterfaces(0, $oPhysInterface->GetKey(), $oPhysInterface->GetKey(), $aVirtInterfaces);
 										}
 										else 
 										{
@@ -1187,6 +1187,9 @@
 						</item>
 						<item id="humanspeed_id">
 							<rank>60</rank>
+						</item>
+						<item id="virttogenericredundancy">
+							<rank>70</rank>
 						</item>
 					</items>
 				</list>
