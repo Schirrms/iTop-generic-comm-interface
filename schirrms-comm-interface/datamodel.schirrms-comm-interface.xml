@@ -475,6 +475,24 @@
 				</field>
 			</fields>
 			<methods>
+				<method id="iterateVirtInterfaces">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[protected function IterateVirtInterfaces($nLevel, $nInt_id, $aVirtInterfaces)
+						{
+							$nLevel++ ;
+							$sOQL = "lnkGenericCommInterfaceToGenericCommVirtInterface WHERE genericcomminterface_id = :interface";
+							$oVirtInterfaceSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('interface' => $nInt_id));
+							while ($oVirtInterface = $oVirtInterfaceSet->Fetch())
+							{
+								$aVirtInterfaces[] = array($nLevel, $oVirtInterface->Get('genericcommvirtinterface_id');
+								$aVirtInterfaces = $this->IterateVirtInterfaces($nLevel, $oVirtInterface->Get('genericcommvirtinterface_id'), $aVirtInterfaces);
+							}
+							return $aVirtInterfaces;
+						}]]>
+					</code>
+				</method>
 				<method id="UpdateCIDependencies">
 					<static>false</static>
 					<access>protected</access>
@@ -488,6 +506,7 @@
 							// get all GenericCommInterface of the current device
 							$aConnDevImpacts = array();
 							$aConnDevDepends = array();
+							$aVirtInterfaces = array();
 							$oDevice = MetaModel::GetObject('ConnectableCI', $this->Get('connectableci_id'));
 							if (is_object($oDevice))
 							{
@@ -506,6 +525,7 @@
 										{
 											$aInt = array($oPhysInterface->Get('connected_to_id'), $oPhysInterface->GetKey(), '0');
 											$aConnDevDepends[$oPhysInterface->Get('connected_to_device_id')] = $aInt;
+											$aVirtInterfaces = $this->IterateVirtInterfaces(0, $oPhysInterface->GetKey(), $aVirtInterfaces);
 										}
 										else 
 										{
@@ -517,7 +537,9 @@
 								file_put_contents($sDebugFile, "Contents of the array \$aConnDevDepends (list of Devices impacting this device)\n", FILE_APPEND);
 								file_put_contents($sDebugFile, print_r($aConnDevDepends, true), FILE_APPEND);
 								file_put_contents($sDebugFile, "Contents of the array \$aConnDevImpacts (list of Devices Depending of this device)\n", FILE_APPEND);
-								file_put_contents($sDebugFile, print_r($aDisconnInt, true), FILE_APPEND);
+								file_put_contents($sDebugFile, print_r($aConnDevImpacts, true), FILE_APPEND);
+								file_put_contents($sDebugFile, "Contents of the array \$aVirtInterfaces (list of all virtual interfaces this device)\n", FILE_APPEND);
+								file_put_contents($sDebugFile, print_r($aVirtInterfaces, true), FILE_APPEND);
 								// scan all lnk tables, to see if the current device is present
 								$aLnkTableD = array();
 								$aLnkTableI = array();
