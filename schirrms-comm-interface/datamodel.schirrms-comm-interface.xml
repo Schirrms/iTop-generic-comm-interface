@@ -486,7 +486,8 @@
 							// no $aContextParam in this case...
 							// file_put_contents($sDebugFile, print_r($aContextParam, true), FILE_APPEND);
 							// get all GenericCommInterface of the current device
-							$aConnInt = array();
+							$aConnDevImpacts = array();
+							$aConnDevDepends = array();
 							$oDevice = MetaModel::GetObject('ConnectableCI', $this->Get('connectableci_id'));
 							if (is_object($oDevice))
 							{
@@ -499,18 +500,38 @@
 								);
 								while ($oPhysInterface = $oPhysInterfaceSet->Fetch())
 								{
-									$aInt = array($oPhysInterface->Get('connected_to_id'), $oPhysInterface->Get('connected_to_device_id'), $oPhysInterface->Get('connection_impact'));
-									$aConnInt[$oPhysInterface->GetKey()] = $aInt;
+									if ($oPhysInterface->Get('connected_to_id') != 0) 
+									{
+										if ($oPhysInterface->Get('connection_impact') == 'depends')
+										{
+											$aInt = array($oPhysInterface->Get('connected_to_id'), $oPhysInterface->GetKey(), '0');
+											$aConnDevDepends[$oPhysInterface->Get('connected_to_device_id')] = $aInt;
+										}
+										else 
+										{
+											$aConnDevImpacts[$oPhysInterface->Get('connected_to_device_id')] = '';
+										}
+										// $aConnDev[] = $oPhysInterface->Get('connected_to_device_id');
+									}
 								}
-								file_put_contents($sDebugFile, "Contents of the array \$aConnInt (list of GenInterfaces of this device)\n", FILE_APPEND);
-								file_put_contents($sDebugFile, print_r($aConnInt, true), FILE_APPEND);
-								// scan all lnk tables, to see if the interfaces local interfaces are present
-								$aLnkTable = array();
+								file_put_contents($sDebugFile, "Contents of the array \$aConnDevDepends (list of Devices impacting this device)\n", FILE_APPEND);
+								file_put_contents($sDebugFile, print_r($aConnDevDepends, true), FILE_APPEND);
+								file_put_contents($sDebugFile, "Contents of the array \$aConnDevImpacts (list of Devices Depending of this device)\n", FILE_APPEND);
+								file_put_contents($sDebugFile, print_r($aDisconnInt, true), FILE_APPEND);
+								// scan all lnk tables, to see if the current device is present
+								$aLnkTableD = array();
+								$aLnkTableI = array();
 								for ($i=0; $i<10; $i++)
 								{
-									$sOQL = "SELECT	lnkConnectableCIToConnectableCI".$i." WHERE impactorci_id != 'NULL'";
-									$aLnkTable[$i] = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array());
-									file_put_contents($sDebugFile, "lnkConnectableCIToConnectableCI".$i."->Count() = ".$aLnkTable[$i]->Count()."\n", FILE_APPEND);
+									// is this CI impactor for the remote ?
+									$sOQL = "SELECT	lnkConnectableCIToConnectableCI".$i." WHERE impactorci_id = :device";
+									$aLnkTableD[$i] = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('device' => $this->Get('connectableci_id')));
+									file_put_contents($sDebugFile, "lnkConnectableCIToConnectableCI".$i."->Count() (Impactor) = ".$aLnkTableD[$i]->Count()."\n", FILE_APPEND);
+									// is this CI depedent from the remote ?
+									$sOQL = "SELECT	lnkConnectableCIToConnectableCI".$i." WHERE dependantci_id = :device";
+									$aLnkTableI[$i] = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('device' => $this->Get('connectableci_id')));
+									file_put_contents($sDebugFile, "lnkConnectableCIToConnectableCI".$i."->Count() (Dependant) = ".$aLnkTableI[$i]->Count()."\n", FILE_APPEND);
+									// remove uneeded connection
 								}
 							}
 						}]]>
