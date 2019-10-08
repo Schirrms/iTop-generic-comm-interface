@@ -482,7 +482,7 @@
 					<code><![CDATA[protected function IterateVirtInterfaces($nLevel, $nInt_id, $aVirtInterfaces)
 						{
 							$nLevel++ ;
-							$sOQL = "lnkGenericCommInterfaceToGenericCommVirtInterface WHERE genericcomminterface_id = :interface";
+							$sOQL = "SELECT lnkGenericCommInterfaceToGenericCommVirtInterface WHERE genericcomminterface_id = :interface";
 							$oVirtInterfaceSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('interface' => $nInt_id));
 							while ($oVirtInterface = $oVirtInterfaceSet->Fetch())
 							{
