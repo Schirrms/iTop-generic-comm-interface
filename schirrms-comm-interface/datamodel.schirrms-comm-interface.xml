@@ -479,15 +479,27 @@
 					<static>false</static>
 					<access>protected</access>
 					<type>Overload-DBObject</type>
-					<code><![CDATA[protected function IterateVirtInterfaces($nLevel, $nInt_id, $aVirtInterfaces)
+					<code><![CDATA[protected function IterateVirtInterfaces($nLevel, $nInt_id, $nRealInt_id, $aVirtInterfaces)
 						{
 							$nLevel++ ;
 							$sOQL = "SELECT lnkGenericCommInterfaceToGenericCommVirtInterface WHERE genericcomminterface_id = :interface";
-							$oVirtInterfaceSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('interface' => $nInt_id));
-							while ($oVirtInterface = $oVirtInterfaceSet->Fetch())
+							$oLnkVirtInterfaceSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('interface' => $nInt_id));
+							while ($oLnkVirtInterface = $oLnkVirtInterfaceSet->Fetch())
 							{
-								$aVirtInterfaces[] = array($nLevel, $oVirtInterface->Get('genericcommvirtinterface_id'));
-								$aVirtInterfaces = $this->IterateVirtInterfaces($nLevel, $oVirtInterface->Get('genericcommvirtinterface_id'), $aVirtInterfaces);
+								$sOQL2 = "SELECT GenericCommVirtInterface WHERE id = :interface";
+								$oVirtInterfaceSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('interface' => $oLnkVirtInterface->Get('genericcommvirtinterface_id'));
+								while ($oVirtInterface = $oVirtInterfaceSet->Fetch())
+								{
+									if ($oVirtInterface->Get('redundancy') != NULL && $oVirtInterface->Get('redundancy') != 'disabled')
+									{
+										$aVirtInterfaces[] = array($nLevel, $nRealInt_id, $oLnkVirtInterface->Get('genericcommvirtinterface_id'), $oVirtInterface->Get('redundancy'));
+										$aVirtInterfaces = $this->IterateVirtInterfaces($nLevel, $oLnkVirtInterface->Get('genericcommvirtinterface_id'), $oLnkVirtInterface->Get('genericcommvirtinterface_id'), $aVirtInterfaces);
+									}
+									else 
+									{
+										$aVirtInterfaces = $this->IterateVirtInterfaces($nLevel-1, $oLnkVirtInterface->Get('genericcommvirtinterface_id'), $nRealInt_id, $aVirtInterfaces);
+									}
+								}
 							}
 							return $aVirtInterfaces;
 						}]]>
