@@ -486,7 +486,7 @@
 							$oVirtInterfaceSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('interface' => $nInt_id));
 							while ($oVirtInterface = $oVirtInterfaceSet->Fetch())
 							{
-								$aVirtInterfaces[] = array($nLevel, $oVirtInterface->Get('genericcommvirtinterface_id');
+								$aVirtInterfaces[] = array($nLevel, $oVirtInterface->Get('genericcommvirtinterface_id'));
 								$aVirtInterfaces = $this->IterateVirtInterfaces($nLevel, $oVirtInterface->Get('genericcommvirtinterface_id'), $aVirtInterfaces);
 							}
 							return $aVirtInterfaces;
