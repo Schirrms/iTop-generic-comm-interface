@@ -492,7 +492,7 @@
 								{
 									if ($oVirtInterface->Get('virttogenericredundancy') != NULL && $oVirtInterface->Get('virttogenericredundancy') != 'disabled')
 									{
-										$aVirtInterfaces[] = array($nLevel, $nRealInt_id, $oLnkVirtInterface->Get('genericcommvirtinterface_id'), $oVirtInterface->Get('virttogenericredundancy'));
+										$aVirtInterfaces[] = array('level' => $nLevel, 'GenInt' => $nRealInt_id, 'VirtInt' => $oLnkVirtInterface->Get('genericcommvirtinterface_id'), 'VirtRedundancy' => $oVirtInterface->Get('virttogenericredundancy'));
 										$aVirtInterfaces = $this->IterateVirtInterfaces($nLevel, $oLnkVirtInterface->Get('genericcommvirtinterface_id'), $oLnkVirtInterface->Get('genericcommvirtinterface_id'), $aVirtInterfaces);
 									}
 									else 
@@ -536,15 +536,14 @@
 									{
 										if ($oPhysInterface->Get('connection_impact') == 'depends')
 										{
-											$aInt = array($oPhysInterface->Get('connected_to_id'), $oPhysInterface->GetKey(), '0');
-											$aConnDevDepends[$oPhysInterface->Get('connected_to_device_id')] = $aInt;
+											$aInt = array('remoteDev' => $oPhysInterface->Get('connected_to_device_id'), 'remoteInt' => $oPhysInterface->Get('connected_to_id'), 'localInt' => $oPhysInterface->GetKey());
+											$aConnDevDepends[] = $aInt;
 											$aVirtInterfaces = $this->IterateVirtInterfaces(0, $oPhysInterface->GetKey(), $oPhysInterface->GetKey(), $aVirtInterfaces);
 										}
 										else 
 										{
 											$aConnDevImpacts[$oPhysInterface->Get('connected_to_device_id')] = '';
 										}
-										// $aConnDev[] = $oPhysInterface->Get('connected_to_device_id');
 									}
 								}
 								file_put_contents($sDebugFile, "Contents of the array \$aConnDevDepends (list of Devices impacting this device)\n", FILE_APPEND);
