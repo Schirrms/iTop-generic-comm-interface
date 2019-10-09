@@ -862,18 +862,28 @@
 					<static>false</static>
 					<access>protected</access>
 					<type>Overload-DBObject</type>
-					<code><![CDATA[	protected function AfterUpdate()
+					<code><![CDATA[	protected function OnUpdate()
 						{
 							$this->DisconnectRemotePort();
 							$this->ConnectRemotePort();
 							parent::OnUpdate();
 				}]]></code>
 				</method>
+				<method id="AfterUpdate">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	protected function AfterUpdate()
+						{
+							GenericCommInterface->UpdateCIDependencies();
+							parent::AfterUpdate();
+				}]]></code>
+				</method>
 				<method id="OnDelete">
 					<static>false</static>
 					<access>protected</access>
 					<type>Overload-DBObject</type>
-					<code><![CDATA[	protected function AfterDelete()
+					<code><![CDATA[	protected function OnDelete()
 						{
 							$this->DisconnectRemotePort();
 							parent::OnDelete();
@@ -1111,6 +1121,16 @@
 							}
 						}]]>
 					</code>
+				</method>
+				<method id="AfterUpdate">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	protected function AfterUpdate()
+						{
+							GenericCommInterface->UpdateCIDependencies();
+							parent::AfterUpdate();
+				}]]></code>
 				</method>
 			</methods>
 			<presentation>
