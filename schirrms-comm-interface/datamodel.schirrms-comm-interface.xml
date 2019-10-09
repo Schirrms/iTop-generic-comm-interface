@@ -509,24 +509,25 @@
 					<static>false</static>
 					<access>protected</access>
 					<type>Overload-DBObject</type>
-					<code><![CDATA[	protected function UpdateCIDependencies()
+					<code><![CDATA[	protected function UpdateCIDependencies($device_id)
 						{
 							$sDebugFile=$_SERVER['CONTEXT_DOCUMENT_ROOT']."/debug/dd-".date("Y-m-d").".txt";
-							file_put_contents($sDebugFile, "BEGIN : in the GenericCommInterface Class\n", FILE_APPEND);
+							file_put_contents($sDebugFile, "BEGIN : ".date("H:i:s")."\n", FILE_APPEND);
+							file_put_contents($sDebugFile, "In the GenericCommInterface Class for the device ".$device_id."\n", FILE_APPEND);
 							// no $aContextParam in this case...
 							// file_put_contents($sDebugFile, print_r($aContextParam, true), FILE_APPEND);
 							// get all GenericCommInterface of the current device
 							$aConnDevImpacts = array();
 							$aConnDevDepends = array();
 							$aVirtInterfaces = array();
-							$oDevice = MetaModel::GetObject('ConnectableCI', $this->Get('connectableci_id'));
+							$oDevice = MetaModel::GetObject('ConnectableCI', $device_id);
 							if (is_object($oDevice))
 							{
 								$sOQL = "SELECT	GenericCommPhysInterface WHERE connectableci_id = :device";
 								$oPhysInterfaceSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL),
 									array(),
 									array(
-									'device' => $this->Get('connectableci_id'),
+									'device' => $device_id,
 									)
 								);
 								while ($oPhysInterface = $oPhysInterfaceSet->Fetch())
@@ -577,7 +578,7 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function AfterInsert()
 						{
-							$this->UpdateCIDependencies();
+							$this->UpdateCIDependencies($this->Get('connectableci_id'));
 							parent::AfterInsert();
 						}]]>
 					</code>
@@ -588,7 +589,7 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function AfterUpdate()
 						{
-							$this->UpdateCIDependencies();
+							$this->UpdateCIDependencies($this->Get('connectableci_id'));
 							parent::AfterUpdate();
 						}]]>
 					</code>
@@ -599,7 +600,7 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function AfterDelete()
 						{
-							$this->UpdateCIDependencies();
+							$this->UpdateCIDependencies($this->Get('connectableci_id'));
 							parent::AfterDelete();
 						}]]>
 					</code>
@@ -875,7 +876,7 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function AfterUpdate()
 						{
-							GenericCommInterface::UpdateCIDependencies();
+							GenericCommInterface::UpdateCIDependencies($this->Get('connectableci_id'));
 							parent::AfterUpdate();
 				}]]></code>
 				</method>
@@ -1128,7 +1129,7 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function AfterUpdate()
 						{
-							GenericCommInterface::UpdateCIDependencies();
+							GenericCommInterface::UpdateCIDependencies($this->Get('connectableci_id'));
 							parent::AfterUpdate();
 				}]]></code>
 				</method>
