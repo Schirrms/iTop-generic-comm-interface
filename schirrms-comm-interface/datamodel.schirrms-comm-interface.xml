@@ -1128,7 +1128,7 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function AfterUpdate()
 						{
-							GenericCommInterface->UpdateCIDependencies();
+							GenericCommInterface::UpdateCIDependencies();
 							parent::AfterUpdate();
 				}]]></code>
 				</method>
