@@ -18,151 +18,93 @@
 //   along with iTop. If not, see <http://www.gnu.org/licenses/>
 
 /**
- * main.itop-portal.php
+ * main.schirrms-comm-interface.php
  * 
- * @author Guillaume Lajarige <guillaume.lajarige@combodo.com>
+ * @author Pascal Schirrmann <schirrms@schirrms.net>
  */
-class iTopPortalEditUrlMaker implements iDBObjectURLMaker
+class GenericCommFunct
 {
-    /**
-     * Generate an (absolute) URL to an object, either in view or edit mode.
-     * Returns null if the current user is not allowed to view / edit object.
-     *
-     * @param string $sClass The class of the object
-     * @param int $iId The identifier of the object
-     * @param string $sMode edit|view
-     *
-     * @return string | null
-     *
-     * @throws Exception
-     * @throws CoreException
-     */
-	public static function PrepareObjectURL($sClass, $iId, $sMode)
+	/**
+	 * Hopefully an external class for all big functions in that package
+	 */
+
+	protected function IterateVirtInterfaces($nLevel, $nInt_id, $nRealInt_id, $aVirtInterfaces)
 	{
-		require_once APPROOT . '/lib/silex/vendor/autoload.php';
-		require_once APPROOT . '/env-' . utils::GetCurrentEnvironment() . '/itop-portal-base/portal/src/providers/urlgeneratorserviceprovider.class.inc.php';
-		require_once APPROOT . '/env-' . utils::GetCurrentEnvironment() . '/itop-portal-base/portal/src/helpers/urlgeneratorhelper.class.inc.php';
-		require_once APPROOT . '/env-' . utils::GetCurrentEnvironment() . '/itop-portal-base/portal/src/providers/scopevalidatorserviceprovider.class.inc.php';
-		require_once APPROOT . '/env-' . utils::GetCurrentEnvironment() . '/itop-portal-base/portal/src/helpers/scopevalidatorhelper.class.inc.php';
-		require_once APPROOT . '/env-' . utils::GetCurrentEnvironment() . '/itop-portal-base/portal/src/helpers/securityhelper.class.inc.php';
-		require_once APPROOT . '/env-' . utils::GetCurrentEnvironment() . '/itop-portal-base/portal/src/helpers/applicationhelper.class.inc.php';
-	
-		// Using a static var allows to preserve the object through function calls
-		static $oApp = null;
-		static $sPortalId = null;
-	
-		// Initializing Silex app (partially for faster execution)
-		// TODO: This should be factorised with itop-portal-base/portal/web/index.php into the ApplicationHelper class.
-		if ($oApp === null)
+		$nLevel++ ;
+		$sOQL = "SELECT lnkGenericCommInterfaceToGenericCommVirtInterface WHERE genericcomminterface_id = :interface";
+		$oLnkVirtInterfaceSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('interface' => $nInt_id));
+		while ($oLnkVirtInterface = $oLnkVirtInterfaceSet->Fetch())
 		{
-			// Retrieving portal id
-			$sPortalId = basename(__DIR__);
-
-			// Initializing Silex framework
-			$oApp = new Silex\Application();
-			// Registering optional silex components
-			$oApp->register(new Combodo\iTop\Portal\Provider\UrlGeneratorServiceProvider());
-			$oApp->register(new Combodo\iTop\Portal\Provider\ScopeValidatorServiceProvider(), array(
-				'scope_validator.scopes_path' => utils::GetCachePath(),
-				'scope_validator.scopes_filename' => $sPortalId . '.scopes.php',
-				'scope_validator.instance_name' => $sPortalId
-			));
-
-			// Preparing portal foundations (partially)
-			// ...
-			Combodo\iTop\Portal\Helper\ApplicationHelper::LoadRouters();
-			Combodo\iTop\Portal\Helper\ApplicationHelper::RegisterRoutes($oApp);
-			// ...
-
-			// Loading portal scopes from the module design
-			Combodo\iTop\Portal\Helper\ApplicationHelper::LoadScopesConfiguration($oApp, new ModuleDesign($sPortalId));
-		}
-
-		/** @var \Combodo\iTop\Portal\Helper\UrlGenerator $oUrlGenerator */
-		$oUrlGenerator = $oApp['url_generator'];
-
-		// The object is reachable in the specified mode (edit/view)
-		//
-		// Note: Scopes only apply when URL check is triggered from the portal GUI.
-        $sObjectQueryString = null;
-		switch($sMode)
-		{
-			case 'view':
-				if(!ContextTag::Check('GUI:Portal') || Combodo\iTop\Portal\Helper\SecurityHelper::IsActionAllowed($oApp, UR_ACTION_READ, $sClass, $iId))
+			$sOQL2 = "SELECT GenericCommVirtInterface WHERE id = :interface";
+			$oVirtInterfaceSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL2), array(), array('interface' => $oLnkVirtInterface->Get('genericcommvirtinterface_id')));
+			while ($oVirtInterface = $oVirtInterfaceSet->Fetch())
+			{
+				if ($oVirtInterface->Get('virttogenericredundancy') != NULL && $oVirtInterface->Get('virttogenericredundancy') != 'disabled')
 				{
-					$sObjectQueryString = $oUrlGenerator->generate('p_object_view', array('sObjectClass' => $sClass, 'sObjectId' => $iId));
+					$aVirtInterfaces[$oLnkVirtInterface->Get('genericcommvirtinterface_id')][] = array('level' => $nLevel, 'GenInt' => $nRealInt_id, 'VirtRedundancy' => $oVirtInterface->Get('virttogenericredundancy'));
+					$aVirtInterfaces = GenericCommFunct::IterateVirtInterfaces($nLevel, $oLnkVirtInterface->Get('genericcommvirtinterface_id'), $oLnkVirtInterface->Get('genericcommvirtinterface_id'), $aVirtInterfaces);
 				}
-			break;
-					
-			case 'edit':
-			default:
-				// Checking if user is allowed to edit object, if not we check if it can at least view it.
-				if(!ContextTag::Check('GUI:Portal') || Combodo\iTop\Portal\Helper\SecurityHelper::IsActionAllowed($oApp, UR_ACTION_MODIFY, $sClass, $iId))
+				else 
 				{
-					$sObjectQueryString = $oUrlGenerator->generate('p_object_edit', array('sObjectClass' => $sClass, 'sObjectId' => $iId));
+					$aVirtInterfaces = GenericCommFunct::IterateVirtInterfaces($nLevel-1, $oLnkVirtInterface->Get('genericcommvirtinterface_id'), $nRealInt_id, $aVirtInterfaces);
 				}
-				elseif(!ContextTag::Check('GUI:Portal') || Combodo\iTop\Portal\Helper\SecurityHelper::IsActionAllowed($oApp, UR_ACTION_READ, $sClass, $iId))
-				{
-					$sObjectQueryString = $oUrlGenerator->generate('p_object_view', array('sObjectClass' => $sClass, 'sObjectId' => $iId));
-				}
-			break;
+			}
 		}
-		
-		$sPortalAbsoluteUrl = utils::GetAbsoluteUrlModulePage($sPortalId, 'index.php');
-		if($sObjectQueryString === null)
-		{
-			$sUrl = null;
-		}
-        elseif (strpos($sPortalAbsoluteUrl, '?') !== false)
-		{
-		    // Removing generated url query parameters so it can be replaced with those from the absolute url
-            // Mostly necessary when iTop instance has multiple portals
-		    if(strpos($sObjectQueryString, '?') !== false)
-            {
-                $sObjectQueryString = substr($sObjectQueryString, 0, strpos($sObjectQueryString, '?'));
-            }
-
-            $sUrl = substr($sPortalAbsoluteUrl, 0, strpos($sPortalAbsoluteUrl, '?')).$sObjectQueryString.substr($sPortalAbsoluteUrl, strpos($sPortalAbsoluteUrl, '?'));
-		}
-		else
-		{
-            $sUrl = $sPortalAbsoluteUrl.$sObjectQueryString;
-		}
-
-		return $sUrl;
+		return $aVirtInterfaces;
 	}
 
-    /**
-     * @param $sClass
-     * @param $iId
-     *
-     * @return null|string
-     *
-     * @throws CoreException
-     */
-	public static function MakeObjectURL($sClass, $iId)
-	{	
-		return static::PrepareObjectURL($sClass, $iId, 'edit');
+	protected function UpdateCIDependencies($device_id)
+	{
+		$sDebugFile=$_SERVER['CONTEXT_DOCUMENT_ROOT']."/debug/dd-".date("Y-m-d").".txt";
+		file_put_contents($sDebugFile, "BEGIN : ".date("H:i:s")."\n", FILE_APPEND);
+		file_put_contents($sDebugFile, "In the GenericCommInterface Class for the device ".$device_id."\n", FILE_APPEND);
+		// no $aContextParam in this case...
+		// file_put_contents($sDebugFile, print_r($aContextParam, true), FILE_APPEND);
+		// get all GenericCommInterface of the current device
+		$aConnDevImpacts = array();
+		$aConnDevDepends = array();
+		$aVirtInterfaces = array();
+		$oDevice = MetaModel::GetObject('ConnectableCI', $device_id);
+		if (is_object($oDevice))
+		{
+			$sOQL = "SELECT	GenericCommPhysInterface WHERE connectableci_id = :device";
+			$oPhysInterfaceSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL),array(),array('device' => $device_id));
+			while ($oPhysInterface = $oPhysInterfaceSet->Fetch())
+			{
+				if ($oPhysInterface->Get('connected_to_id') != 0) 
+				{
+					if ($oPhysInterface->Get('connection_impact') == 'depends')
+					{
+						$aConnDevDepends[$oPhysInterface->GetKey()] = array('remoteDev' => $oPhysInterface->Get('connected_to_device_id'), 'remoteInt' => $oPhysInterface->Get('connected_to_id'));
+						$aVirtInterfaces = GenericCommFunct::IterateVirtInterfaces(0, $oPhysInterface->GetKey(), $oPhysInterface->GetKey(), $aVirtInterfaces);
+					}
+					else 
+					{
+						$aConnDevImpacts[$oPhysInterface->Get('connected_to_device_id')] = '';
+					}
+				}
+			}
+			file_put_contents($sDebugFile, "Contents of the array \$aConnDevDepends (list of Devices impacting this device)\n", FILE_APPEND);
+			file_put_contents($sDebugFile, print_r($aConnDevDepends, true), FILE_APPEND);
+			file_put_contents($sDebugFile, "Contents of the array \$aConnDevImpacts (list of Devices Depending of this device)\n", FILE_APPEND);
+			file_put_contents($sDebugFile, print_r($aConnDevImpacts, true), FILE_APPEND);
+			file_put_contents($sDebugFile, "Contents of the array \$aVirtInterfaces (list of all virtual interfaces this device)\n", FILE_APPEND);
+			file_put_contents($sDebugFile, print_r($aVirtInterfaces, true), FILE_APPEND);
+			// scan all lnk tables, to see if the current device is present
+			$aLnkTableD = array();
+			$aLnkTableI = array();
+			for ($i=0; $i<10; $i++)
+			{
+				// is this CI impactor for the remote ?
+				$sOQL = "SELECT	lnkConnectableCIToConnectableCI".$i." WHERE impactorci_id = :device";
+				$aLnkTableD[$i] = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('device' => $this->Get('connectableci_id')));
+				file_put_contents($sDebugFile, "lnkConnectableCIToConnectableCI".$i."->Count() (Impactor) = ".$aLnkTableD[$i]->Count()."\n", FILE_APPEND);
+				// is this CI depedent from the remote ?
+				$sOQL = "SELECT	lnkConnectableCIToConnectableCI".$i." WHERE dependantci_id = :device";
+				$aLnkTableI[$i] = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('device' => $this->Get('connectableci_id')));
+				file_put_contents($sDebugFile, "lnkConnectableCIToConnectableCI".$i."->Count() (Dependant) = ".$aLnkTableI[$i]->Count()."\n", FILE_APPEND);
+				// remove uneeded connection
+			}
+		}
 	}
 }
-
-/**
- * Hyperlinks to the "view" of the object (vs edition)
- * @author denis
- *
- */
-class iTopPortalViewUrlMaker extends iTopPortalEditUrlMaker
-{
-	public static function MakeObjectURL($sClass, $iId)
-	{
-		return static::PrepareObjectURL($sClass, $iId, 'view');
-	}
-	
-}
-
-// Default portal hyperlink (for notifications) is the edit hyperlink
-DBObject::RegisterURLMakerClass('portal', 'iTopPortalEditUrlMaker');
-DBObject::RegisterURLMakerClass('itop-portal', 'iTopPortalEditUrlMaker');
-DBObject::RegisterURLMakerClass('itop-portal-edit', 'iTopPortalEditUrlMaker');
-DBObject::RegisterURLMakerClass('itop-portal-view', 'iTopPortalViewUrlMaker');
-
