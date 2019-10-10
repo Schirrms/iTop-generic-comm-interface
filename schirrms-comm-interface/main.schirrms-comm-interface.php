@@ -94,13 +94,17 @@ class GenericCommFunct
 			// now, build the link matrix
 			$aDependDevice = array();
 			$aDirectConnDevDepends = $aConnDevDepends; 
-			foreach($aVirtInterfaces as $nVirt)
+			foreach($aVirtInterfaces as $aVirt)
 			{
-				$aTmp = array($nVirt['VirtRedundancy'], array());
-				if (in_array($nVirt['GenInt'],$aConnDevDepends)) 
+				$aTmp = array('', array());
+				foreach($aVirt as $aGen)
 				{
-					$aTmp[1][] = $nVirt['GenInt'];
-					if (in_array($nVirt['GenInt'], $aDirectConnDevDepends)) { unset($aDirectConnDevDepends[$nVirt['GenInt']]); }
+					if (in_array($aGen['GenInt'],$aConnDevDepends)) 
+					{
+						$aTmp[0][] = $aGen['VirtRedundancy'];
+						$aTmp[1][] = $aGen['GenInt'];
+						if (in_array($aGen['GenInt'], $aDirectConnDevDepends)) { unset($aDirectConnDevDepends[$aGen['GenInt']]); }
+					}
 				}
 				$bPush = TRUE;
 				foreach( $aDependDevice as $aValid)
