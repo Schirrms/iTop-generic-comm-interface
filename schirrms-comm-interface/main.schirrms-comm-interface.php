@@ -28,7 +28,7 @@ class GenericCommFunct
 	 * Hopefully an external class for all big functions in that package
 	 */
 
-	public static function IterateVirtInterfaces($nLevel, $nInt_id, $nRealInt_id, $aVirtInterfaces)
+	public function IterateVirtInterfaces($nLevel, $nInt_id, $nRealInt_id, $aVirtInterfaces)
 	{
 		$nLevel++ ;
 		$sOQL = "SELECT lnkGenericCommInterfaceToGenericCommVirtInterface WHERE genericcomminterface_id = :interface";
@@ -53,7 +53,7 @@ class GenericCommFunct
 		return $aVirtInterfaces;
 	}
 
-	public static function UpdateCIDependencies($device_id)
+	public function UpdateCIDependencies($device_id)
 	{
 		$sDebugFile=$_SERVER['CONTEXT_DOCUMENT_ROOT']."/debug/dd-".date("Y-m-d").".txt";
 		file_put_contents($sDebugFile, "BEGIN : ".date("H:i:s")."\n", FILE_APPEND);
@@ -97,11 +97,11 @@ class GenericCommFunct
 			{
 				// is this CI impactor for the remote ?
 				$sOQL = "SELECT	lnkConnectableCIToConnectableCI".$i." WHERE impactorci_id = :device";
-				$aLnkTableD[$i] = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('device' => $this->Get('connectableci_id')));
+				$aLnkTableD[$i] = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('device' => $device_id));
 				file_put_contents($sDebugFile, "lnkConnectableCIToConnectableCI".$i."->Count() (Impactor) = ".$aLnkTableD[$i]->Count()."\n", FILE_APPEND);
 				// is this CI depedent from the remote ?
 				$sOQL = "SELECT	lnkConnectableCIToConnectableCI".$i." WHERE dependantci_id = :device";
-				$aLnkTableI[$i] = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('device' => $this->Get('connectableci_id')));
+				$aLnkTableI[$i] = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('device' => $device_id));
 				file_put_contents($sDebugFile, "lnkConnectableCIToConnectableCI".$i."->Count() (Dependant) = ".$aLnkTableI[$i]->Count()."\n", FILE_APPEND);
 				// remove uneeded connection
 			}
