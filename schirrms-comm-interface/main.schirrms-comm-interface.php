@@ -67,6 +67,7 @@ class GenericCommFunct
 		$oDevice = MetaModel::GetObject('ConnectableCI', $device_id);
 		if (is_object($oDevice))
 		{
+			// step 1 : collect the configuration for this device
 			$sOQL = "SELECT	GenericCommPhysInterface WHERE connectableci_id = :device";
 			$oPhysInterfaceSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL),array(),array('device' => $device_id));
 			while ($oPhysInterface = $oPhysInterfaceSet->Fetch())
@@ -90,7 +91,30 @@ class GenericCommFunct
 			file_put_contents($sDebugFile, print_r($aConnDevImpacts, true), FILE_APPEND);
 			file_put_contents($sDebugFile, "Contents of the array \$aVirtInterfaces (list of all virtual interfaces this device)\n", FILE_APPEND);
 			file_put_contents($sDebugFile, print_r($aVirtInterfaces, true), FILE_APPEND);
-			// scan all lnk tables, to see if the current device is present
+			// now, build the link matrix
+			$aDependDevice = array();
+			$aDirectConnDevDepends = $aConnDevDepends; 
+			foreach($aVirtInterfaces as $nVirt)
+			{
+				$aTmp = array($nVirt['VirtRedundancy'], array());
+				if (in_array($nVirt['GenInt'],$aConnDevDepends)) 
+				{
+					$aTmp[1][] = $nVirt['GenInt'];
+					if (in_array($nVirt['GenInt'], $aDirectConnDevDepends)) { unset($aDirectConnDevDepends[$nVirt['GenInt']]); }
+				}
+				$bPush = TRUE;
+				foreach( $aDependDevice as $aValid)
+				{
+					if ($aValid[0] == $aTmp[0] && $aValid[1] == $aTmp[1] ) { $bPush = FALSE; }
+				}
+				if ($bPush) { $aDependDevice[] = $aTmp; }
+			}
+			file_put_contents($sDebugFile, "Contents of the array \$aDependDevice (list of redundant connections of this device)\n", FILE_APPEND);
+			file_put_contents($sDebugFile, print_r($aDependDevice, true), FILE_APPEND);
+			file_put_contents($sDebugFile, "Contents of the array \$aDirectConnDevDepends (list of non redundant connections of this device)\n", FILE_APPEND);
+			file_put_contents($sDebugFile, print_r($aDirectDependDevice, true), FILE_APPEND);
+
+			// Step 2 : scan all lnk tables, to gather the existing connection for the current device
 			$aLnkTableD = array();
 			$aLnkTableI = array();
 			for ($i=0; $i<10; $i++)
