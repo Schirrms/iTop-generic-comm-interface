@@ -197,9 +197,10 @@ class GenericCommFunct
 					{
 						// found a link set not present on the device. The links are to remove, the redundancy mode can stay
 						file_put_contents($sDebugFile, "The link set number ".$i." is not present on the device, I have to remove it.\n", FILE_APPEND);
-						while ($oLnkTable = $oLnkTableSet->Fetch())
+						$oLnkTableSet2 = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('device' => $device_id));
+						while ($oLnkTable2 = $oLnkTableSet2->Fetch())
 						{
-							file_put_contents($sDebugFile, "Remove the link ".$oLnkTable->Get('impactorci_id')." -> ".$device_id." in link set number ".$i."\n", FILE_APPEND);
+							file_put_contents($sDebugFile, "Remove the link ".$oLnkTable2->Get('impactorci_id')." -> ".$device_id." in link set number ".$i."\n", FILE_APPEND);
 							$aRemoteDevices[$oLnkTable->Get('impactorci_id')]='';
 						}
 					}
