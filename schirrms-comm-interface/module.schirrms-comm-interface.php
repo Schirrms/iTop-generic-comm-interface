@@ -23,6 +23,7 @@ SetupWebPage::AddModule(
 		// Components
 		//
 		'datamodel' => array(
+			'main.schirrms-comm-interface.php',
 			'model.schirrms-comm-interface.php',
 		),
 		'webservice' => array(
