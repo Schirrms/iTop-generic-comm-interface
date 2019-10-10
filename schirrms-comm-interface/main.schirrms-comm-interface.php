@@ -53,7 +53,7 @@ class GenericCommFunct
 		return $aVirtInterfaces;
 	}
 
-	public function UpdateCIDependencies($device_id)
+	public function UpdateCIDependencies($device_id, $searchImpact = TRUE)
 	{
 		$sDebugFile=$_SERVER['CONTEXT_DOCUMENT_ROOT']."/debug/dd-".date("Y-m-d").".txt";
 		file_put_contents($sDebugFile, "BEGIN : ".date("H:i:s")."\n", FILE_APPEND);
@@ -101,22 +101,30 @@ class GenericCommFunct
 				{
 					if (array_key_exists($aGen['GenInt'],$aConnDevDepends)) 
 					{
-						$aTmp[0] = $aGen['VirtRedundancy'];
-						$aTmp[1][] = $aGen['GenInt'];
+						$aTmp['Redundancy'] = $aGen['VirtRedundancy'];
+						$aTmp['remoteDev'][] = aConnDevDepends[$aGen['GenInt']]['remoteDev'];
 						if (array_key_exists($aGen['GenInt'], $aDirectConnDevDepends)) { unset($aDirectConnDevDepends[$aGen['GenInt']]); }
 					}
 				}
 				$bPush = TRUE;
 				foreach( $aDependDevice as $aValid )
 				{
-					if ($aValid[0] == $aTmp[0] && $aValid[1] == $aTmp[1] ) { $bPush = FALSE; }
+					if ($aValid['Redundancy'] == $aTmp['Redundancy'] && $aValid['remoteDev'] == $aTmp['remoteDev'] ) { $bPush = FALSE; }
 				}
-				if ($bPush && $aTmp[0] != '') { $aDependDevice[] = $aTmp; }
+				if ($bPush && $aTmp['Redundancy'] != '') { $aDependDevice[] = $aTmp; }
 			}
 			file_put_contents($sDebugFile, "Contents of the array \$aDependDevice (list of redundant connections of this device)\n", FILE_APPEND);
 			file_put_contents($sDebugFile, print_r($aDependDevice, true), FILE_APPEND);
 			file_put_contents($sDebugFile, "Contents of the array \$aDirectConnDevDepends (list of non redundant connections of this device)\n", FILE_APPEND);
-			file_put_contents($sDebugFile, print_r($aDirectDependDevice, true), FILE_APPEND);
+			file_put_contents($sDebugFile, print_r($aDirectConDevDepends, true), FILE_APPEND);
+			// I now have all the datas that must be put in the lnkTables (if not present) :
+			// All direct connections should be in the lnkConnectableCIToConnectableCI0, in the form 'this device in dependantci_id and $aDirectConDevDepends[*]['remoteDev']
+			// all kind of redundant connections should be in the $aDependDevice array : 
+			// aDependDevice[*]['Redundancy'] contains the redundancy type
+			// aDependDevice[*]['remoteDev'] is an array with all destination Devices
+			// for the connection that impacts, it's not possible to determine the impact from here
+			// so it will be necessary to re run this script for each impacted device, according to the $aConnDevImpacts array.
+			
 
 			// Step 2 : scan all lnk tables, to gather the existing connection for the current device
 			$aLnkTableD = array();
