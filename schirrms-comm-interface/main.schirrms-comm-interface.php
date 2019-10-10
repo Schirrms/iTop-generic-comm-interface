@@ -168,7 +168,7 @@ class GenericCommFunct
 			{
 				$sOQL = "SELECT lnkConnectableCIToConnectableCI".$i." WHERE dependantci_id = :device";
 				$oLnkTableSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('device' => $device_id));
-				file_put_contents($sDebugFile, "lnkConnectableCIToConnectableCI".$i."->Count() (Dependant, redundant) = ".$oLnkTable->Count()."\n", FILE_APPEND);
+				file_put_contents($sDebugFile, "lnkConnectableCIToConnectableCI".$i."->Count() (Dependant, redundant) = ".$oLnkTableSet->Count()."\n", FILE_APPEND);
 				// remove unneeded connection
 				if ($oLnkTableSet->Count() >0)
 				{
