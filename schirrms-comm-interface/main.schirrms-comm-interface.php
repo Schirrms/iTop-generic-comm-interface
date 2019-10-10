@@ -180,15 +180,18 @@ class GenericCommFunct
 					ksort($aRemoteDevices);
 					$sRedName = "GenCommRedundancy".$i;
 					$sRedundancy = $oLocalDevice->Get($sRedName);
-					$aTmpDependDevice = $aDependDevice;
 					file_put_contents($sDebugFile, "Link TBL ".$i." : Redundancy ".$sRedundancy.", Devices ".print_r($aRemoteDevices,true)."\n", FILE_APPEND);
 					$bPush = TRUE;
-					foreach ($aTmpDependDevice as $iDepKey => $aDepData)
+					foreach ($aDependDevice as $iDepKey => $aDepData)
 					{
 						$aCurrRemoteDevices = $aDepData['remoteDev'];
 						ksort($aCurrRemoteDevices);
 						file_put_contents($sDebugFile, "Current Device : Redundancy ".$aDepData['Redundancy'].", Devices ".print_r($aCurrRemoteDevices,true)."\n", FILE_APPEND);
-						if ($aDepData['Redundancy'] == $sRedundancy && $aRemoteDevices == $aCurrRemoteDevices) { $bPush = FALSE; }
+						if ($aDepData['Redundancy'] == $sRedundancy && $aRemoteDevices == $aCurrRemoteDevices) 
+						{ 
+							$bPush = FALSE;
+							$iDepKeyToRemove = $iDepKey;
+						}
 					}
 					if ($bPush)
 					{
@@ -204,7 +207,7 @@ class GenericCommFunct
 					{
 						// the current link exists already in the table, "nothing" to do
 						file_put_contents($sDebugFile, "The link set number ".$i." is the same as the entry ".$iDepKey.", nothing to do.\n", FILE_APPEND);
-						unset($aDependDevice[$iDepKey]);
+						unset($aDependDevice[$iDepKeyToRemove]);
 						unset($aFree[$i]);
 					}
 				}
