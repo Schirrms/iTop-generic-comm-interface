@@ -150,7 +150,7 @@ class GenericCommFunct
 				}
 			}
 			// link to add ? Yes if $aDirectConnectDevices is not empty
-			foreach my ($aDirectConnectDevices as $remoteDev => $nothing)
+			foreach ($aDirectConnectDevices as $remoteDev => $nothing)
 			{
 				//each remaining $remoteDev should be linked in the lnkTables
 				file_put_contents($sDebugFile, "Remote impactor device ".$oLnkTable->Get('impactorci_id')."exists in the device, but not in the table, has to be created in the table\n", FILE_APPEND);
