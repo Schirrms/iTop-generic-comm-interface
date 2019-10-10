@@ -222,8 +222,8 @@ class GenericCommFunct
 				foreach ($aData['remoteDev'] as $remoteDev => $empty)
 				{
 					file_put_contents($sDebugFile, "Add the remote device : ".$remoteDev." and the redundancy ".$aData['Redundancy']." in link set number ".$nFreeSet."\n", FILE_APPEND);
-					$sNewLinkName = "lnkConnectableCIToConnectableCI".$nFreeSet."()";
-					$oNewLink = new $sNewLinkName;
+					$sNewLinkName = "lnkConnectableCIToConnectableCI".$nFreeSet;
+					$oNewLink = new $sNewLinkName();
 					$oNewLink->Set('impactorci_id', $remoteDev);
 					$oNewLink->Set('dependantci_id', $device_id);
 					$oNewLink->DBInsert();
