@@ -202,6 +202,7 @@ class GenericCommFunct
 						{
 							file_put_contents($sDebugFile, "Remove the link ".$oLnkTable2->Get('impactorci_id')." -> ".$device_id." in link set number ".$i."\n", FILE_APPEND);
 							$aRemoteDevices[$oLnkTable2->Get('impactorci_id')]='';
+							$oLnkTable2->DBDelete();
 						}
 					}
 					else
@@ -221,8 +222,15 @@ class GenericCommFunct
 				foreach ($aData['remoteDev'] as $remoteDev => $empty)
 				{
 					file_put_contents($sDebugFile, "Add the remote device : ".$remoteDev." and the redundancy ".$aData['Redundancy']." in link set number ".$nFreeSet."\n", FILE_APPEND);
+					$sNewLinkName = "lnkConnectableCIToConnectableCI".$nFreeSet."()";
+					$oNewLink = new $sNewLinkName;
+					$oNewLink->Set('impactorci_id', $remoteDev);
+					$oNewLink->Set('dependantci_id', $device_id);
+					$oNewLink->DBInsert();
 				}
 				// the redundancy type should actually be changed here, out of the loop
+				$oLocalDevice->Set($sRedName, $aData['Redundancy']);
+				$oLocalDevice->DBUpdate();
 			}
 		}
 	}
