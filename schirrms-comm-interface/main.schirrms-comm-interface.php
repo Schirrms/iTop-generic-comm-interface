@@ -162,14 +162,60 @@ class GenericCommFunct
 			}
 
 			//then the redundant links
-			$aLnkTableI = array();
+			$aFree = ('1' =>'','2' =>'','3' =>'','4' =>'','5' =>'','6' =>'','7' =>'','8' =>'','9' =>'')
+			$oLocalDevice = MetaModel::GetObject('ConnectableCI', $device_id);
 			for ($i=1; $i<10; $i++)
 			{
-				// is this CI depedent from the remote ?
-				$sOQL = "SELECT	lnkConnectableCIToConnectableCI".$i." WHERE dependantci_id = :device";
-				$aLnkTableI[$i] = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('device' => $device_id));
-				file_put_contents($sDebugFile, "lnkConnectableCIToConnectableCI".$i."->Count() (Dependant, redundant) = ".$aLnkTableI[$i]->Count()."\n", FILE_APPEND);
-				// remove uneeded connection
+				$sOQL = "SELECT lnkConnectableCIToConnectableCI".$i." WHERE dependantci_id = :device";
+				$oLnkTable = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('device' => $device_id));
+				file_put_contents($sDebugFile, "lnkConnectableCIToConnectableCI".$i."->Count() (Dependant, redundant) = ".$oLnkTable->Count()."\n", FILE_APPEND);
+				// remove unneeded connection
+				if ($oLnkTable->Count() >0)
+				{
+					$aRemoteDevices = array();
+					while ($oLnkTable = $oLnkTableSet0->Fetch())
+					{
+						$aRemoteDevices[$oLnkTable->Get('impactorci_id')]='';
+					}
+					ksort($aRemoteDevices);
+					$sRedName = "GenCommRedundancy".$i;
+					$sRedundancy = $oLocalDevice->Get($sRedName);
+					$aTmpDependDevice = $aDependDevice;
+					foreach ($aTmpDependDevice as $iDepKey => $aDepData)
+					{
+						$aCurrRemoteDevices = $aDepData['remoteDev'];
+						ksort($aCurrRemoteDevices);
+						if ($aDepData['Redundancy'] == $sRedundancy && $aRemoteDevices == $aCurrRemoteDevices)
+						{
+							// the current link exists already in the table, "nothing" to do
+							file_put_contents($sDebugFile, "The link set number ".$i." is the same as the entry ".$iDepKey.", nothing to do.\n", FILE_APPEND);
+							unset($aDependDevice[$iDepKey]);
+							unset($aFree[$i]);
+						}
+						else
+						{
+							// found a link set not present on the device. The links are to remove, the redundancy mode can stay
+							file_put_contents($sDebugFile, "The link set number ".$i." is not present on the device, I have to remove it.\n", FILE_APPEND);
+							while ($oLnkTable = $oLnkTableSet0->Fetch())
+							{
+								file_put_contents($sDebugFile, "Remove the link ".$oLnkTable->Get('impactorci_id')." -> ".$device_id." in link set number ".$i."\n", FILE_APPEND);
+								$aRemoteDevices[$oLnkTable->Get('impactorci_id')]='';
+							}
+
+						}
+					}
+				}
+			}
+			// at this point, all unneeded link set to this device are removed, and the remaining data in $aDependDevice need to be created
+			foreach ($aDependDevice as $aData)
+			{
+				$nFreeSet = min(array_keys($aFree));
+				unset($aFree[$nFreeSet]);
+				foreach ($aData['remoteDev'] as $remoteDev => $empty)
+				{
+					file_put_contents($sDebugFile, "Add the remote device : ".$remoteDev." and the redundancy ".$aData['Redundancy']." in link set number ".$nFreeSet."\n", FILE_APPEND);
+				}
+				// the redundancy type should actually be changed here, out of the loop
 			}
 		}
 	}
