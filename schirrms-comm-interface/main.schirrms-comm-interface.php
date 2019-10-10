@@ -141,19 +141,19 @@ class GenericCommFunct
 				{
 					// OK, link exists in the device and in the table
 					unset($aDirectConnectDevices[$oLnkTable->Get('impactorci_id')]);
-					file_put_contents($sDebugFile, "Remote impactor device ".$oLnkTable->Get('impactorci_id')."exists in both the device and the table, nothing to do\n", FILE_APPEND);
+					file_put_contents($sDebugFile, "Remote impactor device ".$oLnkTable->Get('impactorci_id')." exists in both the device and the table, nothing to do\n", FILE_APPEND);
 				}
 				else
 				{
 					// Link exists in the table but not anymore in the device, to remove
-					file_put_contents($sDebugFile, "Remote impactor device ".$oLnkTable->Get('impactorci_id')."exists in the table, but not in the device, has to be removed from the table\n", FILE_APPEND);
+					file_put_contents($sDebugFile, "Remote impactor device ".$oLnkTable->Get('impactorci_id')." exists in the table, but not in the device, has to be removed from the table\n", FILE_APPEND);
 				}
 			}
 			// link to add ? Yes if $aDirectConnectDevices is not empty
 			foreach ($aDirectConnectDevices as $remoteDev => $nothing)
 			{
 				//each remaining $remoteDev should be linked in the lnkTables
-				file_put_contents($sDebugFile, "Remote impactor device ".$oLnkTable->Get('impactorci_id')."exists in the device, but not in the table, has to be created in the table\n", FILE_APPEND);
+				file_put_contents($sDebugFile, "Remote impactor device ".$remoteDev." exists in the device, but not in the table, has to be created in the table\n", FILE_APPEND);
 			}
 
 			//then the redundant links
