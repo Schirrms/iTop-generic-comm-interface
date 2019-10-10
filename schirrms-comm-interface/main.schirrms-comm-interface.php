@@ -201,7 +201,7 @@ class GenericCommFunct
 						while ($oLnkTable2 = $oLnkTableSet2->Fetch())
 						{
 							file_put_contents($sDebugFile, "Remove the link ".$oLnkTable2->Get('impactorci_id')." -> ".$device_id." in link set number ".$i."\n", FILE_APPEND);
-							$aRemoteDevices[$oLnkTable->Get('impactorci_id')]='';
+							$aRemoteDevices[$oLnkTable2->Get('impactorci_id')]='';
 						}
 					}
 					else
