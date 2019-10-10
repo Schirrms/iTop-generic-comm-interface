@@ -99,19 +99,19 @@ class GenericCommFunct
 				$aTmp = array('', array());
 				foreach($aVirt as $aGen)
 				{
-					if (in_array($aGen['GenInt'],$aConnDevDepends)) 
+					if (array_key_exists($aGen['GenInt'],$aConnDevDepends)) 
 					{
-						$aTmp[0][] = $aGen['VirtRedundancy'];
+						$aTmp[0] = $aGen['VirtRedundancy'];
 						$aTmp[1][] = $aGen['GenInt'];
-						if (in_array($aGen['GenInt'], $aDirectConnDevDepends)) { unset($aDirectConnDevDepends[$aGen['GenInt']]); }
+						if (array_key_exists($aGen['GenInt'], $aDirectConnDevDepends)) { unset($aDirectConnDevDepends[$aGen['GenInt']]); }
 					}
 				}
 				$bPush = TRUE;
-				foreach( $aDependDevice as $aValid)
+				foreach( $aDependDevice as $aValid )
 				{
 					if ($aValid[0] == $aTmp[0] && $aValid[1] == $aTmp[1] ) { $bPush = FALSE; }
 				}
-				if ($bPush) { $aDependDevice[] = $aTmp; }
+				if ($bPush && $aTmp[0] != '') { $aDependDevice[] = $aTmp; }
 			}
 			file_put_contents($sDebugFile, "Contents of the array \$aDependDevice (list of redundant connections of this device)\n", FILE_APPEND);
 			file_put_contents($sDebugFile, print_r($aDependDevice, true), FILE_APPEND);
