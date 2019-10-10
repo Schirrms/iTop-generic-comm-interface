@@ -229,6 +229,7 @@ class GenericCommFunct
 					$oNewLink->DBInsert();
 				}
 				// the redundancy type should actually be changed here, out of the loop
+				$sRedName = "GenCommRedundancy".$nFreeSet;
 				$oLocalDevice->Set($sRedName, $aData['Redundancy']);
 				$oLocalDevice->DBUpdate();
 			}
