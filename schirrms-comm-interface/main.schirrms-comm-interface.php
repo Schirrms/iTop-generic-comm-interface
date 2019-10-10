@@ -147,6 +147,7 @@ class GenericCommFunct
 				{
 					// Link exists in the table but not anymore in the device, to remove
 					file_put_contents($sDebugFile, "Remote impactor device ".$oLnkTable->Get('impactorci_id')." exists in the table, but not in the device, has to be removed from the table\n", FILE_APPEND);
+					$oLnkTable->DBDelete();
 				}
 			}
 			// link to add ? Yes if $aDirectConnectDevices is not empty
@@ -154,6 +155,10 @@ class GenericCommFunct
 			{
 				//each remaining $remoteDev should be linked in the lnkTables
 				file_put_contents($sDebugFile, "Remote impactor device ".$remoteDev." exists in the device, but not in the table, has to be created in the table\n", FILE_APPEND);
+				$oNewLink = new lnkConnectableCIToConnectableCI0();
+				$oNewLink->Set('impactorci_id', $remoteDev);
+				$oNewLink->Set('dependantci_id', $device_id);
+				$oNewLink->DBInsert();
 			}
 
 			//then the redundant links
