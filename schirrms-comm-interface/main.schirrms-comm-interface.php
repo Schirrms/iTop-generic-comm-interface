@@ -181,27 +181,30 @@ class GenericCommFunct
 					$sRedName = "GenCommRedundancy".$i;
 					$sRedundancy = $oLocalDevice->Get($sRedName);
 					$aTmpDependDevice = $aDependDevice;
+					file_put_contents($sDebugFile, "Link TBL ".$i." : Redundancy ".$sRedundancy.", Devices ".print_r($aRemoteDevices,true)."\n", FILE_APPEND);
+					$bPush = TRUE;
 					foreach ($aTmpDependDevice as $iDepKey => $aDepData)
 					{
 						$aCurrRemoteDevices = $aDepData['remoteDev'];
 						ksort($aCurrRemoteDevices);
-						if ($aDepData['Redundancy'] == $sRedundancy && $aRemoteDevices == $aCurrRemoteDevices)
+						file_put_contents($sDebugFile, "Current Device : Redundancy ".$aDepData['Redundancy'].", Devices ".print_r($aCurrRemoteDevices,true)."\n", FILE_APPEND);
+						if ($aDepData['Redundancy'] == $sRedundancy && $aRemoteDevices == $aCurrRemoteDevices) { $bPush = FALSE; }
+					}
+					if ($bPush)
+					{
+						// the current link exists already in the table, "nothing" to do
+						file_put_contents($sDebugFile, "The link set number ".$i." is the same as the entry ".$iDepKey.", nothing to do.\n", FILE_APPEND);
+						unset($aDependDevice[$iDepKey]);
+						unset($aFree[$i]);
+					}
+					else
+					{
+						// found a link set not present on the device. The links are to remove, the redundancy mode can stay
+						file_put_contents($sDebugFile, "The link set number ".$i." is not present on the device, I have to remove it.\n", FILE_APPEND);
+						while ($oLnkTable = $oLnkTableSet0->Fetch())
 						{
-							// the current link exists already in the table, "nothing" to do
-							file_put_contents($sDebugFile, "The link set number ".$i." is the same as the entry ".$iDepKey.", nothing to do.\n", FILE_APPEND);
-							unset($aDependDevice[$iDepKey]);
-							unset($aFree[$i]);
-						}
-						else
-						{
-							// found a link set not present on the device. The links are to remove, the redundancy mode can stay
-							file_put_contents($sDebugFile, "The link set number ".$i." is not present on the device, I have to remove it.\n", FILE_APPEND);
-							while ($oLnkTable = $oLnkTableSet0->Fetch())
-							{
-								file_put_contents($sDebugFile, "Remove the link ".$oLnkTable->Get('impactorci_id')." -> ".$device_id." in link set number ".$i."\n", FILE_APPEND);
-								$aRemoteDevices[$oLnkTable->Get('impactorci_id')]='';
-							}
-
+							file_put_contents($sDebugFile, "Remove the link ".$oLnkTable->Get('impactorci_id')." -> ".$device_id." in link set number ".$i."\n", FILE_APPEND);
+							$aRemoteDevices[$oLnkTable->Get('impactorci_id')]='';
 						}
 					}
 				}
