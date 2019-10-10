@@ -167,13 +167,13 @@ class GenericCommFunct
 			for ($i=1; $i<10; $i++)
 			{
 				$sOQL = "SELECT lnkConnectableCIToConnectableCI".$i." WHERE dependantci_id = :device";
-				$oLnkTable = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('device' => $device_id));
+				$oLnkTableSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('device' => $device_id));
 				file_put_contents($sDebugFile, "lnkConnectableCIToConnectableCI".$i."->Count() (Dependant, redundant) = ".$oLnkTable->Count()."\n", FILE_APPEND);
 				// remove unneeded connection
-				if ($oLnkTable->Count() >0)
+				if ($oLnkTableSet->Count() >0)
 				{
 					$aRemoteDevices = array();
-					while ($oLnkTable = $oLnkTableSet0->Fetch())
+					while ($oLnkTable = $oLnkTableSet->Fetch())
 					{
 						$aRemoteDevices[$oLnkTable->Get('impactorci_id')]='';
 					}
@@ -192,13 +192,6 @@ class GenericCommFunct
 					}
 					if ($bPush)
 					{
-						// the current link exists already in the table, "nothing" to do
-						file_put_contents($sDebugFile, "The link set number ".$i." is the same as the entry ".$iDepKey.", nothing to do.\n", FILE_APPEND);
-						unset($aDependDevice[$iDepKey]);
-						unset($aFree[$i]);
-					}
-					else
-					{
 						// found a link set not present on the device. The links are to remove, the redundancy mode can stay
 						file_put_contents($sDebugFile, "The link set number ".$i." is not present on the device, I have to remove it.\n", FILE_APPEND);
 						while ($oLnkTable = $oLnkTableSet0->Fetch())
@@ -206,6 +199,13 @@ class GenericCommFunct
 							file_put_contents($sDebugFile, "Remove the link ".$oLnkTable->Get('impactorci_id')." -> ".$device_id." in link set number ".$i."\n", FILE_APPEND);
 							$aRemoteDevices[$oLnkTable->Get('impactorci_id')]='';
 						}
+					}
+					else
+					{
+						// the current link exists already in the table, "nothing" to do
+						file_put_contents($sDebugFile, "The link set number ".$i." is the same as the entry ".$iDepKey.", nothing to do.\n", FILE_APPEND);
+						unset($aDependDevice[$iDepKey]);
+						unset($aFree[$i]);
 					}
 				}
 			}
