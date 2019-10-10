@@ -130,18 +130,40 @@ class GenericCommFunct
 			// so it will be necessary to re run this script for each impacted device, according to the $aConnDevImpacts array.
 
 			// Step 2 : scan all lnk tables, to gather the existing connection for the current device
-			$aLnkTableD = array();
-			$aLnkTableI = array();
-			for ($i=0; $i<10; $i++)
+			// Only in case this device depends, because the case impacts will be seen from the impacted device point of view.
+			// First the non redundant connections (in table 0)
+			$sOQL = "SELECT	lnkConnectableCIToConnectableCI0 WHERE dependantci_id = :device";
+			$oLnkTableSet0 = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('device' => $device_id));
+			file_put_contents($sDebugFile, "lnkConnectableCIToConnectableCI0->Count() (Dependant, non redundant) = ".$oLnkTableSet0->Count()."\n", FILE_APPEND);
+			while ($oLnkTable = $oLnkTableSet0->Fetch())
 			{
-				// is this CI impactor for the remote ?
-				$sOQL = "SELECT	lnkConnectableCIToConnectableCI".$i." WHERE impactorci_id = :device";
-				$aLnkTableD[$i] = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('device' => $device_id));
-				file_put_contents($sDebugFile, "lnkConnectableCIToConnectableCI".$i."->Count() (Impactor) = ".$aLnkTableD[$i]->Count()."\n", FILE_APPEND);
+				if ( array_key_exists($oLnkTable->Get('impactorci_id'), $aDirectConnectDevices) ) 
+				{
+					// OK, link exists in the device and in the table
+					unset($aDirectConnectDevices[$oLnkTable->Get('impactorci_id')]);
+					file_put_contents($sDebugFile, "Remote impactor device ".$oLnkTable->Get('impactorci_id')."exists in both the device and the table, nothing to do\n", FILE_APPEND);
+				}
+				else
+				{
+					// Link exists in the table but not anymore in the device, to remove
+					file_put_contents($sDebugFile, "Remote impactor device ".$oLnkTable->Get('impactorci_id')."exists in the table, but not in the device, has to be removed from the table\n", FILE_APPEND);
+				}
+			}
+			// link to add ? Yes if $aDirectConnectDevices is not empty
+			foreach my ($aDirectConnectDevices as $remoteDev => $nothing)
+			{
+				//each remaining $remoteDev should be linked in the lnkTables
+				file_put_contents($sDebugFile, "Remote impactor device ".$oLnkTable->Get('impactorci_id')."exists in the device, but not in the table, has to be created in the table\n", FILE_APPEND);
+			}
+
+			//then the redundant links
+			$aLnkTableI = array();
+			for ($i=1; $i<10; $i++)
+			{
 				// is this CI depedent from the remote ?
 				$sOQL = "SELECT	lnkConnectableCIToConnectableCI".$i." WHERE dependantci_id = :device";
 				$aLnkTableI[$i] = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('device' => $device_id));
-				file_put_contents($sDebugFile, "lnkConnectableCIToConnectableCI".$i."->Count() (Dependant) = ".$aLnkTableI[$i]->Count()."\n", FILE_APPEND);
+				file_put_contents($sDebugFile, "lnkConnectableCIToConnectableCI".$i."->Count() (Dependant, redundant) = ".$aLnkTableI[$i]->Count()."\n", FILE_APPEND);
 				// remove uneeded connection
 			}
 		}
