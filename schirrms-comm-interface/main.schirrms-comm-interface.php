@@ -162,7 +162,7 @@ class GenericCommFunct
 			}
 
 			//then the redundant links
-			$aFree = array('1' =>'','2' =>'','3' =>'','4' =>'','5' =>'','6' =>'','7' =>'','8' =>'','9' =>'')
+			$aFree = array('1' =>'','2' =>'','3' =>'','4' =>'','5' =>'','6' =>'','7' =>'','8' =>'','9' =>'');
 			$oLocalDevice = MetaModel::GetObject('ConnectableCI', $device_id);
 			for ($i=1; $i<10; $i++)
 			{
