@@ -96,7 +96,7 @@ class GenericCommFunct
 			$aDirectConnDevDepends = $aConnDevDepends; 
 			foreach($aVirtInterfaces as $aVirt)
 			{
-				$aTmp = array('', array());
+				$aTmp = array('Redundancy' => '', 'remoteDev' => array());
 				foreach($aVirt as $aGen)
 				{
 					if (array_key_exists($aGen['GenInt'],$aConnDevDepends)) 
@@ -116,9 +116,9 @@ class GenericCommFunct
 			file_put_contents($sDebugFile, "Contents of the array \$aDependDevice (list of redundant connections of this device)\n", FILE_APPEND);
 			file_put_contents($sDebugFile, print_r($aDependDevice, true), FILE_APPEND);
 			file_put_contents($sDebugFile, "Contents of the array \$aDirectConnDevDepends (list of non redundant connections of this device)\n", FILE_APPEND);
-			file_put_contents($sDebugFile, print_r($aDirectConDevDepends, true), FILE_APPEND);
+			file_put_contents($sDebugFile, print_r($aDirectConnDevDepends, true), FILE_APPEND);
 			// I now have all the datas that must be put in the lnkTables (if not present) :
-			// All direct connections should be in the lnkConnectableCIToConnectableCI0, in the form 'this device in dependantci_id and $aDirectConDevDepends[*]['remoteDev']
+			// All direct connections should be in the lnkConnectableCIToConnectableCI0, in the form 'this device in dependantci_id and $aDirectConnDevDepends[*]['remoteDev']
 			// all kind of redundant connections should be in the $aDependDevice array : 
 			// aDependDevice[*]['Redundancy'] contains the redundancy type
 			// aDependDevice[*]['remoteDev'] is an array with all destination Devices
