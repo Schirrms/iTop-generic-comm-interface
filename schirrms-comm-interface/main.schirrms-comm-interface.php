@@ -102,7 +102,7 @@ class GenericCommFunct
 					if (array_key_exists($aGen['GenInt'],$aConnDevDepends)) 
 					{
 						$aTmp['Redundancy'] = $aGen['VirtRedundancy'];
-						$aTmp['remoteDev'][] = aConnDevDepends[$aGen['GenInt']]['remoteDev'];
+						$aTmp['remoteDev'][] = $aConnDevDepends[$aGen['GenInt']]['remoteDev'];
 						if (array_key_exists($aGen['GenInt'], $aDirectConnDevDepends)) { unset($aDirectConnDevDepends[$aGen['GenInt']]); }
 					}
 				}
