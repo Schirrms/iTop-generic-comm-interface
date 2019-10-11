@@ -869,10 +869,10 @@
 						<item id="commproto_id">
 							<rank>50</rank>
 						</item>
-						<item id="connected_to_device_name">
+						<item id="connected_to_device_id">
 							<rank>90</rank>
 						</item>
-						<item id="connected_to_name">
+						<item id="connected_to_id">
 							<rank>100</rank>
 						</item>
 					</items>
@@ -891,10 +891,10 @@
 						<item id="commproto_id">
 							<rank>50</rank>
 						</item>
-						<item id="connected_to_device_name">
+						<item id="connected_to_device_id">
 							<rank>90</rank>
 						</item>
-						<item id="connected_to_name">
+						<item id="connected_to_id">
 							<rank>100</rank>
 						</item>
 						<item id="connection_impact">
@@ -919,10 +919,10 @@
 						<item id="humanspeed_id">
 							<rank>60</rank>
 						</item>
-						<item id="connected_to_device_name">
+						<item id="connected_to_device_id">
 							<rank>90</rank>
 						</item>
-						<item id="connected_to_name">
+						<item id="connected_to_id">
 							<rank>100</rank>
 						</item>
 						<item id="connection_impact">
@@ -2132,7 +2132,7 @@
 						<item id="genericcommvirtinterface_list">
 							<rank>50</rank>
 						</item>
-						<!-- olny for debugging... -->
+						<!-- olny for debugging... 
 						<item id="impactorgencommci0_list" _delta="define">
 							<rank>57</rank>
 						</item>
@@ -2151,6 +2151,7 @@
 						<item id="dependantgencommci2_list" _delta="define">
 							<rank>62</rank>
 						</item>
+						-->
 						<item id="providercontracts_list">
 							<rank>70</rank>
 						</item>
