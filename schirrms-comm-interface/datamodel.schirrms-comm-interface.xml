@@ -2184,6 +2184,12 @@
 										<item id="enclosure_id">
 											<rank>70</rank>
 										</item>
+										<item id="position_v">
+											<rank>72</rank>
+										</item>
+										<item id="nb_u">
+											<rank>73</rank>
+										</item>
 									</items>
 								</item>
 								<item id="fieldset:Server:moreinfo">
@@ -2203,9 +2209,6 @@
 										</item>
 										<item id="managementip">
 											<rank>45</rank>
-										</item>
-										<item id="nb_u">
-											<rank>60</rank>
 										</item>
 										<item id="serialnumber">
 											<rank>70</rank>
@@ -2331,6 +2334,12 @@
 						</item>
 						<item id="serialnumber">
 							<rank>70</rank>
+						</item>
+						<item id="position_v" _delta="define">
+							<rank>155</rank>
+						</item>
+						<item id="nb_u" _delta="define">
+							<rank>160</rank>
 						</item>
 					</items>
 				</list>
@@ -2710,6 +2719,20 @@
 				</details>
 			</presentation>
 		</class>
+		<class id="NAS" _delta="must_exist">
+			<presentation>
+				<details>
+					<items>
+						<item id="genericcommphysinterface_list" _delta="define">
+							<rank>55</rank>
+						</item>
+						<item id="genericcommvirtinterface_list" _delta="define">
+							<rank>56</rank>
+						</item>
+					</items>
+				</details>
+			</presentation>
+		</class>
 		<class id="Server" _delta="must_exist">
 			<presentation>
 				<details>
@@ -2720,7 +2743,7 @@
 						<item id="genericcommvirtinterface_list" _delta="define">
 							<rank>56</rank>
 						</item>
-						<!-- olny for debugging... -->
+						<!-- olny for debugging... 
 						<item id="impactorgencommci0_list" _delta="define">
 							<rank>57</rank>
 						</item>
@@ -2738,6 +2761,35 @@
 						</item>
 						<item id="dependantgencommci2_list" _delta="define">
 							<rank>62</rank>
+						</item>
+						-->
+					</items>
+				</details>
+			</presentation>
+		</class>
+		<class id="StorageSystem" _delta="must_exist">
+			<presentation>
+				<details>
+					<items>
+						<item id="genericcommphysinterface_list" _delta="define">
+							<rank>55</rank>
+						</item>
+						<item id="genericcommvirtinterface_list" _delta="define">
+							<rank>56</rank>
+						</item>
+					</items>
+				</details>
+			</presentation>
+		</class>
+		<class id="TapeLibrary" _delta="must_exist">
+			<presentation>
+				<details>
+					<items>
+						<item id="genericcommphysinterface_list" _delta="define">
+							<rank>55</rank>
+						</item>
+						<item id="genericcommvirtinterface_list" _delta="define">
+							<rank>56</rank>
 						</item>
 					</items>
 				</details>
