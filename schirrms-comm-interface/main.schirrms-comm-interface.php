@@ -85,12 +85,12 @@ class GenericCommFunct
 					}
 				}
 			}
-			file_put_contents($sDebugFile, "Contents of the array \$aConnDevDepends (list of Devices impacting this device)\n", FILE_APPEND);
-			file_put_contents($sDebugFile, print_r($aConnDevDepends, true), FILE_APPEND);
-			file_put_contents($sDebugFile, "Contents of the array \$aConnDevImpacts (list of Devices Depending of this device)\n", FILE_APPEND);
-			file_put_contents($sDebugFile, print_r($aConnDevImpacts, true), FILE_APPEND);
-			file_put_contents($sDebugFile, "Contents of the array \$aVirtInterfaces (list of all virtual interfaces this device)\n", FILE_APPEND);
-			file_put_contents($sDebugFile, print_r($aVirtInterfaces, true), FILE_APPEND);
+			// file_put_contents($sDebugFile, "Contents of the array \$aConnDevDepends (list of Devices impacting this device)\n", FILE_APPEND);
+			// file_put_contents($sDebugFile, print_r($aConnDevDepends, true), FILE_APPEND);
+			// file_put_contents($sDebugFile, "Contents of the array \$aConnDevImpacts (list of Devices Depending of this device)\n", FILE_APPEND);
+			// file_put_contents($sDebugFile, print_r($aConnDevImpacts, true), FILE_APPEND);
+			// file_put_contents($sDebugFile, "Contents of the array \$aVirtInterfaces (list of all virtual interfaces this device)\n", FILE_APPEND);
+			// file_put_contents($sDebugFile, print_r($aVirtInterfaces, true), FILE_APPEND);
 			// now, build the link matrix
 			$aDependDevice = array();
 			$aDirectConnDevDepends = $aConnDevDepends; 
@@ -117,10 +117,10 @@ class GenericCommFunct
 			// there still a cleanup to do in case of more than one connection between two devices
 			$aDirectConnectDevices = array();
 			foreach ($aDirectConnDevDepends as $nLocalInt) { $aDirectConnectDevices[$nLocalInt['remoteDev']] = '';}
-			file_put_contents($sDebugFile, "Contents of the array \$aDependDevice (list of redundant connections of this device)\n", FILE_APPEND);
-			file_put_contents($sDebugFile, print_r($aDependDevice, true), FILE_APPEND);
-			file_put_contents($sDebugFile, "Contents of the array \$aDirectConnectDevices (list distant devices of this device with a non redundant connection)\n", FILE_APPEND);
-			file_put_contents($sDebugFile, print_r($aDirectConnectDevices, true), FILE_APPEND);
+			// file_put_contents($sDebugFile, "Contents of the array \$aDependDevice (list of redundant connections of this device)\n", FILE_APPEND);
+			// file_put_contents($sDebugFile, print_r($aDependDevice, true), FILE_APPEND);
+			// file_put_contents($sDebugFile, "Contents of the array \$aDirectConnectDevices (list distant devices of this device with a non redundant connection)\n", FILE_APPEND);
+			// file_put_contents($sDebugFile, print_r($aDirectConnectDevices, true), FILE_APPEND);
 			// I now have all the datas that must be put in the lnkTables (if not present) :
 			// All direct connections should be in the lnkConnectableCIToConnectableCI0, in the form 'this device in dependantci_id and $aDirectConnectDevices[*]
 			// all kind of redundant connections should be in the $aDependDevice array : 
@@ -168,7 +168,7 @@ class GenericCommFunct
 			{
 				$sOQL = "SELECT lnkConnectableCIToConnectableCI".$i." WHERE dependantci_id = :device";
 				$oLnkTableSet = new DBObjectSet(DBObjectSearch::FromOQL($sOQL), array(), array('device' => $device_id));
-				file_put_contents($sDebugFile, "lnkConnectableCIToConnectableCI".$i."->Count() (Dependant, redundant) = ".$oLnkTableSet->Count()."\n", FILE_APPEND);
+				//file_put_contents($sDebugFile, "lnkConnectableCIToConnectableCI".$i."->Count() (Dependant, redundant) = ".$oLnkTableSet->Count()."\n", FILE_APPEND);
 				// remove unneeded connection
 				if ($oLnkTableSet->Count() >0)
 				{
@@ -180,13 +180,13 @@ class GenericCommFunct
 					ksort($aRemoteDevices);
 					$sRedName = "GenCommRedundancy".$i;
 					$sRedundancy = $oLocalDevice->Get($sRedName);
-					file_put_contents($sDebugFile, "Link TBL ".$i." : Redundancy ".$sRedundancy.", Devices ".print_r($aRemoteDevices,true)."\n", FILE_APPEND);
+					//file_put_contents($sDebugFile, "Link TBL ".$i." : Redundancy ".$sRedundancy.", Devices ".print_r($aRemoteDevices,true)."\n", FILE_APPEND);
 					$bPush = TRUE;
 					foreach ($aDependDevice as $iDepKey => $aDepData)
 					{
 						$aCurrRemoteDevices = $aDepData['remoteDev'];
 						ksort($aCurrRemoteDevices);
-						file_put_contents($sDebugFile, "Current Device : Redundancy ".$aDepData['Redundancy'].", Devices ".print_r($aCurrRemoteDevices,true)."\n", FILE_APPEND);
+						//file_put_contents($sDebugFile, "Current Device : Redundancy ".$aDepData['Redundancy'].", Devices ".print_r($aCurrRemoteDevices,true)."\n", FILE_APPEND);
 						if ($aDepData['Redundancy'] == $sRedundancy && $aRemoteDevices == $aCurrRemoteDevices) 
 						{ 
 							$bPush = FALSE;
@@ -232,6 +232,15 @@ class GenericCommFunct
 				$sRedName = "GenCommRedundancy".$nFreeSet;
 				$oLocalDevice->Set($sRedName, $aData['Redundancy']);
 				$oLocalDevice->DBUpdate();
+			}
+			// It's now time to call the function for the dependant devices, if any
+			if ( $searchImpact && count($aConnDevImpacts) > 0 )
+			{
+				file_put_contents($sDebugFile, "This device impacts ".count($aConnDevImpacts).", calling myself for them\n", FILE_APPEND);
+				foreach ($aConnDevImpacts as $nDependantDevice => $empty )
+				{
+					GenericCommFunct::UpdateCIDependencies($nDependantDevice, FALSE);
+				}
 			}
 		}
 	}
