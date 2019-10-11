@@ -430,6 +430,10 @@
 					<sql>name</sql>
 					<is_null_allowed>false</is_null_allowed>
 				</field>
+				<field id="physicaladdress" xsi:type="attributeString">
+					<sql>physicaladdress</sql>
+					<is_null_allowed>true</is_null_allowed>
+				</field>
 				<field id="comment" xsi:type="AttributeText">
 					<sql>comment</sql>
 					<default_value/>
@@ -518,6 +522,9 @@
 						<item id="name">
 							<rank>10</rank>
 						</item>
+						<item id="physicaladdress">
+							<rank>20</rank>
+						</item>
 						<item id="comment">
 							<rank>30</rank>
 						</item>
@@ -540,6 +547,9 @@
 						<item id="name">
 							<rank>10</rank>
 						</item>
+						<item id="physicaladdress">
+							<rank>20</rank>
+						</item>
 						<item id="commproto_id">
 							<rank>50</rank>
 						</item>
@@ -556,8 +566,14 @@
 						<item id="name">
 							<rank>10</rank>
 						</item>
+						<item id="physicaladdress">
+							<rank>20</rank>
+						</item>
 						<item id="commproto_id">
 							<rank>50</rank>
+						</item>
+						<item id="humanspeed_id">
+							<rank>60</rank>
 						</item>
 						<item id="connectableci_id">
 							<rank>70</rank>
@@ -568,6 +584,9 @@
 					<items>
 						<item id="name">
 							<rank>10</rank>
+						</item>
+						<item id="physicaladdress">
+							<rank>20</rank>
 						</item>
 						<item id="commproto_id">
 							<rank>50</rank>
@@ -826,7 +845,7 @@
 						<item id="name">
 							<rank>10</rank>
 						</item>
-						<item id="connectableci_id">
+						<item id="physicaladdress">
 							<rank>20</rank>
 						</item>
 						<item id="comment">
@@ -861,7 +880,7 @@
 							<rank>10</rank>
 						</item>
 						<item id="connectableci_id">
-							<rank>20</rank>
+							<rank>30</rank>
 						</item>
 						<item id="physcommtype_id">
 							<rank>40</rank>
@@ -882,8 +901,11 @@
 						<item id="name">
 							<rank>10</rank>
 						</item>
-						<item id="connectableci_id">
+						<item id="physicaladdress">
 							<rank>20</rank>
+						</item>
+						<item id="connectableci_id">
+							<rank>30</rank>
 						</item>
 						<item id="physcommtype_id">
 							<rank>40</rank>
@@ -907,8 +929,11 @@
 						<item id="name">
 							<rank>10</rank>
 						</item>
-						<item id="connectableci_id">
+						<item id="physicaladdress">
 							<rank>20</rank>
+						</item>
+						<item id="connectableci_id">
+							<rank>30</rank>
 						</item>
 						<item id="physcommtype_id">
 							<rank>40</rank>
@@ -1048,7 +1073,7 @@
 						<item id="name">
 							<rank>10</rank>
 						</item>
-						<item id="connectableci_id">
+						<item id="physicaladdress">
 							<rank>20</rank>
 						</item>
 						<item id="comment">
@@ -1089,8 +1114,11 @@
 						<item id="name">
 							<rank>10</rank>
 						</item>
-						<item id="connectableci_id">
+						<item id="physicaladdress">
 							<rank>20</rank>
+						</item>
+						<item id="connectableci_id">
+							<rank>30</rank>
 						</item>
 						<item id="virtualcommredundancy_id">
 							<rank>40</rank>
@@ -1105,8 +1133,11 @@
 						<item id="name">
 							<rank>10</rank>
 						</item>
-						<item id="connectableci_id">
+						<item id="physicaladdress">
 							<rank>20</rank>
+						</item>
+						<item id="connectableci_id">
+							<rank>30</rank>
 						</item>
 						<item id="virtualcommredundancy_id">
 							<rank>40</rank>
