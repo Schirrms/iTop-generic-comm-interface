@@ -155,10 +155,13 @@ class GenericCommFunct
 			{
 				//each remaining $remoteDev should be linked in the lnkTables
 				file_put_contents($sDebugFile, "Remote impactor device ".$remoteDev." exists in the device, but not in the table, has to be created in the table\n", FILE_APPEND);
-				$oNewLink = new lnkConnectableCIToConnectableCI0();
-				$oNewLink->Set('impactorci_id', $remoteDev);
-				$oNewLink->Set('dependantci_id', $device_id);
-				$oNewLink->DBInsert();
+				if ( $remoteDev > 0 && $device_id > 0 )
+				{
+					$oNewLink = new lnkConnectableCIToConnectableCI0();
+					$oNewLink->Set('impactorci_id', $remoteDev);
+					$oNewLink->Set('dependantci_id', $device_id);
+					$oNewLink->DBInsert();
+				}
 			}
 
 			//then the redundant links
@@ -222,11 +225,14 @@ class GenericCommFunct
 				foreach ($aData['remoteDev'] as $remoteDev => $empty)
 				{
 					file_put_contents($sDebugFile, "Add the remote device : ".$remoteDev." and the redundancy ".$aData['Redundancy']." in link set number ".$nFreeSet."\n", FILE_APPEND);
-					$sNewLinkName = "lnkConnectableCIToConnectableCI".$nFreeSet;
-					$oNewLink = new $sNewLinkName();
-					$oNewLink->Set('impactorci_id', $remoteDev);
-					$oNewLink->Set('dependantci_id', $device_id);
-					$oNewLink->DBInsert();
+					if ($remoteDev > 0 && $device_id >0 )
+					{
+						$sNewLinkName = "lnkConnectableCIToConnectableCI".$nFreeSet;
+						$oNewLink = new $sNewLinkName();
+						$oNewLink->Set('impactorci_id', $remoteDev);
+						$oNewLink->Set('dependantci_id', $device_id);
+						$oNewLink->DBInsert();
+					}
 				}
 				// the redundancy type should actually be changed here, out of the loop
 				$sRedName = "GenCommRedundancy".$nFreeSet;
