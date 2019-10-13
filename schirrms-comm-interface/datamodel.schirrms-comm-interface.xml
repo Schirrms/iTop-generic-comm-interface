@@ -485,21 +485,8 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function AfterInsert()
 						{
-							$cFunct = new GenericCommFunct();
-							$cFunct->UpdateCIDependencies($this->Get('connectableci_id'));
+							GenericCommFunct::UpdateCIDependencies($this->Get('connectableci_id'));
 							parent::AfterInsert();
-						}]]>
-					</code>
-				</method>
-				<method id="AfterUpdate">
-					<static>false</static>
-					<access>protected</access>
-					<type>Overload-DBObject</type>
-					<code><![CDATA[	protected function AfterUpdate()
-						{
-							$cFunct = new GenericCommFunct();
-							$cFunct->UpdateCIDependencies($this->Get('connectableci_id'));
-							parent::AfterUpdate();
 						}]]>
 					</code>
 				</method>
@@ -509,8 +496,7 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function AfterDelete()
 						{
-							$cFunct = new GenericCommFunct();
-							$cFunct->UpdateCIDependencies($this->Get('connectableci_id'));
+							GenericCommFunct::UpdateCIDependencies($this->Get('connectableci_id'));
 							parent::AfterDelete();
 						}]]>
 					</code>
@@ -801,8 +787,7 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function AfterUpdate()
 						{
-							$cFunct = new GenericCommFunct();
-							$cFunct->UpdateCIDependencies($this->Get('connectableci_id'));
+							GenericCommFunct::UpdateCIDependencies($this->Get('connectableci_id'));
 							parent::AfterUpdate();
 				}]]></code>
 				</method>
@@ -1061,8 +1046,7 @@
 					<type>Overload-DBObject</type>
 					<code><![CDATA[	protected function AfterUpdate()
 						{
-							$cFunct = new GenericCommFunct();
-							$cFunct->UpdateCIDependencies($this->Get('connectableci_id'));
+							GenericCommFunct::UpdateCIDependencies($this->Get('connectableci_id'));
 							parent::AfterUpdate();
 				}]]></code>
 				</method>
