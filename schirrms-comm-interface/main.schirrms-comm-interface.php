@@ -155,7 +155,7 @@ class GenericCommFunct
 			{
 				//each remaining $remoteDev should be linked in the lnkTables
 				file_put_contents($sDebugFile, "Remote impactor device ".$remoteDev." exists in the device, but not in the table, has to be created in the table\n", FILE_APPEND);
-				if ( $remoteDev > 0 && $device_id > 0 )
+				if ($remoteDev > 0 && $device_id >0 && $remoteDev != $device_id)
 				{
 					$oNewLink = new lnkConnectableCIToConnectableCI0();
 					$oNewLink->Set('impactorci_id', $remoteDev);
@@ -225,7 +225,7 @@ class GenericCommFunct
 				foreach ($aData['remoteDev'] as $remoteDev => $empty)
 				{
 					file_put_contents($sDebugFile, "Add the remote device : ".$remoteDev." and the redundancy ".$aData['Redundancy']." in link set number ".$nFreeSet."\n", FILE_APPEND);
-					if ($remoteDev > 0 && $device_id >0 )
+					if ($remoteDev > 0 && $device_id >0 && $remoteDev != $device_id)
 					{
 						$sNewLinkName = "lnkConnectableCIToConnectableCI".$nFreeSet;
 						$oNewLink = new $sNewLinkName();
