@@ -3,9 +3,7 @@
 	<constants>
 	</constants>
 	<classes>
-		<!--
-		This class stores all types of connectors : Optical Fiber, RJ-45, DB-9...
-		-->
+		<!-- This class stores all types of connectors : Optical Fiber, RJ-45, DB-9...-->
 		<class id="GenericPhysCommConnector" _delta="define">
 			<parent>cmdbAbstractObject</parent>
 			<properties>
@@ -86,9 +84,7 @@
 				</search>
 			</presentation>
 		</class>
-		<!--
-		this class stores all kind of 'level two' protocols : Ethernet, Fiber Channel, RS-232...
-		-->
+		<!-- This class stores all kind of 'level two' protocols : Ethernet, Fiber Channel, RS-232... -->
 		<class id="GenericCommProtocol" _delta="define">
 			<parent>cmdbAbstractObject</parent>
 			<properties>
@@ -158,9 +154,7 @@
 				</list>
 			</presentation>
 		</class>
-		<!--
-		this class stores speeds for the interfaces (instead of setting the speed individually for each interface)
-		-->
+		<!-- This class stores speeds for the interfaces (instead of setting the speed individually for each interface) -->
 		<class id="GenericCommSpeed" _delta="define">
 			<parent>cmdbAbstractObject</parent>
 			<properties>
@@ -324,9 +318,7 @@
 				</search>
 			</presentation>
 		</class>
-		<!--
-		this class stores redundancy protocols for virtual interfaces : LACP, active/standby, active/active...
-		-->
+		<!-- This class stores redundancy protocols for virtual interfaces : LACP, active/standby, active/active... -->
 		<class id="VirtualCommRedundancy" _delta="define">
 			<parent>cmdbAbstractObject</parent>
 			<properties>
@@ -399,9 +391,7 @@
 				</list>
 			</presentation>
 		</class>
-		<!--
-		this abstract class defines a Generic Communication Interface.
-		-->
+		<!-- This abstract class defines a Generic Communication Interface. -->
 		<class id="GenericCommInterface" _delta="define">
 			<parent>cmdbAbstractObject</parent>
 			<properties>
@@ -596,9 +586,7 @@
 				</relation>
 			</relations>
 		</class>
-		<!--
-		this class defines the specific attributes of a Generic Physical Communication interface
-		-->
+		<!-- This class defines the specific attributes of a Generic Physical Communication interface -->
 		<class id="GenericCommPhysInterface" _delta="define">
 			<parent>GenericCommInterface</parent>
 			<properties>
@@ -952,10 +940,7 @@
 				</relation>
 			</relations>
 		</class>
-		<!--
-		this class defines the specific attributes of a Generic Virtual Communication interface
-		It also adds the redudancy function
-		-->
+		<!-- This class defines the specific attributes of a Generic Virtual Communication interface. It also adds the redudancy function -->
 		<class id="GenericCommVirtInterface" _delta="define">
 			<parent>GenericCommInterface</parent>
 			<properties>
@@ -1139,11 +1124,9 @@
 				</list>
 			</presentation>
 		</class>
-		<!--
-			This class create a many to many link between generic Interface and virtual Generic Interface
+		<!-- This class create a many to many link between generic Interface and virtual Generic Interface
 			The idea is that the Virtual interface always depend from the generic interface
-			Also a virtual interface is member of the same device that the generic interface(s)
-		-->
+			Also a virtual interface is member of the same device that the generic interface(s) -->
 		<class id="lnkGenericCommInterfaceToGenericCommVirtInterface" _delta="define">
 			<parent>cmdbAbstractObject</parent>
 			<properties>
@@ -1217,14 +1200,8 @@
 			</list>
 		</presentation>
 		</class>
-		<!--
-				*** All the stuffs for the GenericCommDevices ***
-		-->
-		<!--
-		This class implements a GenericCommDeviceType
-		The idea is to put here the global function of the Device :
-		SAN switch, WAN Router ...
-		-->
+		<!-- *** All the stuffs for the GenericCommDevices *** -->
+		<!-- This class implements a GenericCommDeviceType The idea is to put here the global function of the Device : SAN switch, WAN Router ... -->
 		<class id="GenericCommDeviceType" _delta="define">
 			<parent>Typology</parent>
 			<properties>
@@ -1285,11 +1262,7 @@
 				</list>
 			</presentation>
 		</class>
-		<!--
-		This class is a link between ConnectableCI and ConnectableCI
-		*** Basically, impactorci_id, dependantci_id
-		There as much linktable than redundancy pool
-		-->
+		<!-- This class is a link between ConnectableCI and ConnectableCI. Basically, impactorci_id, dependantci_id. There as much linktable than redundancy pool -->
 		<!-- Set 0 -->
 		<class id="lnkConnectableCIToConnectableCI0" _delta="define">
 			<parent>cmdbAbstractObject</parent>
@@ -2080,9 +2053,7 @@
 			<relations>
 			</relations>
 		</class>
-		<!--
-		This class defines a Generic Network Connection device (instead of a Network Device, a SAN Device...)
-		-->
+		<!-- This class defines a Generic Network Connection device (instead of a Network Device, a SAN Device...) -->
 		<class id="GenericCommDevice" _delta="define">
 			<parent>DatacenterDevice</parent>
 			<properties>
@@ -2375,9 +2346,7 @@
 			<relations>
 			</relations>
 		</class>
-		<!--
-		the next modifications are here to extends existing classes
-		-->
+		<!-- The next modifications are here to extends existing classes -->
 		<class id="ConnectableCI" _delta="must_exist">
 			<fields>
 				<field id="genericcommphysinterface_list" xsi:type="AttributeLinkedSet" _delta="define">
@@ -2811,9 +2780,7 @@
 				</details>
 			</presentation>
 		</class>
-		<!--
-		Thanks to VDumas (again), the correct way to extend an AttributeEnum field
-		-->
+		<!-- Thanks to VDumas (again), the correct way to extend an AttributeEnum field -->
 		<class id="Model" _delta="must_exist">
 			<fields>
 				<field id="type" xsi:type="AttributeEnum" _delta="must_exist">
